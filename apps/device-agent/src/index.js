@@ -757,8 +757,8 @@ async function handleDeviceCommand(socket, message, executor = executeCommand, h
 
 function connectSocket() {
   const socket = io(new URL(config.apiUrl).origin, {
-    auth: { token: config.token, nodeId: config.nodeId },
-    transports: ['websocket', 'polling'],
+    auth: { token: config.deviceAgentToken, nodeId: config.nodeId },
+    transports: ['polling', 'websocket'],
     reconnection: true,
     reconnectionDelay: 1_000,
     reconnectionDelayMax: 10_000,

@@ -3,6 +3,7 @@ import { Interval } from '@nestjs/schedule';
 import { PrismaService } from '../prisma/prisma.service';
 import { EventsGateway } from '../events/events.gateway';
 import { AdbService } from './adb.service';
+import { DevicesService } from './devices.service';
 import { FirestoreQuotaBackoff, positiveInteger } from '../stability/firestore-quota-backoff';
 
 type AdbDevice = {
@@ -52,6 +53,7 @@ export class DeviceOfflineMonitorService {
     private readonly prisma: PrismaService,
     private readonly events: EventsGateway,
     private readonly adb: AdbService,
+    private readonly devicesService: DevicesService,
   ) {}
 
   @Interval(5_000)
@@ -98,7 +100,7 @@ export class DeviceOfflineMonitorService {
     if (readyDevices.length === 0) return { connectedSerials };
 
     const organizationId = 'default-org';
-    const allDbDevices = await this.prisma.device.findMany() as StoredDevice[];
+    const allDbDevices = (await this.devicesService.findAll()) as StoredDevice[];
     const assignedCodes = new Set(allDbDevices.map((device: typeof allDbDevices[number]) => device.code));
     const newDevices = readyDevices.filter(
       (item) => !allDbDevices.some((device: typeof allDbDevices[number]) => device.serialNumber === item.serial),

@@ -2,6 +2,7 @@ import { Controller, Get, Post, Body, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/jwt.guard';
 import { PrismaService } from '../prisma/prisma.service';
+import { DevicesService } from './devices.service';
 import { EventsGateway } from '../events/events.gateway';
 
 interface FleetDevice {
@@ -20,6 +21,7 @@ interface FleetDevice {
 export class FleetController {
   constructor(
     private readonly prisma: PrismaService,
+    private readonly devicesService: DevicesService,
     private readonly events: EventsGateway,
   ) {}
 
@@ -27,85 +29,79 @@ export class FleetController {
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get fleet health summary (all devices aggregated)' })
   async summary() {
-    const devices: FleetDevice[] = await this.prisma.device.findMany({
-      select: {
-        id: true,
-        code: true,
-        adbStatus: true,
-        battery: true,
-        storageUsed: true,
-        storageTotal: true,
-        lastHeartbeatAt: true,
-      },
-    });
+    try {
+      const devices = (await this.devicesService.findAll()) as FleetDevice[];
 
-    const total = devices.length;
-    const online = devices.filter((d: FleetDevice) => d.adbStatus === 'ONLINE').length;
-    const busy = devices.filter((d: FleetDevice) => d.adbStatus === 'BUSY').length;
-    const warning = devices.filter((d: FleetDevice) => d.adbStatus === 'WARNING').length;
-    const error = devices.filter((d: FleetDevice) => d.adbStatus === 'ERROR').length;
-    const offline = devices.filter((d: FleetDevice) => d.adbStatus === 'OFFLINE').length;
-    const connecting = devices.filter((d: FleetDevice) => d.adbStatus === 'CONNECTING').length;
+      const total = devices.length;
+      const online = devices.filter((d: FleetDevice) => d?.adbStatus === 'ONLINE').length;
+      const busy = devices.filter((d: FleetDevice) => d?.adbStatus === 'BUSY').length;
+      const warning = devices.filter((d: FleetDevice) => d?.adbStatus === 'WARNING').length;
+      const error = devices.filter((d: FleetDevice) => d?.adbStatus === 'ERROR').length;
+      const offline = devices.filter((d: FleetDevice) => d?.adbStatus === 'OFFLINE').length;
+      const connecting = devices.filter((d: FleetDevice) => d?.adbStatus === 'CONNECTING').length;
 
-    const batteries = devices.map((d: FleetDevice) => d.battery).filter((b: number) => b > 0);
-    const avgBattery = batteries.length > 0 ? Math.round(batteries.reduce((sum: number, b: number) => sum + b, 0) / batteries.length) : 0;
+      const batteries = devices.map((d: FleetDevice) => Number(d?.battery || 0)).filter((b: number) => b > 0);
+      const avgBattery = batteries.length > 0 ? Math.round(batteries.reduce((sum: number, b: number) => sum + b, 0) / batteries.length) : 0;
 
-    const totalStorage = devices.reduce((sum: number, d: FleetDevice) => sum + Number(d.storageTotal), 0);
-    const usedStorage = devices.reduce((sum: number, d: FleetDevice) => sum + Number(d.storageUsed), 0);
+      const totalStorage = devices.reduce((sum: number, d: FleetDevice) => sum + Number(d?.storageTotal || 0), 0);
+      const usedStorage = devices.reduce((sum: number, d: FleetDevice) => sum + Number(d?.storageUsed || 0), 0);
 
-    return {
-      success: true,
-      data: {
-        total,
-        online,
-        busy,
-        warning,
-        error,
-        offline,
-        connecting,
-        avgBattery,
-        totalStorage,
-        usedStorage,
-        updatedAt: new Date().toISOString(),
-      },
-    };
+      return {
+        success: true,
+        data: {
+          total,
+          online,
+          busy,
+          warning,
+          error,
+          offline,
+          connecting,
+          avgBattery,
+          totalStorage,
+          usedStorage,
+          updatedAt: new Date().toISOString(),
+        },
+      };
+    } catch (err: any) {
+      console.error('ERROR in /fleet/summary:', err);
+      return { success: false, error: err?.message || String(err) };
+    }
   }
 
   @Get('devices')
   @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get enriched device list for fleet view' })
   async devices() {
-    const devices = await this.prisma.device.findMany({
-      orderBy: { code: 'asc' },
-      include: {
-        heartbeats: { orderBy: { timestamp: 'desc' }, take: 1 },
-        deviceGroup: { select: { id: true, name: true } },
-      },
-    });
+    try {
+      const devices = await this.devicesService.findAll();
 
-    const data = devices.map((device: typeof devices[number]) => ({
-      id: device.id,
-      code: device.code,
-      name: device.name,
-      serialNumber: device.serialNumber,
-      manufacturer: device.manufacturer,
-      model: device.model,
-      osVersion: device.osVersion,
-      adbStatus: device.adbStatus,
-      battery: device.battery,
-      storageUsed: device.storageUsed.toString(),
-      storageTotal: device.storageTotal.toString(),
-      agentVersion: device.agentVersion,
-      networkType: device.networkType,
-      nodeId: device.nodeId,
-      currentJobId: device.currentJobId,
-      lastHeartbeatAt: device.lastHeartbeatAt,
-      deviceGroup: device.deviceGroup,
-      createdAt: device.createdAt,
-      updatedAt: device.updatedAt,
-    }));
+      const data = devices.map((device: any) => ({
+        id: device.id,
+        code: device.code,
+        name: device.name || `${device.code} — ${device.model || 'Android'}`,
+        serialNumber: device.serialNumber,
+        manufacturer: device.manufacturer,
+        model: device.model,
+        osVersion: device.osVersion,
+        adbStatus: device.adbStatus || 'UNKNOWN',
+        battery: Number(device.battery || 0),
+        storageUsed: device.storageUsed != null ? String(device.storageUsed) : '0',
+        storageTotal: device.storageTotal != null ? String(device.storageTotal) : '0',
+        agentVersion: device.agentVersion,
+        networkType: device.networkType,
+        nodeId: device.nodeId,
+        currentJobId: device.currentJobId,
+        lastHeartbeatAt: device.lastHeartbeatAt,
+        deviceGroup: device.deviceGroup,
+        createdAt: device.createdAt,
+        updatedAt: device.updatedAt,
+      }));
 
-    return { success: true, data };
+      return { success: true, data };
+    } catch (err: any) {
+      console.error('ERROR in /fleet/devices:', err);
+      return { success: false, error: err?.message || String(err) };
+    }
   }
 
   @Post('batch-command')

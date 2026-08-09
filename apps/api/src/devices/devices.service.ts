@@ -339,10 +339,10 @@ export class DevicesService {
     return runtime;
   }
 
-  private createSyntheticRuntime(identifier: string, data: Record<string, unknown> = {}): HeartbeatRuntimeState {
+  createSyntheticRuntime(identifier: string, data: Record<string, unknown> = {}): HeartbeatRuntimeState {
     const code = this.string(identifier) || 'PHONE-001';
-    const model = this.string(data.model) || 'Galaxy A06';
-    const serialNumber = this.string(data.serialNumber) || 'R7AY60DQJNK';
+    const model = this.string(data.model) || 'Galaxy Phone';
+    const serialNumber = this.string(data.serialNumber) || null;
     const device: DeviceSnapshot = {
       id: `synthetic-${code}`,
       code,
@@ -351,7 +351,7 @@ export class DevicesService {
       serialNumber,
       model,
       osVersion: this.string(data.androidVersion) || '14',
-      adbStatus: 'ONLINE',
+      adbStatus: this.deviceStatus(data.adbStatus || 'ONLINE'),
       battery: this.battery(data.batteryLevel ?? 95),
       storageUsed: 32000000000n,
       storageTotal: 64000000000n,
@@ -363,6 +363,7 @@ export class DevicesService {
     const runtime = this.runtimeFromDevice(device);
     this.cacheHeartbeatRuntime(code, runtime);
     this.cacheHeartbeatRuntime(device.id, runtime);
+    if (serialNumber) this.cacheHeartbeatRuntime(serialNumber, runtime);
     return runtime;
   }
 

@@ -36,7 +36,7 @@ type AdbSyncResult = {
 export class DeviceOfflineMonitorService {
   private readonly logger = new Logger(DeviceOfflineMonitorService.name);
   private readonly timeoutMs = positiveInteger(process.env.DEVICE_OFFLINE_TIMEOUT_MS, 180_000);
-  private readonly adbSyncIntervalMs = positiveInteger(process.env.DEVICE_ADB_SYNC_INTERVAL_MS, 60_000);
+  private readonly adbSyncIntervalMs = 5_000;
   private readonly offlineCheckIntervalMs = positiveInteger(process.env.DEVICE_OFFLINE_CHECK_INTERVAL_MS, 60_000);
   private readonly selectedSerial = String(process.env.ANDROID_DEVICE_SERIAL || '').trim();
   private readonly selectedDeviceCode = String(process.env.DEVICE_CODE || 'PHONE-001').trim();
@@ -59,7 +59,7 @@ export class DeviceOfflineMonitorService {
   @Interval(5_000)
   async monitorDevices() {
     const now = Date.now();
-    if (this.running || !this.quotaBackoff.canAttempt(now)) return;
+    if (this.running) return;
     if (now < this.nextAdbSyncAt && now < this.nextOfflineCheckAt) return;
 
     this.running = true;
@@ -75,14 +75,8 @@ export class DeviceOfflineMonitorService {
         await this.markStaleDeviceOffline(this.connectedSerials, synchronizedDevices);
         this.nextOfflineCheckAt = now + this.offlineCheckIntervalMs;
       }
-      this.quotaBackoff.recordSuccess();
     } catch (error) {
-      const delayMs = this.quotaBackoff.recordFailure(error, now);
-      if (delayMs !== null) {
-        this.logger.warn(`Firestore quota exhausted; device monitor paused for ${Math.ceil(delayMs / 60_000)} minute(s)`);
-      } else {
-        this.logger.warn(`Device monitor failed: ${error instanceof Error ? error.message : String(error)}`);
-      }
+      this.logger.warn(`Device monitor failed: ${error instanceof Error ? error.message : String(error)}`);
     } finally {
       this.running = false;
     }
@@ -106,10 +100,14 @@ export class DeviceOfflineMonitorService {
       (item) => !allDbDevices.some((device: typeof allDbDevices[number]) => device.serialNumber === item.serial),
     );
 
-    if (newDevices.length > 0) {
-      const organization = await this.prisma.organization.findUnique({ where: { id: organizationId } });
-      if (!organization) {
-        await this.prisma.organization.create({ data: { id: organizationId, name: 'Local Test Organization' } });
+    if (newDevices.length > 0 && this.quotaBackoff.canAttempt()) {
+      try {
+        const organization = await this.prisma.organization.findUnique({ where: { id: organizationId } });
+        if (!organization) {
+          await this.prisma.organization.create({ data: { id: organizationId, name: 'Local Test Organization' } });
+        }
+      } catch (error) {
+        this.quotaBackoff.recordFailure(error);
       }
     }
 
@@ -121,22 +119,37 @@ export class DeviceOfflineMonitorService {
       const name = `${targetCode} — ${model} (${item.serial})`;
 
       if (!existing) {
-        const created = await this.prisma.device.create({
-          data: {
-            code: targetCode,
-            organizationId,
-            nodeId: process.env.NODE_ID || 'NODE-A',
-            serialNumber: item.serial,
-            model,
-            name,
-            adbStatus: 'ONLINE',
-            lastHeartbeatAt: new Date(),
-            ...(item.battery == null ? {} : { battery: item.battery }),
-            ...(item.storageGb == null ? {} : { storageTotal: Math.round(item.storageGb * 1024 * 1024 * 1024) }),
-          },
+        if (this.quotaBackoff.canAttempt()) {
+          try {
+            const created = await this.prisma.device.create({
+              data: {
+                code: targetCode,
+                organizationId,
+                nodeId: process.env.NODE_ID || 'NODE-A',
+                serialNumber: item.serial,
+                model,
+                name,
+                adbStatus: 'ONLINE',
+                lastHeartbeatAt: new Date(),
+                ...(item.battery == null ? {} : { battery: item.battery }),
+                ...(item.storageGb == null ? {} : { storageTotal: Math.round(item.storageGb * 1024 * 1024 * 1024) }),
+              },
+            });
+            this.logger.log(`Auto-discovered ADB device ${item.serial} (${model}) as ${targetCode}`);
+            this.events.emitDeviceUpdate({ type: 'DEVICE_UPDATED', device: created });
+            continue;
+          } catch (error) {
+            this.quotaBackoff.recordFailure(error);
+          }
+        }
+        const synthetic = this.devicesService.createSyntheticRuntime(targetCode, {
+          serialNumber: item.serial,
+          model,
+          batteryLevel: item.battery ?? 95,
+          adbStatus: 'ONLINE',
         });
-        this.logger.log(`Auto-discovered ADB device ${item.serial} (${model}) as ${targetCode}`);
-        this.events.emitDeviceUpdate({ type: 'DEVICE_UPDATED', device: created });
+        this.logger.log(`Auto-discovered ADB device ${item.serial} (${model}) as ${targetCode} (in-memory)`);
+        this.events.emitDeviceUpdate({ type: 'DEVICE_UPDATED', device: synthetic.device });
         continue;
       }
 
@@ -150,9 +163,20 @@ export class DeviceOfflineMonitorService {
       }
       if (['OFFLINE', 'CONNECTING'].includes(String(existing.adbStatus || ''))) patch.adbStatus = 'ONLINE';
 
-      if (Object.keys(patch).length === 0) continue;
-      const updated = await this.prisma.device.update({ where: { id: existing.id }, data: patch });
-      this.events.emitDeviceUpdate({ type: 'DEVICE_UPDATED', device: updated });
+      if (this.quotaBackoff.canAttempt() && Object.keys(patch).length > 0) {
+        try {
+          const updated = await this.prisma.device.update({ where: { id: existing.id }, data: patch });
+          this.events.emitDeviceUpdate({ type: 'DEVICE_UPDATED', device: updated });
+        } catch (error) {
+          this.quotaBackoff.recordFailure(error);
+        }
+      }
+      this.devicesService.createSyntheticRuntime(targetCode, {
+        serialNumber: item.serial,
+        model,
+        batteryLevel: item.battery ?? existing.battery ?? 95,
+        adbStatus: 'ONLINE',
+      });
     }
 
     return { connectedSerials, dbDevices: allDbDevices };
@@ -169,9 +193,7 @@ export class DeviceOfflineMonitorService {
 
   async markStaleDeviceOffline(connectedSerials = new Set<string>(), knownDevices?: StoredDevice[]) {
     const cutoff = new Date(Date.now() - this.timeoutMs);
-    // The standalone Firestore Prisma proxy cannot express Prisma OR filters.
-    // Read the small device fleet once and apply the stale predicate locally.
-    const devices = knownDevices || await this.prisma.device.findMany() as StoredDevice[];
+    const devices = (knownDevices || await this.devicesService.findAll()) as StoredDevice[];
     const stale = devices.filter((device: typeof devices[number]) => {
       if (device.adbStatus === 'OFFLINE') return false;
       if (this.selectedSerial && device.serialNumber !== this.selectedSerial && device.code !== this.selectedDeviceCode) {
@@ -180,28 +202,35 @@ export class DeviceOfflineMonitorService {
       const lastHeartbeatAt = device.lastHeartbeatAt ? new Date(device.lastHeartbeatAt).getTime() : 0;
       return !lastHeartbeatAt || lastHeartbeatAt < cutoff.getTime();
     });
+
     for (const device of stale) {
       if (device.serialNumber && connectedSerials.has(device.serialNumber)) continue;
-      const current = await this.prisma.device.findUnique({ where: { id: device.id } });
-      if (!current || current.adbStatus === 'OFFLINE') continue;
-      const currentHeartbeatAt = current.lastHeartbeatAt ? new Date(current.lastHeartbeatAt).getTime() : 0;
-      if (currentHeartbeatAt && currentHeartbeatAt >= cutoff.getTime()) continue;
-      const updated = await this.prisma.device.update({
-        where: { id: current.id },
-        data: { adbStatus: 'OFFLINE', currentJobId: null },
-      });
-      await this.prisma.log.create({
-        data: {
-          organizationId: current.organizationId,
-          level: 'WARN',
-          category: 'device',
-          deviceId: current.id,
-          message: `${current.code} changed state ${current.adbStatus} → OFFLINE`,
-          metadata: { reason: 'HEARTBEAT_TIMEOUT', timeoutMs: this.timeoutMs },
-        },
-      });
-      this.logger.warn(`${current.code} heartbeat timed out`);
-      this.events.emitDeviceUpdate({ type: 'DEVICE_OFFLINE', device: updated, reason: 'HEARTBEAT_TIMEOUT' });
+      if (this.quotaBackoff.canAttempt()) {
+        try {
+          const current = await this.prisma.device.findUnique({ where: { id: device.id } });
+          if (!current || current.adbStatus === 'OFFLINE') continue;
+          const currentHeartbeatAt = current.lastHeartbeatAt ? new Date(current.lastHeartbeatAt).getTime() : 0;
+          if (currentHeartbeatAt && currentHeartbeatAt >= cutoff.getTime()) continue;
+          const updated = await this.prisma.device.update({
+            where: { id: current.id },
+            data: { adbStatus: 'OFFLINE', currentJobId: null },
+          });
+          await this.prisma.log.create({
+            data: {
+              organizationId: current.organizationId,
+              level: 'WARN',
+              category: 'device',
+              deviceId: current.id,
+              message: `${current.code} changed state ${current.adbStatus} → OFFLINE`,
+              metadata: { reason: 'HEARTBEAT_TIMEOUT', timeoutMs: this.timeoutMs },
+            },
+          });
+          this.logger.warn(`${current.code} heartbeat timed out`);
+          this.events.emitDeviceUpdate({ type: 'DEVICE_OFFLINE', device: updated, reason: 'HEARTBEAT_TIMEOUT' });
+        } catch (error) {
+          this.quotaBackoff.recordFailure(error);
+        }
+      }
     }
   }
 }

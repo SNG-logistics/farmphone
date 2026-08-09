@@ -269,9 +269,9 @@ export class AdbService {
     };
   }
 
-  private async safeShell(serial: string, args: string[]) {
+  private async safeShell(serial: string, args: string[], timeout = 2500) {
     try {
-      return (await this.run(['-s', serial, 'shell', ...args])).trim();
+      return (await this.run(['-s', serial, 'shell', ...args], timeout)).trim();
     } catch {
       return '';
     }

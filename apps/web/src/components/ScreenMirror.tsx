@@ -95,9 +95,9 @@ export default function ScreenMirror({ deviceCode, deviceStatus }: ScreenMirrorP
   // Capture frame & render in portrait (จอแนวตั้ง มือถือ)
   const captureFrame = useCallback(async () => {
     if (abortRef.current?.signal.aborted) return;
+    const controller = new AbortController();
+    abortRef.current = controller;
     try {
-      const controller = new AbortController();
-      abortRef.current = controller;
       const response = await fetch(
         `${apiUrl}/api/v1/devices/${encodeURIComponent(deviceCode)}/screen`,
         {
@@ -134,7 +134,7 @@ export default function ScreenMirror({ deviceCode, deviceStatus }: ScreenMirrorP
       frameCountRef.current += 1;
       setMirrorState('streaming');
     } catch (error) {
-      if ((error as Error).name === 'AbortError') return;
+      if ((error as Error)?.name === 'AbortError' || controller.signal.aborted) return;
       setMirrorState('error');
     }
   }, [deviceCode, requestHeaders]);
@@ -151,7 +151,9 @@ export default function ScreenMirror({ deviceCode, deviceStatus }: ScreenMirrorP
   }, [captureFrame]);
 
   const stopStreaming = useCallback(() => {
-    abortRef.current?.abort();
+    if (abortRef.current && !abortRef.current.signal.aborted) {
+      try { abortRef.current.abort('Stopped streaming'); } catch { /* ignore */ }
+    }
     if (frameTimerRef.current) clearTimeout(frameTimerRef.current);
     frameTimerRef.current = null;
     setMirrorState('paused');
@@ -168,7 +170,9 @@ export default function ScreenMirror({ deviceCode, deviceStatus }: ScreenMirrorP
 
   useEffect(() => {
     return () => {
-      abortRef.current?.abort();
+      if (abortRef.current && !abortRef.current.signal.aborted) {
+        try { abortRef.current.abort('Component unmounted'); } catch { /* ignore */ }
+      }
       if (frameTimerRef.current) clearTimeout(frameTimerRef.current);
     };
   }, []);

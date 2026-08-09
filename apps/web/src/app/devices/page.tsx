@@ -19,6 +19,7 @@ import {
   WifiOff,
   Zap,
 } from 'lucide-react';
+import { apiFetch } from '@/lib/api-client';
 
 type JsonRecord = Record<string, unknown>;
 
@@ -76,8 +77,7 @@ export default function FleetPage() {
     background ? setRefreshing(true) : setLoading(true);
     setError('');
     try {
-      const response = await fetch(`${apiUrl}/api/v1/devices`, {
-        cache: 'no-store',
+      const response = await apiFetch('/api/v1/devices', {
         headers: requestHeaders(),
       });
       const payload = await readPayload(response);

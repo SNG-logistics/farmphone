@@ -173,17 +173,23 @@ export class DevicesService {
     const now = Date.now();
     let runtime = this.heartbeatRuntime.get(identifier);
     if (!runtime) {
-      if (!this.quotaBackoff.canAttempt(now)) throw this.quotaUnavailable();
-      try {
-        runtime = await this.loadHeartbeatRuntime(identifier);
-        this.quotaBackoff.recordSuccess();
-      } catch (error) {
-        const delayMs = this.quotaBackoff.recordFailure(error, now);
-        if (delayMs !== null) {
-          this.logger.warn(`Firestore quota exhausted; heartbeat persistence paused for ${Math.ceil(delayMs / 60_000)} minute(s)`);
-          throw this.quotaUnavailable();
+      if (!this.quotaBackoff.canAttempt(now)) {
+        runtime = this.createSyntheticRuntime(identifier, data);
+        this.cacheHeartbeatRuntime(identifier, runtime);
+      } else {
+        try {
+          runtime = await this.loadHeartbeatRuntime(identifier);
+          this.quotaBackoff.recordSuccess();
+        } catch (error) {
+          const delayMs = this.quotaBackoff.recordFailure(error, now);
+          if (delayMs !== null) {
+            this.logger.warn(`Firestore quota exhausted; initializing live in-memory heartbeat runtime for ${Math.ceil(delayMs / 60_000)} minute(s)`);
+            runtime = this.createSyntheticRuntime(identifier, data);
+            this.cacheHeartbeatRuntime(identifier, runtime);
+          } else {
+            throw error;
+          }
         }
-        throw error;
       }
     }
 
@@ -315,6 +321,30 @@ export class DevicesService {
     const runtime = this.runtimeFromDevice(existing);
     this.cacheHeartbeatRuntime(identifier, runtime);
     return runtime;
+  }
+
+  private createSyntheticRuntime(identifier: string, data: Record<string, unknown> = {}): HeartbeatRuntimeState {
+    const code = this.string(identifier) || 'PHONE-001';
+    const model = this.string(data.model) || 'Android';
+    const serialNumber = this.string(data.serialNumber) || null;
+    const device: DeviceSnapshot = {
+      id: `synthetic-${code}`,
+      code,
+      organizationId: 'default-org',
+      name: `${code} — ${model}`,
+      serialNumber,
+      model,
+      osVersion: this.string(data.androidVersion) || null,
+      adbStatus: 'ONLINE',
+      battery: this.battery(data.batteryLevel),
+      storageUsed: 0n,
+      storageTotal: 0n,
+      currentJobId: null,
+      agentVersion: this.string(data.agentVersion) || null,
+      lastHeartbeatAt: new Date(),
+      metadata: {},
+    };
+    return this.runtimeFromDevice(device);
   }
 
   private runtimeFromDevice(existing: DeviceSnapshot): HeartbeatRuntimeState {

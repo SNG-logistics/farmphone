@@ -127,10 +127,7 @@ function selectDevice(devices, configuredSerial = config.selectedSerial) {
   }
 
   const ready = devices.filter((device) => device.state === 'device');
-  if (ready.length > 1) {
-    throw codedError('CONFIGURATION_ERROR', 'พบโทรศัพท์มากกว่าหนึ่งเครื่อง กรุณากำหนด ANDROID_DEVICE_SERIAL');
-  }
-  if (ready.length === 1) return ready[0];
+  if (ready.length >= 1) return ready[0];
   const unauthorized = devices.find((device) => device.state === 'unauthorized');
   if (unauthorized) throw codedError('ADB_UNAUTHORIZED', `โทรศัพท์ ${unauthorized.serial} ยังไม่อนุญาต ADB`);
   throw codedError('DEVICE_NOT_FOUND', 'ไม่พบโทรศัพท์ Android ที่พร้อมใช้งาน');

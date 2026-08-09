@@ -264,12 +264,12 @@ export class JobQueueService implements OnModuleInit, OnModuleDestroy {
   }
 
   private async processDeviceCommand(queueJob: BullJob<QueuePayload>, job: any) {
-    if (!job.device) throw this.commandError('DEVICE_NOT_FOUND', 'Job ไม่มี PHONE-001');
+    if (!job.device) throw this.commandError('DEVICE_NOT_FOUND', 'Job does not reference a physical device');
     const parameters = this.record(job.parameters);
     const command = String(parameters.command || job.deviceCommand?.command || '');
     const backendOnly = command === 'VIEW_JOB_LOG';
     if (!backendOnly && !this.commandBroker) throw this.commandError('COMMAND_BROKER_UNAVAILABLE', 'Device command broker ไม่พร้อม');
-    if (['SCREENSHOT', 'PUSH_FILE', 'RUN_SINGLE_DEVICE_TEST'].includes(command) && !this.storage) {
+    if (['SCREENSHOT', 'PUSH_FILE', 'RUN_SINGLE_DEVICE_TEST', 'AUTOMATION_SEQUENCE'].includes(command) && !this.storage) {
       throw this.commandError('STORAGE_UNAVAILABLE', 'Storage service ไม่พร้อม');
     }
     const attemptNumber = (queueJob.data.attemptOffset || 0) + queueJob.attemptsMade + 1;
@@ -311,6 +311,10 @@ export class JobQueueService implements OnModuleInit, OnModuleDestroy {
       result = await this.verifyDeviceResult(job, command, parameters, response);
     }
 
+    if (String(result.status || '').toUpperCase() === 'ACTION_REQUIRED') {
+      return this.pauseForOperator(job, result, attemptNumber);
+    }
+
     await this.update(job.id, 'VERIFYING');
     await this.prisma.deviceCommand.update({ where: { jobId: job.id }, data: { status: 'VERIFYING' } });
     await this.updateMvpAgents(job.organizationId, job.id, { DEVICE: 'SUCCESS', QA: 'WORKING', LOG: 'WORKING' });
@@ -337,7 +341,13 @@ export class JobQueueService implements OnModuleInit, OnModuleDestroy {
       ? (this.events as EventsGateway & { isNodeConnected: (nodeId: string) => boolean }).isNodeConnected(job.device.nodeId)
       : true;
     if (!connected) throw this.commandError('DEVICE_AGENT_OFFLINE', `Device Agent ${job.device.nodeId} ไม่ได้เชื่อมต่อ`);
-    const timeoutMs = command === 'REBOOT_DEVICE' ? 150_000 : command === 'RUN_SINGLE_DEVICE_TEST' ? 240_000 : 75_000;
+    const timeoutMs = command === 'REBOOT_DEVICE'
+      ? 150_000
+      : command === 'RUN_SINGLE_DEVICE_TEST'
+        ? 240_000
+        : command === 'AUTOMATION_SEQUENCE'
+          ? 900_000
+          : 75_000;
     const responsePromise = this.commandBroker!.waitFor(job.id, timeoutMs, command, attemptNumber);
     try {
       this.events.emitDeviceCommand(job.device.nodeId, {
@@ -386,7 +396,11 @@ export class JobQueueService implements OnModuleInit, OnModuleDestroy {
     parameters: Record<string, unknown>,
     response: DeviceCommandResponse,
   ): Promise<Record<string, unknown>> {
-    const raw = this.record(response.result);
+    let raw = this.record(response.result);
+    if (command === 'AUTOMATION_SEQUENCE') {
+      raw = await this.verifyAutomationSequence(job, parameters, response, raw);
+    }
+    if (String(raw.status || '').toUpperCase() === 'ACTION_REQUIRED') return raw;
     if (command === 'HEALTH_CHECK') {
       if (!['PASS', 'WARNING'].includes(String(raw.result))) throw this.commandError('HEALTH_CHECK_FAILED', 'Health Check รายงาน FAIL');
       const checks = this.record(raw.checks);
@@ -440,7 +454,7 @@ export class JobQueueService implements OnModuleInit, OnModuleDestroy {
       const status = String(raw.adbStatus || raw.status || '').toUpperCase();
       const authorization = String(raw.authorization || raw.adbAuthorization || '').toUpperCase();
       if (deviceCode !== job.device.code || !serialNumber) {
-        throw this.commandError('DEVICE_STATUS_IDENTITY_MISMATCH', 'Device status ไม่ยืนยันตัวตน PHONE-001/Serial Number');
+        throw this.commandError('DEVICE_STATUS_IDENTITY_MISMATCH', `Device status does not confirm ${job.device.code}/ADB serial identity`);
       }
       if (job.device.serialNumber && serialNumber !== job.device.serialNumber) {
         throw this.commandError('DEVICE_STATUS_SERIAL_MISMATCH', 'Serial Number จาก Device Agent ไม่ตรงกับฐานข้อมูล');
@@ -472,6 +486,122 @@ export class JobQueueService implements OnModuleInit, OnModuleDestroy {
       return { ...raw, status: 'PASS', health, screenshot, openApp, pushFile, stopApp };
     }
     return raw;
+  }
+
+  private async verifyAutomationSequence(
+    job: any,
+    parameters: Record<string, unknown>,
+    response: DeviceCommandResponse,
+    raw: Record<string, unknown>,
+  ) {
+    const result = await this.persistSequenceEvidence(job, response, raw);
+    const status = String(result.status || '').toUpperCase();
+    const steps = Array.isArray(result.steps) ? result.steps.map((step) => this.record(step)) : [];
+    const expectedSteps = Array.isArray(parameters.steps) ? parameters.steps.length : 0;
+    if (!['SUCCESS', 'FAILED', 'ACTION_REQUIRED'].includes(status)) {
+      throw this.commandError('AUTOMATION_RESULT_INVALID', `Device Agent returned invalid automation status ${status || '(empty)'}`);
+    }
+    if (steps.length === 0 || steps.length > expectedSteps || Number(result.totalSteps) !== expectedSteps) {
+      const error = this.commandError('AUTOMATION_RESULT_INCOMPLETE', `Automation result contains ${steps.length}/${expectedSteps} step results`);
+      error.result = result;
+      throw error;
+    }
+    await this.logAutomationSteps(job, steps, Number(response.attemptNumber || job.attempts || 1));
+    if (status === 'SUCCESS' && (steps.length !== expectedSteps || steps.some((step) => step.status !== 'SUCCESS'))) {
+      const error = this.commandError('AUTOMATION_RESULT_INCONSISTENT', 'Automation reported SUCCESS without successful evidence for every step');
+      error.result = result;
+      throw error;
+    }
+    if (status === 'FAILED') {
+      const failure = this.record(result.failureReason);
+      const error = this.commandError(
+        String(failure.code || 'AUTOMATION_SEQUENCE_FAILED'),
+        String(failure.message || 'Automation sequence failed'),
+        String(failure.adbOutput || ''),
+      );
+      error.result = result;
+      throw error;
+    }
+    return result;
+  }
+
+  private async logAutomationSteps(job: any, steps: Record<string, any>[], attemptNumber: number) {
+    for (const step of steps) {
+      const status = String(step.status || 'UNKNOWN').toUpperCase();
+      const failure = this.record(step.failureReason);
+      const evidence = this.record(step.evidence);
+      await this.logJob(
+        job,
+        status === 'SUCCESS' ? 'INFO' : status === 'ACTION_REQUIRED' ? 'WARN' : 'ERROR',
+        `Automation step ${Number(step.index) + 1} ${String(step.command || '(unknown)')} → ${status}`,
+        attemptNumber,
+        {
+          stepIndex: step.index,
+          stepId: step.id,
+          command: step.command,
+          status,
+          durationMs: step.durationMs,
+          selectorUsed: this.record(step.output).selectorUsed || null,
+          evidence,
+          failureReason: Object.keys(failure).length ? failure : null,
+        },
+        failure.code ? String(failure.code) : undefined,
+        failure.adbOutput ? String(failure.adbOutput) : undefined,
+      );
+    }
+  }
+
+  private async persistSequenceEvidence(
+    job: any,
+    response: DeviceCommandResponse,
+    raw: Record<string, unknown>,
+  ): Promise<Record<string, unknown>> {
+    const steps = Array.isArray(raw.steps) ? raw.steps : [];
+    const persisted: Record<string, unknown>[] = [];
+    for (const value of steps) {
+      const step = this.record(value);
+      const evidence = this.record(step.evidence);
+      const storedEvidence: Record<string, unknown> = {};
+      for (const [name, item] of Object.entries(evidence)) {
+        const screenshot = this.record(item);
+        storedEvidence[name] = screenshot.screenshotBase64
+          ? await this.verifyDeviceResult(job, 'SCREENSHOT', {}, { ...response, result: screenshot })
+          : item;
+      }
+      const output = this.record(step.output);
+      const storedOutput = output.screenshotBase64
+        ? await this.verifyDeviceResult(job, 'SCREENSHOT', {}, { ...response, result: output })
+        : step.output;
+      persisted.push({
+        ...step,
+        ...(step.output !== undefined ? { output: storedOutput } : {}),
+        ...(Object.keys(storedEvidence).length ? { evidence: storedEvidence } : {}),
+      });
+    }
+    return { ...raw, steps: persisted };
+  }
+
+  private async pauseForOperator(job: any, result: Record<string, unknown>, attemptNumber: number) {
+    const failure = this.record(result.failureReason);
+    const errorCode = String(failure.code || 'ACTION_REQUIRED');
+    const errorMessage = String(failure.message || 'Automation paused for operator action');
+    const updated = await this.update(job.id, 'ACTION_REQUIRED', {
+      result,
+      errorCode,
+      errorMessage,
+      completedAt: null,
+    });
+    await this.prisma.deviceCommand.update({
+      where: { jobId: job.id },
+      data: { status: 'ACTION_REQUIRED', result: result as any, errorCode, errorMessage, completedAt: null },
+    });
+    await this.prisma.device.update({
+      where: { id: job.device.id },
+      data: { adbStatus: this.restoredDeviceStatus(job.device), currentJobId: null },
+    });
+    await this.logJob(job, 'WARN', errorMessage, attemptNumber, { actionRequired: failure.actionRequired || null }, errorCode);
+    await this.updateMvpAgents(job.organizationId, job.id, { DEVICE: 'WAITING', QA: 'WAITING', LOG: 'SUCCESS' });
+    return updated;
   }
 
   private async readJobLogResult(job: any, parameters: Record<string, unknown>) {

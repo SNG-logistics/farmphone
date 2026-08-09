@@ -23,6 +23,7 @@ import {
   logRepo,
   auditLogRepo,
   workflowStepRepo,
+  automationRecipeRepo,
   type BaseEntity,
 } from '@farm-phone/database';
 
@@ -228,6 +229,7 @@ export class PrismaService implements OnModuleInit {
   readonly log = proxy(logRepo);
   readonly auditLog = proxy(auditLogRepo);
   readonly workflowStep = proxy(workflowStepRepo);
+  readonly automationRecipe = proxy(automationRecipeRepo);
 
   async $transaction<T>(arg: ((tx: PrismaService) => Promise<T>) | Promise<unknown>[]): Promise<T> {
     if (Array.isArray(arg)) {

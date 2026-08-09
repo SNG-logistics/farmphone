@@ -66,4 +66,18 @@ export class DevicesController {
   findAllGroups() {
     return this.devicesService.findAllGroups().then((data) => ({ success: true, data }));
   }
+
+  @Post('devices/commands/batch')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Dispatch batch command to multiple devices' })
+  dispatchBatchCommand(@Body() body: { deviceCodes?: string[]; command: string; parameters?: Record<string, unknown> }) {
+    return this.devicesService.dispatchBatchCommand(body.deviceCodes, body.command, body.parameters).then((data) => ({ success: true, data }));
+  }
+
+  @Post('devices/:code/commands')
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: 'Dispatch command to a single device' })
+  dispatchSingleCommand(@Param('code') code: string, @Body() body: { command: string; parameters?: Record<string, unknown> }) {
+    return this.devicesService.dispatchCommand(code, body.command, body.parameters).then((data) => ({ success: true, data }));
+  }
 }

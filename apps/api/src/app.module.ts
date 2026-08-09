@@ -31,6 +31,7 @@ import { EventsModule } from './events/events.module';
 import { AiModule } from './ai/ai.module';
 import { PlatformAutomationModule } from './platform-automation/platform-automation.module';
 import { VideoProcessingModule } from './video-processing/video-processing.module';
+import { AutomationRecipesModule } from './automation-recipes/automation-recipes.module';
 
 // Stability & Health (Super Premium)
 import { StabilityModule } from './stability/stability.module';
@@ -64,6 +65,7 @@ import { HealthModule } from './health/health.module';
     AiModule,
     PlatformAutomationModule,
     VideoProcessingModule,
+    AutomationRecipesModule,
   ],
 })
 export class AppModule {}

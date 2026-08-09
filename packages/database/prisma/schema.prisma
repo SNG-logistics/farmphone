@@ -40,6 +40,7 @@ model Organization {
   auditLogs        AuditLog[]
   notifications    Notification[]
   logs             Log[]
+  automationRecipes AutomationRecipe[]
   subscription     Subscription?
 
   @@map("organizations")
@@ -169,6 +170,27 @@ model WorkflowStep {
   mission Mission @relation(fields: [missionId], references: [id], onDelete: Cascade)
 
   @@map("workflow_steps")
+}
+
+// ---- Deterministic Android Automation ----
+
+model AutomationRecipe {
+  id             String   @id @default(uuid())
+  organizationId String
+  name           String
+  description    String   @default("")
+  status         String   @default("DRAFT") // DRAFT, ACTIVE, ARCHIVED
+  version        Int      @default(1)
+  steps          Json
+  runCount       Int      @default(0)
+  lastRunAt      DateTime?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, status, updatedAt])
+  @@map("automation_recipes")
 }
 
 // ---- Devices ----

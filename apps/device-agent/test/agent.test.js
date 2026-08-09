@@ -48,11 +48,9 @@ test('selects the only authorized device without hardcoding serial', () => {
   assert.equal(selected.serial, 'REAL-001');
 });
 
-test('requires ANDROID_DEVICE_SERIAL when multiple devices are ready', () => {
-  assert.throws(
-    () => selectDevice([{ serial: 'A', state: 'device' }, { serial: 'B', state: 'device' }], ''),
-    (error) => error.code === 'CONFIGURATION_ERROR',
-  );
+test('auto-selects an authorized device when multiple devices are discovered', () => {
+  const selected = selectDevice([{ serial: 'A', state: 'device' }, { serial: 'B', state: 'device' }], '');
+  assert.equal(selected.serial, 'A');
 });
 
 test('reports unauthorized device instead of treating it as online', () => {
@@ -190,6 +188,28 @@ test('turns a resolved single-device FAIL report into an uncached retryable erro
   assert.equal(emitted[0].payload.error.code, 'SINGLE_DEVICE_TEST_FAILED');
   assert.equal(emitted[0].payload.result.status, 'FAIL');
   assert.equal(emitted[1].payload.result.status, 'PASS');
+});
+
+test('does not cache a structured FAILED automation result before backend retry', async () => {
+  resetCommandState();
+  const emitted = [];
+  const socket = { emit: (event, payload) => emitted.push({ event, payload }) };
+  let executions = 0;
+  const executor = async () => {
+    executions += 1;
+    return executions === 1
+      ? { status: 'FAILED', failureReason: { code: 'UI_SELECTOR_NOT_FOUND', message: 'selector missing', retryable: true } }
+      : { status: 'SUCCESS', steps: [{ status: 'SUCCESS' }] };
+  };
+  const message = { jobId: 'job-automation-retry', deviceId: 'device-1', command: 'AUTOMATION_SEQUENCE', attemptNumber: 1 };
+
+  await handleDeviceCommand(socket, message, executor, async () => undefined);
+  await handleDeviceCommand(socket, { ...message, attemptNumber: 2 }, executor, async () => undefined);
+
+  assert.equal(executions, 2);
+  assert.equal(emitted[0].payload.result.status, 'FAILED');
+  assert.equal(emitted[0].payload.error, undefined);
+  assert.equal(emitted[1].payload.result.status, 'SUCCESS');
 });
 
 test('ignores a duplicate delivery while the same physical command is in progress', async () => {

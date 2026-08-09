@@ -13,6 +13,7 @@ export { campaignRepo, type CampaignDoc } from './repositories/campaign.repo';
 export { contentRepo, type ContentDoc } from './repositories/content.repo';
 export { missionRepo, type MissionDoc } from './repositories/mission.repo';
 export { workflowStepRepo, type WorkflowStepDoc } from './repositories/workflow-step.repo';
+export { automationRecipeRepo, type AutomationRecipeDoc } from './repositories/automation-recipe.repo';
 export { aiAgentRepo, type AiAgentDoc } from './repositories/ai-agent.repo';
 export { agentTaskRepo, type AgentTaskDoc } from './repositories/agent-task.repo';
 export { agentEventRepo, type AgentEventDoc } from './repositories/agent-event.repo';

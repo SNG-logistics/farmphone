@@ -163,6 +163,15 @@ export class DeviceOfflineMonitorService {
       }
       if (['OFFLINE', 'CONNECTING'].includes(String(existing.adbStatus || ''))) patch.adbStatus = 'ONLINE';
 
+      // A `synthetic-*` device id only exists in the in-memory runtime cache, never
+      // in Firestore. Attempting `prisma.device.update` against such an id results
+      // in a 500 NOT_FOUND loop. Skip persistence for synthetic devices — their
+      // runtime state is maintained by DevicesService.heartbeat.
+      if (typeof existing.id === 'string' && existing.id.startsWith('synthetic-')) {
+        this.logger.debug(`Skipping Firestore update for in-memory device ${existing.id}`);
+        continue;
+      }
+
       if (this.quotaBackoff.canAttempt() && Object.keys(patch).length > 0) {
         try {
           const updated = await this.prisma.device.update({ where: { id: existing.id }, data: patch });

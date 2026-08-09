@@ -20,7 +20,7 @@ export class SingleDeviceCommandsController {
   @Roles('OPERATOR')
   @UseInterceptors(FileInterceptor('file', { limits: { fileSize: 500 * 1024 * 1024 } }))
   @ApiConsumes('application/json', 'multipart/form-data')
-  @ApiOperation({ summary: 'Create and enqueue a real PHONE-001 command' })
+  @ApiOperation({ summary: 'Create and enqueue a command for a physical Android device' })
   create(
     @Param('code') code: string,
     @Body() body: { command?: string; parameters?: unknown; idempotencyKey?: string },
@@ -28,7 +28,11 @@ export class SingleDeviceCommandsController {
     @Headers('x-idempotency-key') alternateIdempotencyKey: string | undefined,
     @UploadedFile() file?: { originalname: string; mimetype: string; buffer: Buffer; size: number },
   ) {
-    return this.commands.create(code, body, idempotencyKey || alternateIdempotencyKey, file)
+    return this.commands.create(code, {
+      command: body.command,
+      parameters: body.parameters,
+      idempotencyKey: body.idempotencyKey,
+    }, idempotencyKey || alternateIdempotencyKey, file)
       .then((data) => ({ success: true, data }));
   }
 

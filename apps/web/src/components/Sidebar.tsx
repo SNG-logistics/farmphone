@@ -11,12 +11,12 @@ import {
 
 const navItems = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-  { href: '/ai-office', label: 'AI Office', icon: Bot },
-  { href: '/devices', label: 'Devices', icon: Smartphone },
-  { href: '/content', label: 'Content', icon: FileVideo },
+  { href: '/devices', label: 'Device Farm', icon: Smartphone },
+  { href: '/jobs', label: 'Jobs', icon: ListTodo },
   { href: '/accounts', label: 'Accounts', icon: Users },
   { href: '/campaigns', label: 'Campaigns', icon: Megaphone },
-  { href: '/jobs', label: 'Jobs', icon: ListTodo },
+  { href: '/content', label: 'Content', icon: FileVideo },
+  { href: '/ai-office', label: 'AI Office', icon: Bot },
   { href: '/scheduler', label: 'Scheduler', icon: Clock },
   { href: '/reports', label: 'Reports', icon: BarChart3 },
   { href: '/billing', label: 'Billing', icon: CreditCard },

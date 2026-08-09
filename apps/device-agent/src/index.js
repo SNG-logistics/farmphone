@@ -6,6 +6,7 @@ const os = require('os');
 const path = require('path');
 const { promisify } = require('util');
 const { createAdbBridge } = require('./adb-bridge');
+const { executeAutomationSequence } = require('./automation-executor');
 
 const execFileAsync = promisify(execFile);
 
@@ -517,7 +518,7 @@ async function rebootDevice(serial) {
     }
     await new Promise((resolve) => setTimeout(resolve, 250));
   }
-  if (!disconnectedAt) throw codedError('REBOOT_DISCONNECT_NOT_OBSERVED', 'ไม่พบช่วงที่ PHONE-001 หลุดจาก ADB หลังสั่ง reboot');
+  if (!disconnectedAt) throw codedError('REBOOT_DISCONNECT_NOT_OBSERVED', `ไม่พบช่วงที่ ${config.deviceCode} หลุดจาก ADB หลังสั่ง reboot`);
 
   const deadline = startedAt + config.rebootTimeoutMs;
   await runAdb(['-s', serial, 'wait-for-device'], { timeout: Math.max(1_000, deadline - Date.now()) });
@@ -635,7 +636,7 @@ async function runSingleDeviceTest(serial, parameters) {
 async function executeCommand(command, parameters = {}) {
   const selected = await detectSelectedDevice();
   const serial = selected.serial;
-  if (state.serial && serial !== state.serial) throw codedError('SERIAL_CHANGED', 'Serial ไม่ตรงกับ PHONE-001 ที่ลงทะเบียน');
+  if (state.serial && serial !== state.serial) throw codedError('SERIAL_CHANGED', `Serial ไม่ตรงกับ ${config.deviceCode} ที่ลงทะเบียน`);
 
   if (command === 'HEALTH_CHECK') return healthCheck(serial, parameters.packageName || config.targetPackage);
   if (command === 'SCREENSHOT') return captureScreenshot(serial);
@@ -656,8 +657,49 @@ async function executeCommand(command, parameters = {}) {
   }
   if (command === 'RUN_SINGLE_DEVICE_TEST') return runSingleDeviceTest(serial, parameters);
   if (command === 'SETUP_ADB_REVERSE') return setupAdbReverse(serial);
+  if (command === 'AUTOMATION_SEQUENCE') {
+    return executeAutomationSequence(serial, parameters, automationDependencies());
+  }
+  if (['TAP', 'TAP_UI', 'SWIPE', 'TYPE_TEXT', 'KEYEVENT', 'BACK', 'HOME', 'WAIT_UI', 'DUMP_UI'].includes(command)) {
+    const result = await executeAutomationSequence(serial, {
+      sequenceVersion: 1,
+      recipeId: '',
+      recipeVersion: 1,
+      steps: [{
+        id: 'direct-command',
+        name: command,
+        command,
+        parameters,
+        selectors: directSelectors(parameters),
+        timeoutMs: parameters.timeoutMs,
+        evidence: parameters.evidence,
+      }],
+    }, automationDependencies());
+    if (result.status === 'FAILED') {
+      const error = codedError(result.failureReason?.code || 'AUTOMATION_STEP_FAILED', result.failureReason?.message || `${command} failed`);
+      error.result = result;
+      throw error;
+    }
+    return result.status === 'ACTION_REQUIRED' ? result : result.steps[0].output;
+  }
 
   throw codedError('UNSUPPORTED_COMMAND', `ไม่รองรับคำสั่ง ${command}`);
+}
+
+function automationDependencies() {
+  return { shell, captureScreenshot, healthCheck, openApp, stopApp };
+}
+
+function directSelectors(parameters) {
+  if (Array.isArray(parameters.selectors)) return parameters.selectors;
+  const selectors = [];
+  if (parameters.resourceId) selectors.push({ strategy: 'resourceId', value: parameters.resourceId });
+  if (parameters.contentDescription) selectors.push({ strategy: 'contentDescription', value: parameters.contentDescription });
+  if (parameters.text) selectors.push({ strategy: 'text', value: parameters.text });
+  if (parameters.fallbackX !== undefined && parameters.fallbackY !== undefined) {
+    selectors.push({ strategy: 'coordinate', x: parameters.fallbackX, y: parameters.fallbackY });
+  }
+  return selectors;
 }
 
 function registerSocketAgent() {
@@ -729,7 +771,7 @@ async function handleDeviceCommand(socket, message, executor = executeCommand, h
       deviceCode: config.deviceCode,
       command,
       attemptNumber,
-      error: { code: 'DEVICE_BUSY', message: `PHONE-001 is executing job ${state.currentJobId}`, adbOutput: '' },
+      error: { code: 'DEVICE_BUSY', message: `${config.deviceCode} is executing job ${state.currentJobId}`, adbOutput: '' },
       completedAt: new Date().toISOString(),
     });
     return true;
@@ -743,7 +785,8 @@ async function handleDeviceCommand(socket, message, executor = executeCommand, h
   log('info', `Executing ${command}`, { jobId, attemptNumber });
   try {
     const result = await executor(command, message.parameters || {});
-    if (String(result?.status || '').toUpperCase() === 'FAIL') {
+    const resultStatus = String(result?.status || '').toUpperCase();
+    if (resultStatus === 'FAIL') {
       const error = codedError('SINGLE_DEVICE_TEST_FAILED', `${command} reported FAIL`);
       error.result = result;
       throw error;
@@ -757,8 +800,17 @@ async function handleDeviceCommand(socket, message, executor = executeCommand, h
       result,
       completedAt: new Date().toISOString(),
     };
-    rememberCompletedResponse(jobId, response);
-    appendCommandHistory(jobId, 'INFO', 'Command execution succeeded', { command, attemptNumber });
+    if (resultStatus !== 'FAILED') rememberCompletedResponse(jobId, response);
+    appendCommandHistory(
+      jobId,
+      ['ACTION_REQUIRED', 'FAILED'].includes(resultStatus) ? 'WARN' : 'INFO',
+      resultStatus === 'ACTION_REQUIRED'
+        ? 'Command paused for operator action'
+        : resultStatus === 'FAILED'
+          ? 'Command returned a structured retryable failure'
+          : 'Command execution succeeded',
+      { command, attemptNumber },
+    );
     socket.emit('device:response', response);
   } catch (error) {
     state.commandError = { code: error.code || 'DEVICE_COMMAND_FAILED', message: error.message };

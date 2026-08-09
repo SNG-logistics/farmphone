@@ -13,6 +13,16 @@ export const DEVICE_COMMANDS = [
   'RESTART_APP',
   'PUSH_FILE',
   'REBOOT_DEVICE',
+  'TAP',
+  'TAP_UI',
+  'SWIPE',
+  'TYPE_TEXT',
+  'KEYEVENT',
+  'BACK',
+  'HOME',
+  'WAIT_UI',
+  'DUMP_UI',
+  'AUTOMATION_SEQUENCE',
   'VIEW_DEVICE_STATUS',
   'VIEW_JOB_LOG',
   'RUN_SINGLE_DEVICE_TEST',
@@ -38,7 +48,12 @@ export class SingleDeviceCommandsService {
 
   async create(
     deviceCode: string,
-    input: { command?: string; parameters?: unknown; idempotencyKey?: string },
+    input: {
+      command?: string;
+      parameters?: unknown;
+      idempotencyKey?: string;
+      context?: Record<string, unknown>;
+    },
     headerIdempotencyKey?: string,
     file?: UploadFile,
   ) {
@@ -78,18 +93,19 @@ export class SingleDeviceCommandsService {
     }
 
     const activeCommand = await this.prisma.deviceCommand.findFirst({
-      where: { deviceId: device.id, command, status: { in: [...ACTIVE_JOB_STATUSES] } },
+      where: { deviceId: device.id, status: { in: [...ACTIVE_JOB_STATUSES] } },
       include: { job: { include: { deviceCommand: true, uploadedFiles: true, logs: true } } },
       orderBy: { createdAt: 'desc' },
     });
     if (activeCommand) {
-      return { job: activeCommand.job, duplicate: true, queued: true, reason: 'COMMAND_ALREADY_ACTIVE' };
+      const activeJob = activeCommand.job || await this.prisma.job.findUnique({ where: { id: activeCommand.jobId } });
+      return { job: activeJob, duplicate: true, queued: true, reason: 'DEVICE_ALREADY_BUSY' };
     }
 
     const parameters = this.parameters(input.parameters);
     let uploadFile = file;
     if (command === 'RUN_SINGLE_DEVICE_TEST' && !uploadFile) {
-      const buffer = Buffer.from(`FARM PHONE PHONE-001 single-device test\n${new Date().toISOString()}\n`, 'utf8');
+      const buffer = Buffer.from(`FARM PHONE ${deviceCode} single-device test\n${new Date().toISOString()}\n`, 'utf8');
       uploadFile = {
         originalname: 'farm-phone-single-device-test.txt',
         mimetype: 'text/plain',
@@ -122,7 +138,11 @@ export class SingleDeviceCommandsService {
             type: 'DEVICE_COMMAND',
             status: 'CREATED',
             parameters: { command, ...parameters, ...(fileMetadata ? { file: fileMetadata } : {}) },
-            metadata: { source: 'SINGLE_DEVICE_DASHBOARD', deviceCode },
+            metadata: {
+              ...(input.context || {}),
+              source: String(input.context?.source || 'SINGLE_DEVICE_DASHBOARD'),
+              deviceCode,
+            },
             attempts: 0,
             maxAttempts: 3,
             retryCount: 0,
@@ -188,7 +208,7 @@ export class SingleDeviceCommandsService {
       throw error;
     }
 
-    await this.initializeMvpAgents(device.organizationId, job.id, command);
+    await this.initializeMvpAgents(device.organizationId, job.id, command, deviceCode);
     try {
       await this.queue.enqueue(job.id, null, job.maxAttempts);
       await this.prisma.deviceCommand.update({ where: { jobId: job.id }, data: { status: 'QUEUED' } });
@@ -245,7 +265,7 @@ export class SingleDeviceCommandsService {
     return { file, buffer };
   }
 
-  private async initializeMvpAgents(organizationId: string, jobId: string, command: string) {
+  private async initializeMvpAgents(organizationId: string, jobId: string, command: string, deviceCode: string) {
     const roles = ['MANAGER', 'DEVICE', 'QA', 'LOG'] as const;
     for (const role of roles) {
       const code = `16bit.${role}`;
@@ -259,9 +279,9 @@ export class SingleDeviceCommandsService {
         data: {
           agentId: agent.id,
           type: 'DEVICE_COMMAND',
-          title: `${command} → PHONE-001`,
+          title: `${command} → ${deviceCode}`,
           description: `Job ${jobId}`,
-          input: { jobId, command, deviceCode: 'PHONE-001' },
+          input: { jobId, command, deviceCode },
           status: role === 'MANAGER' ? 'COMPLETED' : role === 'LOG' ? 'IN_PROGRESS' : 'PENDING',
           startedAt: role === 'MANAGER' || role === 'LOG' ? new Date() : null,
           completedAt: role === 'MANAGER' ? new Date() : null,
@@ -272,7 +292,7 @@ export class SingleDeviceCommandsService {
         data: { currentTaskId: role === 'MANAGER' ? null : task.id },
       });
       await this.prisma.agentEvent.create({
-        data: { agentId: agent.id, eventType: 'DEVICE_TASK_CREATED', message: `${command} → PHONE-001`, metadata: { jobId, command, status } },
+        data: { agentId: agent.id, eventType: 'DEVICE_TASK_CREATED', message: `${command} → ${deviceCode}`, metadata: { jobId, command, status, deviceCode } },
       });
       this.events.emitAgentState({ organizationId, code, status, currentTaskId: role === 'MANAGER' ? null : task.id, jobId });
     }

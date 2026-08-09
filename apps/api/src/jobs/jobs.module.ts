@@ -16,6 +16,6 @@ import { VideoProcessingModule } from '../video-processing/video-processing.modu
   imports: [EventsModule, DevicesModule, ContentModule, PlatformAutomationModule, VideoProcessingModule],
   controllers: [JobsController, SingleDeviceCommandsController],
   providers: [JobsService, JobQueueService, JobSchedulerService, PlatformUploaderService, SingleDeviceCommandsService],
-  exports: [JobsService],
+  exports: [JobsService, SingleDeviceCommandsService],
 })
 export class JobsModule {}

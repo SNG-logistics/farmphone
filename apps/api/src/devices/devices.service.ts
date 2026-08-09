@@ -96,8 +96,22 @@ export class DevicesService {
     return this.findOne(code);
   }
 
+  private isSyntheticDevice(id: string): boolean {
+    return typeof id === 'string' && id.startsWith('synthetic-');
+  }
+
   async updateStatus(id: string, adbStatus: string) {
     const existing = await this.findOne(id);
+    if (this.isSyntheticDevice(existing.id)) {
+      const runtime = this.heartbeatRuntime.get(existing.id) || this.heartbeatRuntime.get(existing.code);
+      if (runtime) {
+        runtime.device = { ...runtime.device, adbStatus: this.deviceStatus(adbStatus) } as DeviceSnapshot;
+        runtime.status = this.deviceStatus(adbStatus);
+        this.cacheHeartbeatRuntime(existing.id, runtime);
+        this.events.emitDeviceUpdate({ type: 'DEVICE_UPDATED', device: runtime.device });
+      }
+      return { ...existing, adbStatus: this.deviceStatus(adbStatus) };
+    }
     const device = await this.prisma.device.update({ where: { id: existing.id }, data: { adbStatus: this.deviceStatus(adbStatus) } });
     this.heartbeatRuntime.clear();
     return device;
@@ -174,8 +188,22 @@ export class DevicesService {
     }
 
     try {
-      const device = await this.prisma.device.update({ where: { id: existing.id }, data: allowed });
+      let device: DeviceSnapshot;
+      if (this.isSyntheticDevice(existing.id)) {
+        device = await this.prisma.device.upsert({
+          where: { code: existing.code },
+          create: {
+            ...this.deviceData({ ...existing, ...allowed }, existing.organizationId, existing.code),
+            lastHeartbeatAt: existing.lastHeartbeatAt || new Date(),
+          },
+          update: allowed,
+        }) as DeviceSnapshot;
+        this.heartbeatRuntime.delete(existing.id);
+      } else {
+        device = await this.prisma.device.update({ where: { id: existing.id }, data: allowed }) as DeviceSnapshot;
+      }
       this.heartbeatRuntime.clear();
+      this.cacheHeartbeatRuntime(device.code, this.runtimeFromDevice(device));
       this.events.emitDeviceUpdate({ type: 'DEVICE_UPDATED', device });
       return device;
     } catch (error) {
@@ -265,10 +293,38 @@ export class DevicesService {
       try {
         if (shouldPersistSnapshot) {
           persistenceAttempted = true;
-          liveDevice = await this.prisma.device.update({
-            where: { id: existing.id },
-            data: snapshotData,
-          }) as DeviceSnapshot;
+          if (this.isSyntheticDevice(existing.id)) {
+            // Synthetic ids do not exist in Firestore. Promote this device into a
+            // real document keyed by its stable device code, or update it if the
+            // real document already exists. This is the only path that resolves
+            // a `synthetic-*` fallback back to durable storage.
+            liveDevice = await this.prisma.device.upsert({
+              where: { code: existing.code },
+              create: {
+                ...this.deviceData(
+                  {
+                    ...existing,
+                    ...snapshotData,
+                    storageUsed: Number(storageUsed),
+                    storageTotal: Number(storageTotal),
+                  },
+                  existing.organizationId,
+                  existing.code,
+                ),
+                lastHeartbeatAt: receivedAt,
+              },
+              update: snapshotData,
+            }) as DeviceSnapshot;
+            this.heartbeatRuntime.delete(existing.id);
+            this.heartbeatRuntime.delete(existing.code);
+            runtime.device = liveDevice;
+            this.cacheHeartbeatRuntime(existing.code, runtime);
+          } else {
+            liveDevice = await this.prisma.device.update({
+              where: { id: existing.id },
+              data: snapshotData,
+            }) as DeviceSnapshot;
+          }
           runtime.lastSnapshotAt = now;
         }
         if (shouldPersistHistory) {
@@ -276,7 +332,7 @@ export class DevicesService {
           await this.prisma.deviceHeartbeat.create({
             data: {
               organizationId: existing.organizationId,
-              deviceId: existing.id,
+              deviceId: liveDevice.id,
               deviceCode: existing.code,
               serialNumber,
               status,
@@ -299,7 +355,7 @@ export class DevicesService {
               organizationId: existing.organizationId,
               level: status === 'ERROR' ? 'ERROR' : status === 'WARNING' ? 'WARN' : 'INFO',
               category: 'device',
-              deviceId: existing.id,
+              deviceId: liveDevice.id,
               jobId: currentJobId,
               message: `${existing.code} changed state ${runtime.lastLoggedStatus || 'UNKNOWN'} → ${status}`,
               metadata: { batteryLevel, storageUsed: storageUsed.toString(), storageTotal: storageTotal.toString() },
@@ -337,6 +393,53 @@ export class DevicesService {
     const runtime = this.runtimeFromDevice(existing);
     this.cacheHeartbeatRuntime(identifier, runtime);
     return runtime;
+  }
+
+  async dispatchCommand(deviceCode: string, command: string, parameters: Record<string, unknown> = {}) {
+    const device = await this.findOne(deviceCode);
+    const payload = {
+      jobId: `job-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+      deviceCode: device.code,
+      deviceId: device.id,
+      command,
+      parameters,
+      createdAt: new Date().toISOString(),
+    };
+    this.events.emitDeviceCommand(device.nodeId || 'NODE-A', payload);
+    return payload;
+  }
+
+  async dispatchBatchCommand(deviceCodes?: string[], command = 'HOME', parameters: Record<string, unknown> = {}) {
+    let targetDevices: any[] = [];
+    const all = (await this.findAll()) as any[];
+
+    if (Array.isArray(deviceCodes) && deviceCodes.length > 0) {
+      const codeSet = new Set(deviceCodes);
+      targetDevices = all.filter((d) => codeSet.has(d.code) || codeSet.has(d.id));
+    } else {
+      targetDevices = all.filter((d) => ['ONLINE', 'WARNING', 'BUSY'].includes(String(d.adbStatus || d.status || '').toUpperCase()));
+    }
+
+    const results = [];
+    for (const device of targetDevices) {
+      const payload = {
+        jobId: `batch-job-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+        deviceCode: device.code,
+        deviceId: device.id,
+        command,
+        parameters,
+        createdAt: new Date().toISOString(),
+      };
+      this.events.emitDeviceCommand(device.nodeId || 'NODE-A', payload);
+      results.push(payload);
+    }
+
+    return {
+      command,
+      totalDispatched: results.length,
+      dispatchedDevices: targetDevices.map((d) => d.code),
+      jobs: results,
+    };
   }
 
   createSyntheticRuntime(identifier: string, data: Record<string, unknown> = {}): HeartbeatRuntimeState {

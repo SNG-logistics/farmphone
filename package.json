@@ -17,6 +17,8 @@
     "dev:all": "node scripts/start-system.mjs",
     "setup": "npm run db:generate && npm run db:migrate",
     "adb:devices": "\"C:\\Users\\acer\\AppData\\Local\\Android\\platform-tools\\adb.exe\" devices -l",
+    "bridge:check": "node scripts/check-adb-bridge.mjs",
+    "bridge:reverse": "adb reverse tcp:3200 tcp:3200 && adb reverse --list",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "typecheck": "turbo run typecheck",

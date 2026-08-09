@@ -1,17 +1,23 @@
 (function () {
-  let socket = null;
-  let heartbeatTimer = null;
-  let isConnected = false;
+  'use strict';
 
-  const apiUrlInput = document.getElementById('apiUrlInput');
-  const deviceCodeInput = document.getElementById('deviceCodeInput');
-  const nodeIdInput = document.getElementById('nodeIdInput');
-  const connectBtn = document.getElementById('connectBtn');
+  const BRIDGE_BASE_URL = 'http://localhost:3200';
+  const POLL_INTERVAL_MS = 3000;
+
   const statusBadge = document.getElementById('statusBadge');
+  const bridgeAddress = document.getElementById('bridgeAddress');
+  const deviceCodeText = document.getElementById('deviceCodeText');
+  const deviceIdentity = document.getElementById('deviceIdentity');
+  const androidVersionText = document.getElementById('androidVersionText');
+  const currentJobText = document.getElementById('currentJobText');
   const batteryText = document.getElementById('batteryText');
   const storageText = document.getElementById('storageText');
   const logsConsole = document.getElementById('logsConsole');
   const clearLogsBtn = document.getElementById('clearLogsBtn');
+  const reconnectBtn = document.getElementById('reconnectBtn');
+
+  let lastBridgeState = null;
+  let lastConnectivity = null;
 
   function addLog(message, type = 'info') {
     const p = document.createElement('p');
@@ -25,110 +31,120 @@
 
     logsConsole.appendChild(p);
     logsConsole.scrollTop = logsConsole.scrollHeight;
+
+    // จำกัดขนาด log ไว้ 200 บรรทัด
+    while (logsConsole.children.length > 200) {
+      logsConsole.removeChild(logsConsole.firstChild);
+    }
   }
 
-  clearLogsBtn.addEventListener('click', () => {
+  function setBadge(text, styleClass) {
+    statusBadge.textContent = text;
+    statusBadge.className = `px-3 py-1 rounded-full text-xs font-mono font-bold ${styleClass}`;
+  }
+
+  function setConnectedBadge() {
+    setBadge('CONNECTED', 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 animate-pulse');
+  }
+
+  function formatBytes(bytes) {
+    if (bytes === null || bytes === undefined || Number.isNaN(Number(bytes))) return '—';
+    const value = Number(bytes);
+    if (value < 1024 * 1024) return `${(value / 1024).toFixed(0)} KB`;
+    if (value < 1024 * 1024 * 1024) return `${(value / (1024 * 1024)).toFixed(1)} MB`;
+    return `${(value / (1024 * 1024 * 1024)).toFixed(2)} GB`;
+  }
+
+  function updateDeviceIdentity(state) {
+    const model = state.device?.model || state.device?.manufacturer || null;
+    deviceIdentity.textContent = state.bridge?.serial
+      ? (model ? `${state.bridge.serial} · ${model}` : state.bridge.serial)
+      : '—';
+    androidVersionText.textContent = state.device?.androidVersion || '—';
+    deviceCodeText.textContent = state.bridge?.deviceCode || 'PHONE-001';
+    currentJobText.textContent = state.device?.currentJobId || 'ไม่มีลำดับงาน';
+    batteryText.textContent = state.device?.batteryLevel !== null && state.device?.batteryLevel !== undefined
+      ? `${state.device.batteryLevel}%`
+      : '—';
+    const used = state.device?.storageUsed;
+    const total = state.device?.storageTotal;
+    storageText.textContent = (used !== null && total !== null)
+      ? `${formatBytes(used)} / ${formatBytes(total)}`
+      : '—';
+  }
+
+  function handleState(state) {
+    const connected = state.bridge && state.bridge.connected;
+
+    if (connected) {
+      if (!lastConnectivity) {
+        addLog(`เชื่อมต่อ ADB Bridge สำเร็จ (${state.bridge.serial || 'serial ไม่ทราบ'})`, 'success');
+      }
+      setConnectedBadge();
+      lastConnectivity = true;
+    } else {
+      if (lastConnectivity) {
+        addLog('การเชื่อมต่อกับ ADB Bridge หลุด กำลังค้นหาใหม่...', 'warn');
+      }
+      setBadge('DISCONNECTED', 'bg-red-500/20 text-red-400 border border-red-500/40');
+      lastConnectivity = false;
+    }
+
+    updateDeviceIdentity(state);
+  }
+
+  async function pollBridge() {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 5000);
+
+      const healthResponse = await fetch(`${BRIDGE_BASE_URL}/health`, { signal: controller.signal });
+      if (!healthResponse.ok) throw new Error(`Bridge ตอบกลับ HTTP ${healthResponse.status}`);
+
+      const stateResponse = await fetch(`${BRIDGE_BASE_URL}/state`, { signal: controller.signal });
+      clearTimeout(timeout);
+
+      if (!stateResponse.ok) throw new Error(`Bridge state ตอบกลับ HTTP ${stateResponse.status}`);
+
+      const state = await stateResponse.json().catch(() => ({}));
+      lastBridgeState = state;
+      handleState(state);
+    } catch (error) {
+      if (lastConnectivity) {
+        addLog(`ไม่สามารถติดต่อ ADB Bridge: ${error.message}`, 'warn');
+        setBadge('DISCONNECTED', 'bg-red-500/20 text-red-400 border border-red-500/40');
+        lastConnectivity = false;
+      }
+    }
+  }
+
+  function clearLogs() {
     logsConsole.innerHTML = '';
     addLog('[SYSTEM] ล้างบันทึกการทำงานเรียบร้อย');
-  });
-
-  async function updateDeviceMetrics() {
-    try {
-      if ('getBattery' in navigator) {
-        const battery = await navigator.getBattery();
-        const level = Math.round(battery.level * 100);
-        const charging = battery.charging ? ' (Charging)' : '';
-        batteryText.textContent = `${level}%${charging}`;
-      } else {
-        batteryText.textContent = '95% (Standard)';
-      }
-
-      if (navigator.storage && navigator.storage.estimate) {
-        const { quota, usage } = await navigator.storage.estimate();
-        const usedGb = (usage / (1024 * 1024 * 1024)).toFixed(1);
-        const totalGb = (quota / (1024 * 1024 * 1024)).toFixed(1);
-        storageText.textContent = `${usedGb} GB / ${totalGb} GB`;
-      } else {
-        storageText.textContent = '32.0 GB / 128.0 GB';
-      }
-    } catch {
-      // fallback
-    }
   }
 
-  async function sendHeartbeat(apiUrl, deviceCode) {
-    if (!isConnected) return;
-    try {
-      const payload = {
-        deviceCode,
-        status: 'ONLINE',
-        agentVersion: '1.0.0-APK',
-        timestamp: new Date().toISOString(),
-        batteryLevel: 95,
-        storageUsed: 32000000000,
-        storageTotal: 128000000000,
-      };
+  function reconnect() {
+    clearInterval(window._bridgePollTimer);
+    addLog('[SYSTEM] กำลังลองเชื่อมต่อ ADB Bridge ใหม่...', 'warn');
+    setBadge('CONNECTING...', 'bg-amber-500/20 text-amber-300 border border-amber-500/40');
+    const firstPoll = pollBridge();
+    const timer = setInterval(() => void pollBridge(), POLL_INTERVAL_MS);
+    window._bridgePollTimer = timer;
 
-      await fetch(`${apiUrl}/api/v1/devices/${encodeURIComponent(deviceCode)}/heartbeat`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-    } catch (err) {
-      addLog(`Heartbeat Error: ${err.message}`, 'warn');
-    }
-  }
-
-  function handleConnect() {
-    const apiUrl = apiUrlInput.value.trim().replace(/\/+$/, '');
-    const deviceCode = deviceCodeInput.value.trim();
-    const nodeId = nodeIdInput.value.trim();
-
-    if (!apiUrl || !deviceCode) {
-      alert('กรุณาระบุ API URL และ Device Code');
-      return;
-    }
-
-    if (socket) socket.disconnect();
-
-    addLog(`กำลังเชื่อมต่อไปยัง ${apiUrl} ...`);
-    statusBadge.textContent = 'CONNECTING...';
-    statusBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40';
-
-    socket = io(apiUrl, { reconnection: true });
-
-    socket.on('connect', () => {
-      isConnected = true;
-      statusBadge.textContent = 'CONNECTED ONLINE';
-      statusBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-emerald-500/20 text-emerald-400 border border-emerald-500/40 animate-pulse';
-      addLog(`เชื่อมต่อสำเร็จกับ Farm Phone Backend Server (${deviceCode})`, 'success');
-
-      if (heartbeatTimer) clearInterval(heartbeatTimer);
-      heartbeatTimer = setInterval(() => void sendHeartbeat(apiUrl, deviceCode), 5000);
-      void sendHeartbeat(apiUrl, deviceCode);
-    });
-
-    socket.on('disconnect', () => {
-      isConnected = false;
-      statusBadge.textContent = 'DISCONNECTED';
-      statusBadge.className = 'px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40';
-      addLog('การเชื่อมต่อกับเซิร์ฟเวอร์หลุด กำลังพยายามเชื่อมต่อใหม่...', 'warn');
-    });
-
-    socket.on('deviceCommand', (cmdData) => {
-      addLog(`ได้รับคำสั่งจากเซิร์ฟเวอร์: ${JSON.stringify(cmdData)}`, 'info');
-      if (cmdData.jobId) {
-        socket.emit('deviceCommandResponse', {
-          jobId: cmdData.jobId,
-          deviceCode,
-          status: 'SUCCESS',
-          result: { executedAt: new Date().toISOString(), message: `คำสั่ง ${cmdData.command} สำเร็จบนอุปกรณ์` },
-        });
-      }
+    // รอรอบแรกเสร็จก่อนสตาร์ต interval ถัดไป
+    firstPoll.then(() => {
+      if (window._bridgePollTimer === timer) clearInterval(timer);
+      void pollBridge();
+      window._bridgePollTimer = setInterval(() => void pollBridge(), POLL_INTERVAL_MS);
     });
   }
 
-  connectBtn.addEventListener('click', handleConnect);
-  void updateDeviceMetrics();
-  setInterval(updateDeviceMetrics, 10000);
+  bridgeAddress.textContent = BRIDGE_BASE_URL;
+  clearLogsBtn.addEventListener('click', clearLogs);
+  reconnectBtn.addEventListener('click', reconnect);
+
+  addLog(`[SYSTEM] เริ่มต้น — ADB Bridge ที่ ${BRIDGE_BASE_URL}`);
+  addLog('[SYSTEM] รอให้ Device Agent สร้าง ADB Bridge (ต้องต่อสาย USB เข้าคอมพิวเตอร์)...');
+
+  reconnect();
 })();

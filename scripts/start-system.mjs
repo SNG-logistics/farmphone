@@ -8,12 +8,12 @@ console.log('\n======================================================');
 console.log('  🚀 AUTOMATION CONTROL — ONE-CLICK ALL-IN-ONE LAUNCHER');
 console.log('======================================================\n');
 
-// 1. Auto Pre-Flight Port Cleanup (Clears 3000 & 3001 ports if occupied)
+// 1. Auto Pre-Flight Port Cleanup (Clears 3000, 3001 & 3200 ports if occupied)
 console.log('🧹 Preparing system ports (clearing stale processes)...');
 if (isWin) {
   try {
-    execSync('powershell -Command "Get-NetTCPConnection -LocalPort 3001,3000 -ErrorAction SilentlyContinue | ForEach-Object { Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue }"', { stdio: 'ignore' });
-    console.log('✅ Ports 3000 & 3001 ready and clear.');
+    execSync('powershell -Command "Get-NetTCPConnection -LocalPort 3001,3000,3200 -ErrorAction SilentlyContinue | ForEach-Object { Get-Process -Id $_.OwningProcess -ErrorAction SilentlyContinue | Stop-Process -Force -ErrorAction SilentlyContinue }"', { stdio: 'ignore' });
+    console.log('✅ Ports 3000, 3001 & 3200 ready and clear.');
   } catch {
     /* ignore */
   }

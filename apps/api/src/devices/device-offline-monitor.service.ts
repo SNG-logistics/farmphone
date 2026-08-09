@@ -171,13 +171,12 @@ export class DeviceOfflineMonitorService {
           this.quotaBackoff.recordFailure(error);
         }
       }
-      this.devicesService.createSyntheticRuntime(targetCode, {
-        serialNumber: item.serial,
-        model,
-        batteryLevel: item.battery ?? existing.battery ?? 95,
-        adbStatus: 'ONLINE',
-      });
+      // Do NOT overwrite the real runtime cache with a synthetic device here.
+      // The device already exists in Firestore with a real id — replacing it with
+      // `synthetic-<code>` made heartbeat try to update a non-existent document (500).
+      // DevicesService.heartbeat keeps the runtime cache up to date on its own.
     }
+
 
     return { connectedSerials, dbDevices: allDbDevices };
   }

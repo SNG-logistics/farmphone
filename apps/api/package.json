@@ -5,7 +5,7 @@
   "scripts": {
     "build:dependencies": "npm run build --workspace @farm-phone/types && npm run build --workspace @farm-phone/config && npm run build --workspace @farm-phone/database && npm run build --workspace @farm-phone/events",
     "predev": "npm run build:dependencies",
-    "dev": "nest start --watch",
+    "dev": "node dist/main",
     "prebuild": "npm run build:dependencies",
     "build": "nest build",
     "start": "node dist/main",

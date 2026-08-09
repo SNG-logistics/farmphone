@@ -5,6 +5,7 @@ const { promises: fs } = require('fs');
 const os = require('os');
 const path = require('path');
 const { promisify } = require('util');
+const { createAdbBridge } = require('./adb-bridge');
 
 const execFileAsync = promisify(execFile);
 
@@ -46,6 +47,8 @@ const config = {
   commandTimeoutMs: boundedNumber(process.env.DEVICE_COMMAND_TIMEOUT_MS, 60_000, 1_000, 600_000),
   rebootTimeoutMs: boundedNumber(process.env.DEVICE_REBOOT_TIMEOUT_MS, 120_000, 30_000, 600_000),
   pushDestination: process.env.PUSH_FILE_DESTINATION || '/sdcard/Download/FarmPhone/',
+  bridgeHost: String(process.env.ADB_BRIDGE_HOST || '127.0.0.1').trim(),
+  bridgePort: boundedNumber(process.env.ADB_BRIDGE_PORT, 3200, 1024, 65535),
 };
 
 const state = {
@@ -61,6 +64,18 @@ const state = {
   activeCommandJobs: new Map(),
   completedCommandResponses: new Map(),
   commandHistory: new Map(),
+  // ADB Bridge state สำหรับโทรศัพท์ query
+  status: 'CONNECTING',
+  batteryLevel: null,
+  storageUsed: null,
+  storageTotal: null,
+  androidVersion: null,
+  model: null,
+  manufacturer: null,
+  uptimeSeconds: null,
+  lastInfoAt: null,
+  bridgeReverseReady: false,
+  lastReverseAt: 0,
 };
 
 function log(level, message, metadata = {}) {
@@ -254,6 +269,8 @@ async function registerDevice() {
   state.deviceId = device.id;
   state.serial = selected.serial;
   state.lastError = null;
+  state.bridgeReverseReady = false;
+  state.lastReverseAt = 0;
   log('info', `Registered ${config.deviceCode}`, { serial: state.serial, deviceId: state.deviceId });
   registerSocketAgent();
   return { device, info, status };
@@ -268,6 +285,18 @@ async function sendHeartbeat() {
   return state.heartbeatPromise;
 }
 
+function syncBridgeState(info, status) {
+  state.status = status || state.status;
+  state.batteryLevel = info?.batteryLevel ?? state.batteryLevel;
+  state.storageUsed = info?.storageUsed ?? state.storageUsed;
+  state.storageTotal = info?.storageTotal ?? state.storageTotal;
+  state.androidVersion = info?.androidVersion ?? state.androidVersion;
+  state.model = info?.model ?? state.model;
+  state.manufacturer = info?.manufacturer ?? state.manufacturer;
+  state.uptimeSeconds = info?.uptimeSeconds ?? state.uptimeSeconds;
+  state.lastInfoAt = new Date().toISOString();
+}
+
 async function sendHeartbeatOnce() {
   if (Date.now() < state.backendRetryAt) return;
   try {
@@ -276,6 +305,10 @@ async function sendHeartbeatOnce() {
     if (selected.serial !== state.serial) throw codedError('SERIAL_CHANGED', `อุปกรณ์ที่เลือกเปลี่ยนจาก ${state.serial} เป็น ${selected.serial}`);
     const info = await readDeviceInfo(state.serial);
     const status = deriveStatus(info);
+    syncBridgeState(info, status);
+    await ensureBridgeReverse(state.serial).catch((error) => {
+      log('warn', 'ADB reverse ยังไม่พร้อม', { code: error.code, message: error.message });
+    });
     await apiRequest(`/devices/${config.deviceCode}/heartbeat`, {
       method: 'POST',
       body: JSON.stringify({
@@ -622,6 +655,7 @@ async function executeCommand(command, parameters = {}) {
     return { jobId: targetJobId, entries: state.commandHistory.get(targetJobId) || [] };
   }
   if (command === 'RUN_SINGLE_DEVICE_TEST') return runSingleDeviceTest(serial, parameters);
+  if (command === 'SETUP_ADB_REVERSE') return setupAdbReverse(serial);
 
   throw codedError('UNSUPPORTED_COMMAND', `ไม่รองรับคำสั่ง ${command}`);
 }
@@ -755,9 +789,43 @@ async function handleDeviceCommand(socket, message, executor = executeCommand, h
   return true;
 }
 
+async function setupAdbReverse(serial) {
+  await runAdb(['-s', serial, 'reverse', `tcp:${config.bridgePort}`, `tcp:${config.bridgePort}`]);
+  const list = String(await runAdb(['-s', serial, 'reverse', '--list'])).trim();
+  if (!list.includes(`tcp:${config.bridgePort}`)) {
+    throw codedError('ADB_REVERSE_FAILED', `adb reverse tcp:${config.bridgePort} ลงทะเบียนไม่สำเร็จ`, list);
+  }
+  state.bridgeReverseReady = true;
+  state.lastReverseAt = Date.now();
+  log('info', `ADB reverse พร้อมแล้ว โทรศัพท์เข้าถึง bridge ที่ localhost:${config.bridgePort}`, { serial, port: config.bridgePort });
+  return { serial, port: config.bridgePort };
+}
+
+async function ensureBridgeReverse(serial) {
+  if (!serial) return false;
+  if (state.bridgeReverseReady && Date.now() - state.lastReverseAt < 60_000) return state.bridgeReverseReady;
+  await setupAdbReverse(serial);
+  return true;
+}
+
+async function startAdbBridge() {
+  const bridge = createAdbBridge({
+    config,
+    getState: () => state,
+  });
+  await bridge.listen();
+  log('info', `ADB Bridge เปิดที่ ${bridge.host}:${bridge.port} (localhost-only)`);
+  if (state.serial) {
+    await setupAdbReverse(state.serial).catch((error) => {
+      log('error', 'adb reverse ล้มเหลว', { code: error.code, message: error.message });
+    });
+  }
+  return bridge;
+}
+
 function connectSocket() {
   const socket = io(new URL(config.apiUrl).origin, {
-    auth: { token: config.deviceAgentToken, nodeId: config.nodeId },
+    auth: { token: config.token, nodeId: config.nodeId },
     transports: ['polling', 'websocket'],
     reconnection: true,
     reconnectionDelay: 1_000,
@@ -779,7 +847,9 @@ async function main() {
     deviceCode: config.deviceCode,
     configuredSerial: config.selectedSerial || null,
     heartbeatMs: config.heartbeatMs,
+    bridgePort: config.bridgePort,
   });
+  const bridge = await startAdbBridge();
   connectSocket();
   await sendHeartbeat();
   const timer = setInterval(() => void sendHeartbeat(), config.heartbeatMs);
@@ -796,6 +866,7 @@ async function main() {
       }).catch(() => undefined);
     }
     state.socket?.disconnect();
+    await bridge.close().catch(() => undefined);
     process.exit(0);
   };
   process.on('SIGINT', () => void shutdown('SIGINT'));
@@ -825,5 +896,8 @@ module.exports = {
   validatePushPayload,
   executeCommand,
   handleDeviceCommand,
+  setupAdbReverse,
+  ensureBridgeReverse,
+  startAdbBridge,
   state,
 };

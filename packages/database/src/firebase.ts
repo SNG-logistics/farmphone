@@ -46,18 +46,26 @@ function tryInitFirebase(): App | null {
 
   try {
     const serviceAccount = JSON.parse(fs.readFileSync(credentialPath, 'utf8'));
+    // Use the service account's own project_id when FIREBASE_PROJECT_ID is not
+    // set in the process environment yet (Nest ConfigModule loads .env after
+    // module imports, so process.env may not have it during Firestore init).
+    const effectiveProjectId = serviceAccount.project_id || projectId || 'farmphone-b9f7c';
+    const effectiveBucket = process.env.FIREBASE_STORAGE_BUCKET
+      ? storageBucket
+      : `${effectiveProjectId}.firebasestorage.app`;
     const app = initializeApp({
       credential: cert(serviceAccount),
-      projectId: projectId || serviceAccount.project_id,
-      storageBucket,
+      projectId: effectiveProjectId,
+      storageBucket: effectiveBucket,
     });
     firebaseAvailable = true;
-    console.log(`[Firebase] ✅ Connected to project: ${projectId} using ${credentialPath}`);
+    console.log(`[Firebase] ✅ Connected to project: ${effectiveProjectId} using ${credentialPath}`);
     return app;
   } catch (err) {
     console.warn('[Firebase] ⚠️  Failed to initialize with service account:', (err as Error).message);
     return null;
   }
+
 }
 
 firebaseApp = tryInitFirebase();

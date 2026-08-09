@@ -105,9 +105,12 @@ export class DevicesService {
 
   async create(data: Record<string, unknown>) {
     const now = Date.now();
-    if (!this.quotaBackoff.canAttempt(now)) throw this.quotaUnavailable();
     const organizationId = this.string(data.organizationId) || 'default-org';
     const code = this.requiredString(data.code, 'code');
+    if (!this.quotaBackoff.canAttempt(now)) {
+      const runtime = this.createSyntheticRuntime(code, data);
+      return runtime.device;
+    }
     let device: DeviceSnapshot;
     try {
       await this.prisma.organization.upsert({
@@ -125,8 +128,9 @@ export class DevicesService {
     } catch (error) {
       const delayMs = this.quotaBackoff.recordFailure(error, now);
       if (delayMs === null) throw error;
-      this.logger.warn(`Firestore quota exhausted; device registration paused for ${Math.ceil(delayMs / 60_000)} minute(s)`);
-      throw this.quotaUnavailable();
+      this.logger.warn(`Firestore quota exhausted; initializing live in-memory device for ${Math.ceil(delayMs / 60_000)} minute(s)`);
+      const runtime = this.createSyntheticRuntime(code, data);
+      return runtime.device;
     }
 
     try {
@@ -154,7 +158,7 @@ export class DevicesService {
   }
 
   async update(identifier: string, data: Record<string, unknown>) {
-    const existing = await this.deviceRecord(identifier);
+    const existing = await this.findOne(identifier);
     const allowed: Record<string, unknown> = {};
     for (const key of ['name', 'serialNumber', 'manufacturer', 'model', 'osVersion', 'adbStatus', 'battery', 'storage', 'storageUsed', 'storageTotal', 'agentVersion', 'networkType', 'nodeId', 'deviceGroupId', 'currentJobId', 'metadata']) {
       if (data[key] !== undefined) allowed[key] = data[key];
@@ -163,10 +167,23 @@ export class DevicesService {
     if (allowed.battery !== undefined) allowed.battery = this.battery(allowed.battery);
     if (allowed.storageUsed !== undefined) allowed.storageUsed = BigInt(this.nonNegativeInteger(allowed.storageUsed));
     if (allowed.storageTotal !== undefined) allowed.storageTotal = BigInt(this.nonNegativeInteger(allowed.storageTotal));
-    const device = await this.prisma.device.update({ where: { id: existing.id }, data: allowed });
-    this.heartbeatRuntime.clear();
-    this.events.emitDeviceUpdate({ type: 'DEVICE_UPDATED', device });
-    return device;
+
+    if (!this.quotaBackoff.canAttempt()) {
+      const runtime = this.createSyntheticRuntime(identifier, { ...existing, ...allowed });
+      return runtime.device;
+    }
+
+    try {
+      const device = await this.prisma.device.update({ where: { id: existing.id }, data: allowed });
+      this.heartbeatRuntime.clear();
+      this.events.emitDeviceUpdate({ type: 'DEVICE_UPDATED', device });
+      return device;
+    } catch (error) {
+      const delayMs = this.quotaBackoff.recordFailure(error);
+      if (delayMs === null) throw error;
+      const runtime = this.createSyntheticRuntime(identifier, { ...existing, ...allowed });
+      return runtime.device;
+    }
   }
 
   async heartbeat(identifier: string, data: Record<string, unknown> = {}) {
@@ -179,7 +196,6 @@ export class DevicesService {
       } else {
         try {
           runtime = await this.loadHeartbeatRuntime(identifier);
-          this.quotaBackoff.recordSuccess();
         } catch (error) {
           const delayMs = this.quotaBackoff.recordFailure(error, now);
           if (delayMs !== null) {

@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="th">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>คู่มือการใช้งาน FARM PHONE AI OFFICE</title>
+  <style>
+    @page { size: A4; margin: 16mm 15mm 18mm; }
+    * { box-sizing: border-box; }
+    body { margin: 0; color: #172033; background: #fff; font-family: "Leelawadee UI", "Tahoma", sans-serif; font-size: 10.5pt; line-height: 1.55; }
+    h1, h2, h3 { color: #123e52; margin: 0 0 8px; line-height: 1.28; page-break-after: avoid; }
+    h1 { font-size: 25pt; }
+    h2 { font-size: 17pt; padding-bottom: 5px; border-bottom: 2px solid #19a7a0; margin-top: 18px; }
+    h3 { font-size: 12.5pt; color: #176b72; margin-top: 13px; }
+    p { margin: 5px 0 9px; }
+    ul, ol { margin: 5px 0 10px 22px; padding: 0; }
+    li { margin: 3px 0; }
+    table { width: 100%; border-collapse: collapse; margin: 8px 0 13px; page-break-inside: avoid; }
+    th, td { border: 1px solid #cbd8df; padding: 6px 8px; text-align: left; vertical-align: top; }
+    th { background: #eaf7f6; color: #123e52; }
+    code { font-family: Consolas, monospace; background: #eef2f5; padding: 1px 4px; border-radius: 3px; }
+    .cover { height: 250mm; padding: 42mm 14mm 20mm; color: white; background: linear-gradient(145deg, #092d3d, #12616a 65%, #19a7a0); position: relative; page-break-after: always; }
+    .cover h1 { color: white; font-size: 30pt; margin-top: 18mm; }
+    .cover .kicker { color: #91fff0; font-weight: 700; letter-spacing: 1.5px; }
+    .cover .subtitle { font-size: 15pt; max-width: 130mm; margin-top: 10mm; }
+    .cover .meta { position: absolute; left: 14mm; bottom: 20mm; color: #d8f6f3; }
+    .logo { width: 23mm; height: 23mm; border: 2px solid #91fff0; border-radius: 7mm; display: grid; place-items: center; font-size: 17pt; font-weight: 800; }
+    .page-break { page-break-before: always; }
+    .toc a { color: #176b72; text-decoration: none; }
+    .toc td:first-child { width: 14mm; text-align: center; font-weight: 700; color: #176b72; }
+    .note, .warning, .success { border-left: 5px solid; padding: 9px 12px; margin: 10px 0; page-break-inside: avoid; }
+    .note { background: #edf7ff; border-color: #2185c5; }
+    .warning { background: #fff5e8; border-color: #ec8b24; }
+    .success { background: #ecfaf3; border-color: #24a66a; }
+    .step { display: inline-grid; place-items: center; width: 24px; height: 24px; border-radius: 50%; background: #19a7a0; color: white; font-weight: 700; margin-right: 5px; }
+    .checklist { list-style: none; margin-left: 0; }
+    .checklist li::before { content: "☐"; color: #176b72; font-weight: 700; margin-right: 7px; }
+    .status { font-weight: 700; white-space: nowrap; }
+    .green { color: #168451; } .orange { color: #c66b13; } .red { color: #bd3030; } .blue { color: #176b9c; }
+    .small { font-size: 9pt; color: #52616c; }
+    .footer-note { margin-top: 18px; padding-top: 8px; border-top: 1px solid #cbd8df; color: #65727a; font-size: 8.5pt; }
+  </style>
+</head>
+<body>
+  <section class="cover">
+    <div class="logo">FP</div>
+    <div class="kicker">FARM PHONE AI OFFICE</div>
+    <h1>คู่มือการจัดการระบบ<br>สำหรับลูกค้าและผู้เช่า</h1>
+    <p class="subtitle">ตั้งแต่เริ่มใช้งาน จัดการโทรศัพท์ บัญชี คลิป และแคมเปญ ไปจนถึงตรวจสอบผลการโพสต์อย่างปลอดภัย</p>
+    <div class="meta">ฉบับผู้ใช้งาน 1.0<br>ปรับปรุงล่าสุด: 28 กรกฎาคม 2026</div>
+  </section>
+
+  <section>
+    <h1>สารบัญ</h1>
+    <table class="toc">
+      <tr><td>1</td><td><a href="#intro">รู้จักระบบและขอบเขตการใช้งาน</a></td></tr>
+      <tr><td>2</td><td><a href="#start">เริ่มต้นใช้งานและเข้าสู่ระบบ</a></td></tr>
+      <tr><td>3</td><td><a href="#dashboard">หน้า Dashboard และสถานะสำคัญ</a></td></tr>
+      <tr><td>4</td><td><a href="#devices">จัดการโทรศัพท์</a></td></tr>
+      <tr><td>5</td><td><a href="#accounts">จัดการบัญชีหรือช่อง</a></td></tr>
+      <tr><td>6</td><td><a href="#content">จัดการคลิปและเนื้อหา</a></td></tr>
+      <tr><td>7</td><td><a href="#campaign">สร้างแคมเปญและสั่งงาน</a></td></tr>
+      <tr><td>8</td><td><a href="#one-to-one">ตัวอย่าง: คลิป 1 ลงช่อง 1</a></td></tr>
+      <tr><td>9</td><td><a href="#monitor">ติดตามงานและตรวจผล</a></td></tr>
+      <tr><td>10</td><td><a href="#errors">แก้ปัญหาเบื้องต้น</a></td></tr>
+      <tr><td>11</td><td><a href="#security">ความปลอดภัยและข้อควรระวัง</a></td></tr>
+      <tr><td>12</td><td><a href="#daily">เช็กลิสต์ประจำวัน</a></td></tr>
+    </table>
+
+    <div class="note"><strong>สำหรับใคร:</strong> เจ้าของระบบ ผู้เช่าระบบ ผู้ดูแลช่อง และพนักงานที่ได้รับสิทธิ์จัดการคลิปหรือโทรศัพท์</div>
+    <div class="warning"><strong>ข้อสำคัญ:</strong> ชื่อเมนูหรือความสามารถบางส่วนอาจต่างกันตามแพ็กเกจและเวอร์ชันที่ผู้ให้บริการเปิดใช้งาน ควรใช้ระบบตามกฎของแพลตฟอร์มและกฎหมายที่เกี่ยวข้องเสมอ</div>
+  </section>
+
+  <section id="intro" class="page-break">
+    <h2>1. รู้จักระบบและขอบเขตการใช้งาน</h2>
+    <p>FARM PHONE AI OFFICE เป็นศูนย์กลางสำหรับดูสถานะโทรศัพท์ จัดเก็บข้อมูลช่องและคลิป สร้างงานโพสต์ ติดตามผล และรับแจ้งเตือนจากอุปกรณ์หลายเครื่องในหน้าจอเดียว</p>
+    <h3>ลำดับการทำงานหลัก</h3>
+    <p><strong>เตรียมโทรศัพท์ → ผูกช่อง → เพิ่มคลิป → สร้างแคมเปญ → ตรวจความพร้อม → เริ่มงาน → ตรวจผล → เก็บรายงาน</strong></p>
+    <h3>บทบาทผู้ใช้งาน</h3>
+    <table>
+      <tr><th>บทบาท</th><th>หน้าที่ทั่วไป</th></tr>
+      <tr><td>Owner / Admin</td><td>จัดการผู้ใช้ สิทธิ์ เครื่อง ช่อง การตั้งค่า และตรวจรายงานทั้งหมด</td></tr>
+      <tr><td>Manager</td><td>อนุมัติคลิป วางแผนแคมเปญ และตรวจผลรวม</td></tr>
+      <tr><td>Operator</td><td>เพิ่มคลิป ตรวจเครื่อง เริ่มหรือหยุดงาน และแก้ปัญหาเบื้องต้น</td></tr>
+      <tr><td>Viewer</td><td>ดู Dashboard สถานะ และรายงานโดยไม่แก้ข้อมูล</td></tr>
+    </table>
+  </section>
+
+  <section id="start">
+    <h2>2. เริ่มต้นใช้งานและเข้าสู่ระบบ</h2>
+    <ol>
+      <li>รับ URL ระบบ ชื่อผู้ใช้ รหัสผ่าน และช่องทางติดต่อผู้ดูแลจากผู้ให้บริการ</li>
+      <li>เปิดระบบด้วย Chrome หรือ Edge เวอร์ชันล่าสุดบนคอมพิวเตอร์</li>
+      <li>กรอกอีเมลและรหัสผ่าน แล้วกด <strong>เข้าสู่ระบบ</strong></li>
+      <li>ตรวจชื่อองค์กรหรือแพ็กเกจด้านบนของหน้าจอให้ถูกต้อง</li>
+      <li>เปลี่ยนรหัสผ่านเมื่อเข้าใช้งานครั้งแรก และไม่ส่งรหัสผ่านในกลุ่มแชต</li>
+    </ol>
+    <div class="warning"><strong>เข้าสู่ระบบไม่ได้:</strong> ตรวจภาษาแป้นพิมพ์ ปุ่ม Caps Lock และ URL ก่อน หากลองหลายครั้งแล้วยังไม่ได้ให้หยุดและติดต่อผู้ดูแล เพื่อป้องกันบัญชีถูกล็อก</div>
+  </section>
+
+  <section id="dashboard">
+    <h2>3. หน้า Dashboard และสถานะสำคัญ</h2>
+    <table>
+      <tr><th>สถานะ</th><th>ความหมาย</th><th>สิ่งที่ควรทำ</th></tr>
+      <tr><td class="status green">ONLINE / READY</td><td>พร้อมรับงาน</td><td>ใช้งานได้ตามปกติ</td></tr>
+      <tr><td class="status blue">BUSY / RUNNING</td><td>กำลังทำงาน</td><td>อย่าควบคุมเครื่องด้วยมือ</td></tr>
+      <tr><td class="status orange">WARNING</td><td>มีเงื่อนไขเสี่ยง เช่น แบตต่ำ</td><td>ตรวจรายละเอียดก่อนเริ่มงาน</td></tr>
+      <tr><td class="status red">OFFLINE / ERROR</td><td>ไม่เชื่อมต่อหรือเกิดข้อผิดพลาด</td><td>หยุดส่งงานและแก้สาเหตุก่อน</td></tr>
+      <tr><td class="status red">AUTH REQUIRED</td><td>ช่องต้องเข้าสู่ระบบหรือยืนยันตัวตน</td><td>ให้ผู้มีสิทธิ์จัดการบนโทรศัพท์</td></tr>
+    </table>
+    <p>ก่อนเริ่มงานทุกครั้ง ให้ดูจำนวนเครื่องออนไลน์ งานที่กำลังทำ งานล้มเหลว แบตเตอรี่ และข้อความเตือนล่าสุด หากข้อมูลไม่อัปเดตให้รีเฟรชหน้าเว็บหนึ่งครั้ง</p>
+  </section>
+
+  <section id="devices" class="page-break">
+    <h2>4. จัดการโทรศัพท์</h2>
+    <h3>เพิ่มและเตรียมเครื่อง</h3>
+    <ol>
+      <li>เปิด Developer options และ USB debugging ตามคำแนะนำของผู้ให้บริการ</li>
+      <li>ติดตั้งแอปโซเชียลที่ได้รับอนุญาต และอัปเดตเป็นเวอร์ชันที่ระบบรองรับ</li>
+      <li>เชื่อม Wi-Fi ที่เสถียร เสียบชาร์จ และควรมีแบตเตอรี่มากกว่า 50%</li>
+      <li>เปิดเมนู <strong>Devices</strong> แล้วตรวจว่าเครื่องปรากฏเป็น <strong>ONLINE</strong></li>
+      <li>ตั้งชื่อที่จำง่าย เช่น <code>PHONE-001</code> และจัดเข้ากลุ่มที่ถูกต้อง</li>
+    </ol>
+    <h3>เกณฑ์พร้อมทำงาน</h3>
+    <ul class="checklist">
+      <li>สถานะ ONLINE และมี heartbeat ล่าสุด</li>
+      <li>แบตเตอรี่เกิน 50% หรือเสียบชาร์จ</li>
+      <li>พื้นที่ว่างพอสำหรับไฟล์คลิป</li>
+      <li>หน้าจอไม่ล็อกระหว่างทำงาน</li>
+      <li>ไม่มี popup, update หรือการขอสิทธิ์ค้างอยู่</li>
+      <li>เปิดบัญชีเป้าหมายตรงกับช่องที่ผูกในระบบ</li>
+    </ul>
+    <div class="warning">เมื่อเครื่องแสดง <strong>BUSY</strong> ห้ามจับหน้าจอ เปิดแอปอื่น ถอดสาย หรือสลับบัญชี เพราะอาจทำให้งานลงผิดช่องหรือล้มเหลว</div>
+  </section>
+
+  <section id="accounts">
+    <h2>5. จัดการบัญชีหรือช่อง</h2>
+    <ol>
+      <li>เข้าเมนู <strong>Accounts</strong> แล้วเลือก <strong>เพิ่มบัญชี</strong></li>
+      <li>เลือกแพลตฟอร์ม กรอก Username และตั้งชื่อเรียก เช่น “ช่อง 1”</li>
+      <li>เลือกโทรศัพท์ที่ล็อกอินบัญชีนี้อยู่จริง</li>
+      <li>บันทึก แล้วตรวจสถานะเป็น <strong>ACTIVE</strong> และการยืนยันตัวตนเป็นปกติ</li>
+      <li>เปิดแอปบนโทรศัพท์และตรวจหน้าโปรไฟล์ว่าตรงกับ Username ในระบบ</li>
+    </ol>
+    <h3>เมื่อเปลี่ยนรหัสผ่านหรือออกจากระบบ</h3>
+    <p>หยุดแคมเปญของช่องนั้นก่อน เข้าสู่ระบบใหม่บนเครื่องเดิม ตรวจว่าไม่มี OTP หรือ CAPTCHA ค้าง แล้วจึงเปลี่ยนสถานะช่องกลับเป็น ACTIVE</p>
+    <div class="note">แนะนำให้หนึ่งช่องมีเครื่องหลักที่ระบุชัดเจน และตั้งชื่อเครื่องกับช่องให้สัมพันธ์กัน เช่น <code>PHONE-001 ↔ CHANNEL-001</code></div>
+  </section>
+
+  <section id="content">
+    <h2>6. จัดการคลิปและเนื้อหา</h2>
+    <ol>
+      <li>เข้าเมนู <strong>Content</strong> และเลือก <strong>เพิ่มเนื้อหา</strong></li>
+      <li>เลือกไฟล์วิดีโอ แล้วรอจนแถบอัปโหลดครบ 100%</li>
+      <li>กรอกชื่อคลิป Caption, Hashtags และ Tags ให้ครบ</li>
+      <li>ตรวจภาพตัวอย่าง ความยาว ความละเอียด และเสียง</li>
+      <li>ตรวจคำต้องห้าม ลิขสิทธิ์ ข้อมูลส่วนตัว และนโยบายแพลตฟอร์ม</li>
+      <li>เมื่อพร้อมใช้งาน ให้สถานะคลิปเป็น <strong>READY</strong></li>
+    </ol>
+    <h3>รูปแบบแนะนำ</h3>
+    <table>
+      <tr><th>รายการ</th><th>คำแนะนำ</th></tr>
+      <tr><td>ไฟล์</td><td>MP4, H.264, เสียง AAC</td></tr>
+      <tr><td>คลิปแนวตั้ง</td><td>1080 × 1920 พิกเซล</td></tr>
+      <tr><td>ชื่อไฟล์</td><td>ใช้ตัวอักษรอังกฤษ ตัวเลข ขีดกลาง เช่น <code>CLIP-001.mp4</code></td></tr>
+      <tr><td>Caption</td><td>ตรวจสะกด ลิงก์ โปรโมชั่น และวันหมดอายุ</td></tr>
+      <tr><td>Hashtags</td><td>ใช้เฉพาะคำที่เกี่ยวข้องและไม่มากเกินไป</td></tr>
+    </table>
+  </section>
+
+  <section id="campaign" class="page-break">
+    <h2>7. สร้างแคมเปญและสั่งงาน</h2>
+    <ol>
+      <li>เข้าเมนู <strong>Campaigns</strong> แล้วเลือก <strong>สร้างแคมเปญ</strong></li>
+      <li>ตั้งชื่อที่ค้นง่าย เช่น วันที่ + ชื่อชุดคลิป + กลุ่มช่อง</li>
+      <li>เลือกคลิป บัญชีเป้าหมาย และกลุ่มโทรศัพท์ให้ถูกต้อง</li>
+      <li>กำหนดเวลา จำนวนงานต่อวัน ลำดับ และจำนวนครั้งที่อนุญาตให้ลองใหม่</li>
+      <li>บันทึกเป็น <strong>DRAFT</strong> และตรวจสรุปอีกครั้ง</li>
+      <li>เมื่อทุกอย่างพร้อม เปลี่ยนเป็น <strong>READY</strong> แล้วกดเริ่มงาน</li>
+    </ol>
+    <h3>จุดตรวจอนุมัติก่อนเริ่ม</h3>
+    <ul class="checklist">
+      <li>จำนวนคลิปและจำนวนช่องตรงตามใบงาน</li>
+      <li>คลิปทุกไฟล์เป็น READY</li>
+      <li>ช่องทุกช่องเป็น ACTIVE</li>
+      <li>เครื่องทุกเครื่องเป็น ONLINE และไม่มีงานซ้อน</li>
+      <li>เวลาโพสต์และเขตเวลาถูกต้อง</li>
+      <li>Caption และ Hashtags ผ่านการอนุมัติ</li>
+    </ul>
+    <div class="warning"><strong>เริ่มจากงานน้อยก่อน:</strong> แคมเปญใหม่ควรทดลอง 1 คลิป 1 ช่อง 1 เครื่อง แล้วตรวจผลจริงก่อนขยายจำนวนงาน</div>
+  </section>
+
+  <section id="one-to-one">
+    <h2>8. ตัวอย่าง: คลิป 1 ลงช่อง 1</h2>
+    <p><span class="step">1</span> เปิด <strong>Devices</strong> และตรวจ <code>PHONE-001</code> เป็น ONLINE แบตเตอรี่เพียงพอ และไม่มีงานค้าง</p>
+    <p><span class="step">2</span> เปิด <strong>Accounts</strong> ตรวจ “ช่อง 1” เป็น ACTIVE และผูกกับ <code>PHONE-001</code></p>
+    <p><span class="step">3</span> เปิดแอปบนโทรศัพท์ ตรวจหน้าโปรไฟล์ว่าคือช่อง 1 จริง แล้วกลับหน้า Home</p>
+    <p><span class="step">4</span> เปิด <strong>Content</strong> เลือก “คลิป 1” ดูวิดีโอและตรวจ Caption จนจบ</p>
+    <p><span class="step">5</span> สร้าง Campaign ชื่อ “คลิป 1 ลงช่อง 1” เลือกคลิป 1 ช่อง 1 และ PHONE-001</p>
+    <p><span class="step">6</span> เลือกลงทันทีหรือกำหนดเวลา ตรวจสรุป แล้วเปลี่ยนสถานะเป็น READY</p>
+    <p><span class="step">7</span> กดเริ่มงาน จากนั้นห้ามใช้งานโทรศัพท์จนกว่างานจะจบ</p>
+    <p><span class="step">8</span> ดูสถานะตามลำดับ CREATED → RUNNING → VERIFYING → SUCCESS</p>
+    <p><span class="step">9</span> เปิดโพสต์จริง ตรวจคลิป เสียง Caption, Hashtags และการมองเห็น</p>
+    <p><span class="step">10</span> บันทึกลิงก์โพสต์ เวลา และภาพหลักฐาน แล้วปิดงานเป็น COMPLETED</p>
+    <div class="success"><strong>ถือว่างานสำเร็จเมื่อ:</strong> โพสต์ปรากฏในช่องเป้าหมาย เปิดเล่นได้ ข้อมูลถูกต้อง และระบบเก็บหลักฐานครบ ไม่ใช่เพียงแค่กดปุ่มโพสต์แล้ว</div>
+  </section>
+
+  <section id="monitor">
+    <h2>9. ติดตามงานและตรวจผล</h2>
+    <table>
+      <tr><th>สถานะงาน</th><th>คำอธิบาย</th></tr>
+      <tr><td>CREATED / QUEUED</td><td>สร้างงานแล้วและกำลังรอคิว</td></tr>
+      <tr><td>ASSIGNED</td><td>เลือกโทรศัพท์และช่องแล้ว</td></tr>
+      <tr><td>RUNNING</td><td>โทรศัพท์กำลังทำขั้นตอนโพสต์</td></tr>
+      <tr><td>VERIFYING</td><td>กำลังตรวจว่าโพสต์สำเร็จจริง</td></tr>
+      <tr><td>SUCCESS</td><td>โพสต์และตรวจหลักฐานสำเร็จ</td></tr>
+      <tr><td>FAILED</td><td>งานไม่สำเร็จ ต้องเปิดดู Error และหลักฐาน</td></tr>
+      <tr><td>CANCELLED</td><td>งานถูกยกเลิกโดยผู้ใช้หรือระบบ</td></tr>
+    </table>
+    <p>หลังงานจบ ควรตรวจ Post URL, Post ID, ช่อง, เครื่อง, เวลาที่โพสต์, Caption และ Screenshot หากข้อมูลใดหาย ให้เปิด Ticket ก่อนเริ่มงานชุดใหญ่ต่อไป</p>
+  </section>
+
+  <section id="errors" class="page-break">
+    <h2>10. แก้ปัญหาเบื้องต้น</h2>
+    <table>
+      <tr><th>อาการ</th><th>วิธีตรวจและแก้</th></tr>
+      <tr><td>เครื่อง OFFLINE</td><td>ตรวจไฟ สาย USB/Wi-Fi เปิดหน้าจอ แล้วรอ heartbeat; หากยังไม่กลับมาให้ติดต่อผู้ดูแล</td></tr>
+      <tr><td>แบตเตอรี่ต่ำ</td><td>หยุดส่งงาน เสียบชาร์จ และรอให้เกินระดับที่กำหนด</td></tr>
+      <tr><td>ช่อง AUTH REQUIRED</td><td>หยุดแคมเปญ เข้าสู่ระบบบนเครื่อง ตรวจ OTP/CAPTCHA แล้วทดสอบด้วยงานเดียว</td></tr>
+      <tr><td>อัปโหลดค้าง</td><td>อย่ากดซ้ำทันที ตรวจอินเทอร์เน็ตและสถานะงาน เพื่อป้องกันโพสต์ซ้ำ</td></tr>
+      <tr><td>FAILED</td><td>อ่าน Error เปิด Screenshot ตรวจช่องและเครื่อง แล้วลองใหม่เฉพาะเมื่อสาเหตุถูกแก้แล้ว</td></tr>
+      <tr><td>โพสต์ผิดช่อง</td><td>หยุดทุกงานของเครื่องนั้น บันทึกหลักฐาน แจ้ง Admin และตรวจการผูกช่องใหม่</td></tr>
+      <tr><td>CAPTCHA / OTP</td><td>ห้ามให้ระบบกดต่อ ให้ผู้มีสิทธิ์ดำเนินการด้วยตนเองและบันทึกเหตุการณ์</td></tr>
+    </table>
+    <h3>ข้อมูลที่ต้องส่งเมื่อแจ้งปัญหา</h3>
+    <ul>
+      <li>ชื่อองค์กรและชื่อผู้ใช้งาน</li>
+      <li>Campaign ID และ Job ID</li>
+      <li>ชื่อช่องและรหัสโทรศัพท์</li>
+      <li>เวลาที่เกิดปัญหา</li>
+      <li>ข้อความ Error, Screenshot หรือวิดีโอหน้าจอ</li>
+      <li>สิ่งที่ทำไปก่อนเกิดปัญหา</li>
+    </ul>
+  </section>
+
+  <section id="security">
+    <h2>11. ความปลอดภัยและข้อควรระวัง</h2>
+    <ul>
+      <li>ห้ามแชร์รหัสผ่าน Token, OTP หรือ Recovery Code ในแชตสาธารณะ</li>
+      <li>เปิดสิทธิ์ผู้ใช้เท่าที่จำเป็น และยกเลิกสิทธิ์ทันทีเมื่อพนักงานออก</li>
+      <li>ห้ามใช้คลิปหรือเพลงที่ไม่มีสิทธิ์ และห้ามโพสต์เนื้อหาผิดกฎหมาย</li>
+      <li>ปฏิบัติตามข้อกำหนดของ TikTok, YouTube, Facebook หรือแพลตฟอร์มเป้าหมาย</li>
+      <li>ห้ามพยายามหลบ CAPTCHA, ระบบป้องกัน หรือข้อจำกัดของแพลตฟอร์ม</li>
+      <li>สำรองคลิปและรายงานสำคัญตามรอบที่ผู้ให้บริการกำหนด</li>
+      <li>ตรวจ Audit Log เมื่อพบการแก้ข้อมูลที่ไม่ทราบที่มา</li>
+    </ul>
+  </section>
+
+  <section id="daily">
+    <h2>12. เช็กลิสต์ประจำวัน</h2>
+    <h3>ก่อนเริ่มงาน</h3>
+    <ul class="checklist">
+      <li>เข้าสู่ระบบด้วยบัญชีของตนเอง</li>
+      <li>ตรวจ Dashboard และข้อความเตือน</li>
+      <li>เครื่องเป้าหมาย ONLINE แบตและพื้นที่เพียงพอ</li>
+      <li>ช่องเป้าหมาย ACTIVE และล็อกอินถูกบัญชี</li>
+      <li>คลิปและข้อความผ่านการอนุมัติ</li>
+      <li>เวลาและจำนวนงานตรงตามแผน</li>
+    </ul>
+    <h3>หลังจบงาน</h3>
+    <ul class="checklist">
+      <li>ไม่มีงานค้างใน RUNNING หรือ VERIFYING</li>
+      <li>ตรวจโพสต์จริงและบันทึกลิงก์ครบ</li>
+      <li>ตรวจงาน FAILED และเปิด Ticket หากจำเป็น</li>
+      <li>ปิดหรือพักแคมเปญที่จบแล้ว</li>
+      <li>ตรวจเครื่องร้อน แบตต่ำ หรือพื้นที่ใกล้เต็ม</li>
+      <li>ออกจากระบบเมื่อใช้คอมพิวเตอร์ร่วมกับผู้อื่น</li>
+    </ul>
+    <div class="footer-note">เอกสารนี้เป็นคู่มือการใช้งานทั่วไป ผู้ให้บริการควรเพิ่ม URL ระบบ ช่องทาง Support, SLA, ข้อมูลแพ็กเกจ และขั้นตอนเฉพาะแพลตฟอร์มก่อนส่งมอบลูกค้า</div>
+  </section>
+</body>
+</html>

@@ -1,0 +1,191 @@
+{
+  "testId": "TEST-009",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T08:14:15.274Z",
+  "completedAt": "2026-07-28T08:14:15.274Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-009/result.json"
+  ],
+  "notes": "",
+  "details": {
+    "job": {
+      "id": "4cccb947-5932-4402-9023-34e1d7687831",
+      "organizationId": "default-org",
+      "campaignId": null,
+      "accountId": null,
+      "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+      "contentId": null,
+      "type": "DEVICE_COMMAND",
+      "priority": "NORMAL",
+      "scheduledAt": null,
+      "startedAt": "2026-07-28T08:14:13.114Z",
+      "completedAt": "2026-07-28T08:14:14.505Z",
+      "status": "SUCCESS",
+      "parameters": {
+        "file": {
+          "size": 133,
+          "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+          "filename": "live_push_PHONE-001.txt",
+          "destination": "/sdcard/Download/FarmPhone/live_push_PHONE-001.txt",
+          "uploadedFileId": "1a4c5366-cde1-4544-a60f-ec5aeea867d7"
+        },
+        "command": "PUSH_FILE",
+        "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/"
+      },
+      "result": {
+        "size": 133,
+        "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+        "filename": "live_push_PHONE-001.txt",
+        "adbOutput": "",
+        "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/live_push_PHONE-001.txt"
+      },
+      "attempts": 1,
+      "maxAttempts": 3,
+      "retryCount": 0,
+      "maxRetries": 3,
+      "errorCode": null,
+      "errorMessage": null,
+      "idempotencyKey": "PHONE-001:PUSH_FILE:29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994:1785226452794",
+      "metadata": {
+        "source": "SINGLE_DEVICE_DASHBOARD",
+        "deviceCode": "PHONE-001"
+      },
+      "createdAt": "2026-07-28T08:14:12.974Z",
+      "updatedAt": "2026-07-28T08:14:14.506Z",
+      "device": {
+        "id": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "organizationId": "default-org",
+        "deviceGroupId": null,
+        "code": "PHONE-001",
+        "name": "samsung SM-A075F",
+        "serialNumber": "R8YY81H581J",
+        "manufacturer": "samsung",
+        "model": "SM-A075F",
+        "osVersion": "16",
+        "adbStatus": "ONLINE",
+        "battery": 99,
+        "storage": 46,
+        "storageUsed": "21531090944",
+        "storageTotal": "49480187904",
+        "agentVersion": "1.0.0",
+        "networkType": "wifi",
+        "assignedAccountId": null,
+        "currentJobId": null,
+        "lastHeartbeatAt": "2026-07-28T08:14:14.702Z",
+        "nodeId": "NODE-A",
+        "metadata": {
+          "lastHeartbeatError": null
+        },
+        "createdAt": "2026-07-28T01:43:35.524Z",
+        "updatedAt": "2026-07-28T08:14:14.703Z"
+      },
+      "campaign": null,
+      "account": null,
+      "content": null,
+      "deviceCommand": {
+        "id": "10af9be8-e8fe-49a5-aab7-a87daf09e0ad",
+        "organizationId": "default-org",
+        "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "jobId": "4cccb947-5932-4402-9023-34e1d7687831",
+        "command": "PUSH_FILE",
+        "parameters": {
+          "file": {
+            "size": 133,
+            "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+            "filename": "live_push_PHONE-001.txt",
+            "destination": "/sdcard/Download/FarmPhone/live_push_PHONE-001.txt",
+            "uploadedFileId": "1a4c5366-cde1-4544-a60f-ec5aeea867d7"
+          },
+          "command": "PUSH_FILE",
+          "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/"
+        },
+        "status": "SUCCESS",
+        "result": {
+          "size": 133,
+          "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+          "filename": "live_push_PHONE-001.txt",
+          "adbOutput": "",
+          "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/live_push_PHONE-001.txt"
+        },
+        "errorCode": null,
+        "errorMessage": null,
+        "requestedAt": "2026-07-28T08:14:12.988Z",
+        "assignedAt": "2026-07-28T08:14:13.125Z",
+        "startedAt": "2026-07-28T08:14:13.292Z",
+        "completedAt": "2026-07-28T08:14:14.505Z",
+        "createdAt": "2026-07-28T08:14:12.988Z",
+        "updatedAt": "2026-07-28T08:14:14.513Z"
+      },
+      "logs": [
+        {
+          "id": "054acec7-f61f-4f1b-aa0c-757963d9a742",
+          "organizationId": "default-org",
+          "jobId": "4cccb947-5932-4402-9023-34e1d7687831",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "PUSH_FILE ผ่านการ Verify",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": {
+            "result": {
+              "size": 133,
+              "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+              "filename": "live_push_PHONE-001.txt",
+              "adbOutput": "",
+              "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/live_push_PHONE-001.txt"
+            }
+          },
+          "createdAt": "2026-07-28T08:14:14.526Z"
+        },
+        {
+          "id": "078f5278-ec44-4da7-9f84-3482a06b5a1f",
+          "organizationId": "default-org",
+          "jobId": "4cccb947-5932-4402-9023-34e1d7687831",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "มอบหมาย PUSH_FILE ให้ Device Agent",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:13.167Z"
+        },
+        {
+          "id": "645f3c08-8c52-4923-9de6-120cad6837a9",
+          "organizationId": "default-org",
+          "jobId": "4cccb947-5932-4402-9023-34e1d7687831",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "สร้างคำสั่ง PUSH_FILE สำหรับ PHONE-001",
+          "attemptNumber": 0,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:12.991Z"
+        }
+      ],
+      "uploadedFiles": [
+        {
+          "id": "1a4c5366-cde1-4544-a60f-ec5aeea867d7",
+          "organizationId": "default-org",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "jobId": "4cccb947-5932-4402-9023-34e1d7687831",
+          "filename": "live_push_PHONE-001.txt",
+          "mimeType": "application/octet-stream",
+          "size": "133",
+          "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+          "storageKey": "content/2026-07-28/d48e83c5-976b-41be-8c2f-32a6bc206983.txt",
+          "url": "minio://farm-phone-media/content/2026-07-28/d48e83c5-976b-41be-8c2f-32a6bc206983.txt",
+          "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/live_push_PHONE-001.txt",
+          "status": "PUSHED",
+          "createdAt": "2026-07-28T08:14:12.979Z",
+          "updatedAt": "2026-07-28T08:14:14.388Z"
+        }
+      ]
+    }
+  }
+}

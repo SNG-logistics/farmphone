@@ -1,0 +1,17 @@
+{
+  "brandName": "SNG EXPRESS",
+  "aspectRatio": "9:16",
+  "resolution": "1080x1920",
+  "fps": 30,
+  "theme": {
+    "primaryYellow": "#FFCC00",
+    "darkBackground": "#111111",
+    "whiteText": "#FFFFFF"
+  },
+  "typography": {
+    "fontFile": "C:/Windows/Fonts/tahoma.ttf",
+    "headerSize": 72,
+    "bodySize": 52,
+    "ctaSize": 54
+  }
+}

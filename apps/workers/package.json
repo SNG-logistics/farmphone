@@ -1,0 +1,23 @@
+{
+  "name": "@farm-phone/workers",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "ts-node src/worker.ts",
+    "build": "tsc",
+    "start": "node dist/worker.js"
+  },
+  "dependencies": {
+    "@farm-phone/config": "*",
+    "@farm-phone/database": "*",
+    "@farm-phone/events": "*",
+    "@farm-phone/types": "*",
+    "bullmq": "^5.4.0",
+    "ioredis": "^5.4.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.4.0"
+  }
+}

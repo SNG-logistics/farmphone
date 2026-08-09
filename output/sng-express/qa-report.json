@@ -1,0 +1,13 @@
+{
+  "verified": true,
+  "checksum": "3cf4fa3734fcafa35e15f9e0adbd8b728f42120cd34781a43aa16dc718ca0cda",
+  "fileSize": 831091,
+  "width": 1080,
+  "height": 1920,
+  "duration": 25,
+  "videoCodec": "h264",
+  "pixelFormat": "yuv420p",
+  "frameRate": "30/1",
+  "audioCodec": "aac",
+  "verifiedAt": "2026-08-08T23:06:42.481Z"
+}

@@ -1,0 +1,137 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: farm-phone-postgres
+    environment:
+      POSTGRES_USER: farmphone
+      POSTGRES_PASSWORD: farmphone_secret
+      POSTGRES_DB: farm_phone
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U farmphone -d farm_phone"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: farm-phone-redis
+    command: redis-server --appendonly yes --requirepass redis_secret
+    ports:
+      - "127.0.0.1:6379:6379"
+    volumes:
+      - ./data/redis:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis_secret", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  minio:
+    image: minio/minio:latest
+    container_name: farm-phone-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioadmin
+      MINIO_ROOT_PASSWORD: minioadmin_secret
+    ports:
+      - "127.0.0.1:9000:9000"
+      - "127.0.0.1:9001:9001"
+    volumes:
+      - ./data/minio:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.api
+    container_name: farm-phone-api
+    environment:
+      DATABASE_URL: postgresql://farmphone:farmphone_secret@postgres:5432/farm_phone
+      REDIS_URL: redis://:redis_secret@redis:6379
+      JWT_SECRET: dev_jwt_secret_change_in_production
+      FILE_URL_SECRET: dev_file_url_secret_change_in_production
+      MINIO_ENDPOINT: minio
+      MINIO_PORT: "9000"
+      MINIO_ACCESS_KEY: minioadmin
+      MINIO_SECRET_KEY: minioadmin_secret
+      MINIO_BUCKET: farm-phone-media
+      DEVICE_AGENT_TOKEN: change_this_device_agent_token
+      DEVICE_OFFLINE_TIMEOUT_MS: "15000"
+      SOCKET_REDIS_ADAPTER: "true"
+      NODE_ENV: development
+      API_PORT: "3001"
+      CORS_ORIGIN: http://localhost:3000
+      LOCAL_DEV_AUTH_BYPASS: "true"
+      COMETAPI_API_KEY: ${COMETAPI_API_KEY:-}
+      COMETAPI_BASE_URL: ${COMETAPI_BASE_URL:-https://api.cometapi.com/v1}
+      COMETAPI_MODEL: ${COMETAPI_MODEL:-gpt-4o}
+      COMETAPI_MINI_MODEL: ${COMETAPI_MINI_MODEL:-gpt-4o-mini}
+    command: ["sh", "-c", "cd packages/database && npx prisma migrate deploy && cd /app && node dist/main.js"]
+    ports:
+      - "127.0.0.1:3001:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.web
+      args:
+        NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://localhost:3001}
+        NEXT_PUBLIC_WS_URL: ${NEXT_PUBLIC_WS_URL:-http://localhost:3001}
+    container_name: farm-phone-web
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:3001
+      NEXT_PUBLIC_WS_URL: http://localhost:3001
+      API_URL: http://api:3001
+    ports:
+      - "127.0.0.1:3000:3000"
+    depends_on:
+      - api
+
+  device-agent:
+    profiles: ["device-agent"]
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.agent
+    container_name: farm-phone-agent
+    environment:
+      API_URL: http://host.docker.internal:3001
+      NODE_ID: NODE-A
+      DEVICE_CODE: PHONE-001
+      ANDROID_DEVICE_SERIAL: ${ANDROID_DEVICE_SERIAL:-}
+      TARGET_ANDROID_PACKAGE: ${TARGET_ANDROID_PACKAGE:-}
+      DEVICE_AGENT_TOKEN: change_this_device_agent_token
+      SIMULATOR_MODE: "false"
+      HEARTBEAT_INTERVAL_MS: "5000"
+      ADB_SERVER_SOCKET: tcp:host.docker.internal:5037
+    depends_on:
+      - api
+
+  worker:
+    profiles: ["legacy-multi-device"]
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.worker
+    container_name: farm-phone-worker
+    environment:
+      DATABASE_URL: postgresql://farmphone:farmphone_secret@postgres:5432/farm_phone
+      REDIS_URL: redis://:redis_secret@redis:6379
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy

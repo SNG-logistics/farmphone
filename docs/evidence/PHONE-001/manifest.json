@@ -1,0 +1,35 @@
+{
+  "deviceCode": "PHONE-001",
+  "generatedAt": "2026-07-28T08:16:36.2401747Z",
+  "physicalDeviceRequired": true,
+  "automatedTestsCovered": [
+    "TEST-001",
+    "TEST-001A",
+    "TEST-002",
+    "TEST-005",
+    "TEST-006",
+    "TEST-007",
+    "TEST-007A",
+    "TEST-008",
+    "TEST-009",
+    "TEST-009A",
+    "TEST-010",
+    "TEST-010A",
+    "TEST-011",
+    "TEST-012",
+    "TEST-013",
+    "TEST-013A",
+    "TEST-016",
+    "TEST-017",
+    "TEST-018"
+  ],
+  "acceptedManualTests": [
+    "TEST-014",
+    "TEST-015"
+  ],
+  "manualTestsStillRequired": [
+    "TEST-003",
+    "TEST-004"
+  ],
+  "webUrl": "http://localhost:3000"
+}

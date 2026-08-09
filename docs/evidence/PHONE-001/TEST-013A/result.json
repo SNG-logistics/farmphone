@@ -1,0 +1,167 @@
+{
+  "testId": "TEST-013A",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T08:15:40.060Z",
+  "completedAt": "2026-07-28T08:15:40.060Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-013A/result.json"
+  ],
+  "notes": "",
+  "details": {
+    "job": {
+      "id": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+      "organizationId": "default-org",
+      "campaignId": null,
+      "accountId": null,
+      "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+      "contentId": null,
+      "type": "DEVICE_COMMAND",
+      "priority": "NORMAL",
+      "scheduledAt": null,
+      "startedAt": "2026-07-28T08:14:44.264Z",
+      "completedAt": "2026-07-28T08:15:39.363Z",
+      "status": "SUCCESS",
+      "parameters": {
+        "command": "REBOOT_DEVICE"
+      },
+      "result": {
+        "rebooted": true,
+        "reconnectMs": 53904,
+        "uptimeAfter": 36,
+        "disconnectMs": 7400,
+        "uptimeBefore": 120,
+        "bootCompleted": true,
+        "bootCompletedMs": 54172,
+        "disconnectObserved": true
+      },
+      "attempts": 1,
+      "maxAttempts": 3,
+      "retryCount": 0,
+      "maxRetries": 3,
+      "errorCode": null,
+      "errorMessage": null,
+      "idempotencyKey": "PHONE-001:REBOOT_DEVICE:1785226484128",
+      "metadata": {
+        "source": "SINGLE_DEVICE_DASHBOARD",
+        "deviceCode": "PHONE-001"
+      },
+      "createdAt": "2026-07-28T08:14:44.151Z",
+      "updatedAt": "2026-07-28T08:15:39.365Z",
+      "device": {
+        "id": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "organizationId": "default-org",
+        "deviceGroupId": null,
+        "code": "PHONE-001",
+        "name": "samsung SM-A075F",
+        "serialNumber": "R8YY81H581J",
+        "manufacturer": "samsung",
+        "model": "SM-A075F",
+        "osVersion": "16",
+        "adbStatus": "ONLINE",
+        "battery": 99,
+        "storage": 46,
+        "storageUsed": "21532778496",
+        "storageTotal": "49480187904",
+        "agentVersion": "1.0.0",
+        "networkType": "wifi",
+        "assignedAccountId": null,
+        "currentJobId": null,
+        "lastHeartbeatAt": "2026-07-28T08:15:39.372Z",
+        "nodeId": "NODE-A",
+        "metadata": {
+          "lastHeartbeatError": null
+        },
+        "createdAt": "2026-07-28T01:43:35.524Z",
+        "updatedAt": "2026-07-28T08:15:39.383Z"
+      },
+      "campaign": null,
+      "account": null,
+      "content": null,
+      "deviceCommand": {
+        "id": "9eaa0078-bcac-4bb8-872a-c3708841415a",
+        "organizationId": "default-org",
+        "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+        "command": "REBOOT_DEVICE",
+        "parameters": {
+          "command": "REBOOT_DEVICE"
+        },
+        "status": "SUCCESS",
+        "result": {
+          "rebooted": true,
+          "reconnectMs": 53904,
+          "uptimeAfter": 36,
+          "disconnectMs": 7400,
+          "uptimeBefore": 120,
+          "bootCompleted": true,
+          "bootCompletedMs": 54172,
+          "disconnectObserved": true
+        },
+        "errorCode": null,
+        "errorMessage": null,
+        "requestedAt": "2026-07-28T08:14:44.158Z",
+        "assignedAt": "2026-07-28T08:14:44.269Z",
+        "startedAt": "2026-07-28T08:14:44.391Z",
+        "completedAt": "2026-07-28T08:15:39.363Z",
+        "createdAt": "2026-07-28T08:14:44.158Z",
+        "updatedAt": "2026-07-28T08:15:39.377Z"
+      },
+      "logs": [
+        {
+          "id": "4482f4c9-acac-4d3a-b0e5-f548e15b8109",
+          "organizationId": "default-org",
+          "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "REBOOT_DEVICE ผ่านการ Verify",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": {
+            "result": {
+              "rebooted": true,
+              "reconnectMs": 53904,
+              "uptimeAfter": 36,
+              "disconnectMs": 7400,
+              "uptimeBefore": 120,
+              "bootCompleted": true,
+              "bootCompletedMs": 54172,
+              "disconnectObserved": true
+            }
+          },
+          "createdAt": "2026-07-28T08:15:39.392Z"
+        },
+        {
+          "id": "20b97713-26ac-44a5-ac86-75838dac9f0e",
+          "organizationId": "default-org",
+          "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "มอบหมาย REBOOT_DEVICE ให้ Device Agent",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:44.282Z"
+        },
+        {
+          "id": "357a3083-f295-486e-aeed-b5a85ad5f077",
+          "organizationId": "default-org",
+          "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "สร้างคำสั่ง REBOOT_DEVICE สำหรับ PHONE-001",
+          "attemptNumber": 0,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:44.161Z"
+        }
+      ],
+      "uploadedFiles": []
+    }
+  }
+}

@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">FARM PHONE Companion</string>
+    <string name="title_activity_main">FARM PHONE Companion</string>
+    <string name="package_name">com.farmphone.companion</string>
+    <string name="custom_url_scheme">com.farmphone.companion</string>
+</resources>

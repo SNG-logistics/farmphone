@@ -1,0 +1,20 @@
+{
+  "moduleFileExtensions": ["js", "json", "ts"],
+  "rootDir": "..",
+  "testEnvironment": "node",
+  "testRegex": "test/.*\\.(e2e-spec|contract-spec)\\.ts$",
+  "transform": {
+    "^.+\\.(t|j)s$": ["ts-jest", { "tsconfig": "<rootDir>/test/tsconfig.json" }]
+  },
+  "collectCoverageFrom": [
+    "src/{accounts,campaigns,content,jobs}/**/*.service.ts",
+    "!src/**/*.module.ts"
+  ],
+  "coverageDirectory": "<rootDir>/coverage/e2e",
+  "clearMocks": true,
+  "restoreMocks": true,
+  "testTimeout": 15000,
+  "transformIgnorePatterns": [
+    "/node_modules/(?!(jose|jwks-rsa)/)"
+  ]
+}

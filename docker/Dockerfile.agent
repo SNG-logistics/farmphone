@@ -1,0 +1,23 @@
+# ============================================================
+# Farm Phone AI Office — Device Agent Dockerfile
+# ============================================================
+FROM node:20-alpine
+
+WORKDIR /app
+
+# Install ADB (Android Debug Bridge) for device control
+RUN apk add --no-cache android-tools
+
+# Install the Device Agent workspace from the repository lockfile
+COPY package.json package-lock.json ./
+COPY apps/device-agent/package.json apps/device-agent/
+RUN npm ci --workspace @farm-phone/device-agent --omit=dev
+
+# Copy agent source
+COPY apps/device-agent/src apps/device-agent/src
+
+EXPOSE 3100
+
+ENV NODE_ENV=production
+
+CMD ["node", "apps/device-agent/src/index.js"]

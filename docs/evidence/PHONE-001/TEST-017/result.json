@@ -1,0 +1,1421 @@
+{
+  "testId": "TEST-017",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T08:15:44.435Z",
+  "completedAt": "2026-07-28T08:15:44.435Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-017/result.json"
+  ],
+  "notes": "",
+  "details": {
+    "agents": [
+      {
+        "id": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+        "organizationId": "default-org",
+        "code": "16bit.DEVICE",
+        "name": "DEVICE",
+        "role": "DEVICE",
+        "avatar": "",
+        "status": "SUCCESS",
+        "currentTaskId": null,
+        "lastActivityAt": "2026-07-28T08:15:39.410Z",
+        "config": {},
+        "createdAt": "2026-07-28T01:49:08.906Z",
+        "updatedAt": "2026-07-28T08:15:39.427Z",
+        "tasks": [
+          {
+            "id": "740133c1-2114-4fa7-801d-9265b71d0d95",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "REBOOT_DEVICE → PHONE-001",
+            "description": "Job 4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+            "input": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "command": "REBOOT_DEVICE",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:44.294Z",
+            "completedAt": "2026-07-28T08:15:39.421Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:44.190Z",
+            "updatedAt": "2026-07-28T08:15:39.422Z"
+          },
+          {
+            "id": "26cc0155-f967-416e-a5a3-d3c8a8cfebb8",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "OPEN_APP → PHONE-001",
+            "description": "Job 265efd51-6db3-448f-9e6d-81ec358ad037",
+            "input": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "command": "OPEN_APP",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "FAILED",
+            "startedAt": "2026-07-28T08:14:25.585Z",
+            "completedAt": "2026-07-28T08:14:43.169Z",
+            "error": "Device command failed",
+            "createdAt": "2026-07-28T08:14:25.481Z",
+            "updatedAt": "2026-07-28T08:14:43.171Z"
+          },
+          {
+            "id": "c6fbe202-03f0-4fec-9e75-eda884c224cd",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "HEALTH_CHECK → PHONE-001",
+            "description": "Job 85a01d5d-6392-4819-9f95-5e393a72b6b5",
+            "input": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "command": "HEALTH_CHECK",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:23.293Z",
+            "completedAt": "2026-07-28T08:14:24.474Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:23.175Z",
+            "updatedAt": "2026-07-28T08:14:24.475Z"
+          },
+          {
+            "id": "f595c9b8-238b-4539-8bd5-b7a36424a365",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "VIEW_JOB_LOG → PHONE-001",
+            "description": "Job cdd70d98-053b-4197-88cc-6e8c48d9b816",
+            "input": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "command": "VIEW_JOB_LOG",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": null,
+            "completedAt": "2026-07-28T08:14:22.285Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:21.945Z",
+            "updatedAt": "2026-07-28T08:14:22.286Z"
+          },
+          {
+            "id": "fcbd4eee-c9b2-4342-9e78-6ff8279ea04f",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "RUN_SINGLE_DEVICE_TEST → PHONE-001",
+            "description": "Job 2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+            "input": {
+              "jobId": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+              "command": "RUN_SINGLE_DEVICE_TEST",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:15.702Z",
+            "completedAt": "2026-07-28T08:14:21.676Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:15.525Z",
+            "updatedAt": "2026-07-28T08:14:21.677Z"
+          }
+        ],
+        "events": [
+          {
+            "id": "e5fd33d6-d946-4a9f-b7a6-75c7ce9953a7",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "4bf10086-1e9b-40c5-9570-f60ae47bccb1 → SUCCESS",
+            "metadata": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:15:39.432Z"
+          },
+          {
+            "id": "4dbbf0e8-7202-4be9-a8a4-a1c697220997",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "4bf10086-1e9b-40c5-9570-f60ae47bccb1 → SUCCESS",
+            "metadata": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:15:39.295Z"
+          },
+          {
+            "id": "fdd274e2-28b5-4a33-80cd-23581d8a34e8",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "4bf10086-1e9b-40c5-9570-f60ae47bccb1 → WORKING",
+            "metadata": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:44.304Z"
+          },
+          {
+            "id": "0780b488-41b2-4fa8-b842-e559e7eb0658",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "REBOOT_DEVICE → PHONE-001",
+            "metadata": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "status": "WAITING",
+              "command": "REBOOT_DEVICE"
+            },
+            "createdAt": "2026-07-28T08:14:44.199Z"
+          },
+          {
+            "id": "69c729d7-6491-4c1b-b1be-12531185f046",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → ERROR",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "ERROR"
+            },
+            "createdAt": "2026-07-28T08:14:43.180Z"
+          },
+          {
+            "id": "e5f06867-e851-40c6-ac3f-0e107647747b",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → WORKING",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:42.378Z"
+          },
+          {
+            "id": "6567b153-34e6-43ef-bd8c-ccb5f5a7df89",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → WARNING",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WARNING"
+            },
+            "createdAt": "2026-07-28T08:14:32.277Z"
+          },
+          {
+            "id": "edfca109-966f-41cb-840e-2771cca74356",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → WORKING",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:31.464Z"
+          },
+          {
+            "id": "8f8aec37-500d-43cc-a195-1b1fa4956008",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → WARNING",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WARNING"
+            },
+            "createdAt": "2026-07-28T08:14:26.378Z"
+          },
+          {
+            "id": "da0d510d-99e9-40da-8cc7-58d9d5e10f39",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → WORKING",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:25.595Z"
+          },
+          {
+            "id": "0b31c850-c684-4099-a193-db3e46f28886",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "OPEN_APP → PHONE-001",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WAITING",
+              "command": "OPEN_APP"
+            },
+            "createdAt": "2026-07-28T08:14:25.491Z"
+          },
+          {
+            "id": "a9d12787-0c08-44d8-aa48-db53c6422e13",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "85a01d5d-6392-4819-9f95-5e393a72b6b5 → SUCCESS",
+            "metadata": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:14:24.485Z"
+          },
+          {
+            "id": "ba7618fb-641a-4635-bf26-74b55987b30f",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "85a01d5d-6392-4819-9f95-5e393a72b6b5 → SUCCESS",
+            "metadata": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:14:24.379Z"
+          },
+          {
+            "id": "0230ca16-f4c7-4411-bffa-710fe08d2f97",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "85a01d5d-6392-4819-9f95-5e393a72b6b5 → WORKING",
+            "metadata": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:23.317Z"
+          },
+          {
+            "id": "4126fa7d-7272-4a70-bc05-3a32fcc53307",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "HEALTH_CHECK → PHONE-001",
+            "metadata": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "status": "WAITING",
+              "command": "HEALTH_CHECK"
+            },
+            "createdAt": "2026-07-28T08:14:23.185Z"
+          },
+          {
+            "id": "c0fc19ee-bf2c-48ca-a329-0d7d3cf18dbd",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "cdd70d98-053b-4197-88cc-6e8c48d9b816 → SUCCESS",
+            "metadata": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:14:22.297Z"
+          },
+          {
+            "id": "51a5ec5b-5f9f-4c4c-be66-ed610e759e7a",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "cdd70d98-053b-4197-88cc-6e8c48d9b816 → SUCCESS",
+            "metadata": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:14:22.178Z"
+          },
+          {
+            "id": "d00e8fd5-428f-4ba0-9b42-ae76d20f3e3f",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "cdd70d98-053b-4197-88cc-6e8c48d9b816 → WAITING",
+            "metadata": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "status": "WAITING"
+            },
+            "createdAt": "2026-07-28T08:14:22.065Z"
+          },
+          {
+            "id": "1cb678fb-750a-4d45-941a-e3027ca9b29d",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "VIEW_JOB_LOG → PHONE-001",
+            "metadata": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "status": "WAITING",
+              "command": "VIEW_JOB_LOG"
+            },
+            "createdAt": "2026-07-28T08:14:21.955Z"
+          },
+          {
+            "id": "94035fc2-659c-4aac-8932-e57611af1bc2",
+            "agentId": "fe3c4f25-3ba7-47dd-a576-b9b32d470432",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f → SUCCESS",
+            "metadata": {
+              "jobId": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:14:21.687Z"
+          }
+        ]
+      },
+      {
+        "id": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+        "organizationId": "default-org",
+        "code": "16bit.LOG",
+        "name": "LOG",
+        "role": "LOG",
+        "avatar": "",
+        "status": "SUCCESS",
+        "currentTaskId": null,
+        "lastActivityAt": "2026-07-28T08:15:39.461Z",
+        "config": {},
+        "createdAt": "2026-07-28T01:49:08.944Z",
+        "updatedAt": "2026-07-28T08:15:39.474Z",
+        "tasks": [
+          {
+            "id": "2faec615-61e1-4993-88e1-7d0dcab53930",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "REBOOT_DEVICE → PHONE-001",
+            "description": "Job 4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+            "input": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "command": "REBOOT_DEVICE",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:44.240Z",
+            "completedAt": "2026-07-28T08:15:39.468Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:44.241Z",
+            "updatedAt": "2026-07-28T08:15:39.469Z"
+          },
+          {
+            "id": "ec313abf-34a9-425f-bdc4-6ce91cb5f608",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "OPEN_APP → PHONE-001",
+            "description": "Job 265efd51-6db3-448f-9e6d-81ec358ad037",
+            "input": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "command": "OPEN_APP",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "FAILED",
+            "startedAt": "2026-07-28T08:14:25.524Z",
+            "completedAt": "2026-07-28T08:14:43.217Z",
+            "error": "Device command failed",
+            "createdAt": "2026-07-28T08:14:25.525Z",
+            "updatedAt": "2026-07-28T08:14:43.218Z"
+          },
+          {
+            "id": "3c326839-6ae6-46e9-9ea4-057ba705e6c6",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "HEALTH_CHECK → PHONE-001",
+            "description": "Job 85a01d5d-6392-4819-9f95-5e393a72b6b5",
+            "input": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "command": "HEALTH_CHECK",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:23.219Z",
+            "completedAt": "2026-07-28T08:14:24.523Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:23.220Z",
+            "updatedAt": "2026-07-28T08:14:24.524Z"
+          },
+          {
+            "id": "9fc94344-00b2-48da-8fc0-a10bc1a54f84",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "VIEW_JOB_LOG → PHONE-001",
+            "description": "Job cdd70d98-053b-4197-88cc-6e8c48d9b816",
+            "input": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "command": "VIEW_JOB_LOG",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:21.984Z",
+            "completedAt": "2026-07-28T08:14:22.338Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:21.986Z",
+            "updatedAt": "2026-07-28T08:14:22.339Z"
+          },
+          {
+            "id": "87accedc-6479-4109-9654-b3574f23440a",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "RUN_SINGLE_DEVICE_TEST → PHONE-001",
+            "description": "Job 2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+            "input": {
+              "jobId": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+              "command": "RUN_SINGLE_DEVICE_TEST",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:15.596Z",
+            "completedAt": "2026-07-28T08:14:21.732Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:15.598Z",
+            "updatedAt": "2026-07-28T08:14:21.733Z"
+          }
+        ],
+        "events": [
+          {
+            "id": "71bec8f4-a9ed-466c-bd76-df62f06b93f2",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "4bf10086-1e9b-40c5-9570-f60ae47bccb1 → SUCCESS",
+            "metadata": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:15:39.479Z"
+          },
+          {
+            "id": "8499f472-b155-4b42-bd51-90bec7c044dc",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "4bf10086-1e9b-40c5-9570-f60ae47bccb1 → WORKING",
+            "metadata": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:15:39.355Z"
+          },
+          {
+            "id": "c1dbd245-d67a-45aa-b7f2-8e9b05f9534b",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "4bf10086-1e9b-40c5-9570-f60ae47bccb1 → WORKING",
+            "metadata": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:44.370Z"
+          },
+          {
+            "id": "babbe4f3-0168-4bae-ba2b-88e4e82817fa",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "REBOOT_DEVICE → PHONE-001",
+            "metadata": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "status": "WORKING",
+              "command": "REBOOT_DEVICE"
+            },
+            "createdAt": "2026-07-28T08:14:44.249Z"
+          },
+          {
+            "id": "1f9c7ec7-4559-42d0-9349-56fbb517b72b",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → ERROR",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "ERROR"
+            },
+            "createdAt": "2026-07-28T08:14:43.227Z"
+          },
+          {
+            "id": "7883c380-ab65-495c-94d2-0e2bc39826dc",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → WORKING",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:42.453Z"
+          },
+          {
+            "id": "5e38f17d-331e-4670-aff4-1d10c6ca61c7",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → WARNING",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WARNING"
+            },
+            "createdAt": "2026-07-28T08:14:32.339Z"
+          },
+          {
+            "id": "a7cfd055-14b3-4d1e-b76a-f9be15c7d24e",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → WORKING",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:31.518Z"
+          },
+          {
+            "id": "22fa670a-a3a8-4040-9379-630a023593f4",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → WARNING",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WARNING"
+            },
+            "createdAt": "2026-07-28T08:14:26.423Z"
+          },
+          {
+            "id": "8ee37d11-cf13-4dae-aa88-7d45388b37a0",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → WORKING",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:25.637Z"
+          },
+          {
+            "id": "f129f989-61b1-4251-81e6-ec1e07884b9d",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "OPEN_APP → PHONE-001",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WORKING",
+              "command": "OPEN_APP"
+            },
+            "createdAt": "2026-07-28T08:14:25.533Z"
+          },
+          {
+            "id": "9214cec0-af58-4187-b8c6-e8f338979ec0",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "85a01d5d-6392-4819-9f95-5e393a72b6b5 → SUCCESS",
+            "metadata": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:14:24.534Z"
+          },
+          {
+            "id": "a372f061-c78e-487e-b3e8-6a51c79c24c2",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "85a01d5d-6392-4819-9f95-5e393a72b6b5 → WORKING",
+            "metadata": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:24.434Z"
+          },
+          {
+            "id": "b35dbea4-cf40-4e9e-b7b7-80cd79cfdcf0",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "85a01d5d-6392-4819-9f95-5e393a72b6b5 → WORKING",
+            "metadata": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:23.384Z"
+          },
+          {
+            "id": "7b244d1a-dbc1-472e-853e-64c9a387b178",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "HEALTH_CHECK → PHONE-001",
+            "metadata": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "status": "WORKING",
+              "command": "HEALTH_CHECK"
+            },
+            "createdAt": "2026-07-28T08:14:23.230Z"
+          },
+          {
+            "id": "69bd2605-ba50-4430-8b42-4b5f52d0d4b5",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "cdd70d98-053b-4197-88cc-6e8c48d9b816 → SUCCESS",
+            "metadata": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:14:22.353Z"
+          },
+          {
+            "id": "d9b9ec1f-2bba-4fa5-b083-9e2186cda7d7",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "cdd70d98-053b-4197-88cc-6e8c48d9b816 → WORKING",
+            "metadata": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:22.233Z"
+          },
+          {
+            "id": "5e1ce388-60ac-4cf9-8f1b-9f79e92a1b3a",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "cdd70d98-053b-4197-88cc-6e8c48d9b816 → WORKING",
+            "metadata": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:22.119Z"
+          },
+          {
+            "id": "bbfb2423-764b-45ff-9ced-c01ca892081c",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "VIEW_JOB_LOG → PHONE-001",
+            "metadata": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "status": "WORKING",
+              "command": "VIEW_JOB_LOG"
+            },
+            "createdAt": "2026-07-28T08:14:21.995Z"
+          },
+          {
+            "id": "cfeaedd6-14ff-4324-9422-a11f916aad5e",
+            "agentId": "3eea25f8-cb3d-4252-a776-41e15fcf3c4a",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f → SUCCESS",
+            "metadata": {
+              "jobId": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:14:21.741Z"
+          }
+        ]
+      },
+      {
+        "id": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+        "organizationId": "default-org",
+        "code": "16bit.MANAGER",
+        "name": "MANAGER",
+        "role": "MANAGER",
+        "avatar": "",
+        "status": "SUCCESS",
+        "currentTaskId": null,
+        "lastActivityAt": "2026-07-28T08:14:44.166Z",
+        "config": {},
+        "createdAt": "2026-07-28T01:49:08.849Z",
+        "updatedAt": "2026-07-28T08:14:44.176Z",
+        "tasks": [
+          {
+            "id": "5bc4ffb7-83b5-4618-9517-e4fe8d7b3b49",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "REBOOT_DEVICE → PHONE-001",
+            "description": "Job 4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+            "input": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "command": "REBOOT_DEVICE",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:44.170Z",
+            "completedAt": "2026-07-28T08:14:44.170Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:44.172Z",
+            "updatedAt": "2026-07-28T08:14:44.172Z"
+          },
+          {
+            "id": "20c43706-3724-4543-8180-e5cf7d575242",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "OPEN_APP → PHONE-001",
+            "description": "Job 265efd51-6db3-448f-9e6d-81ec358ad037",
+            "input": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "command": "OPEN_APP",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:25.454Z",
+            "completedAt": "2026-07-28T08:14:25.454Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:25.455Z",
+            "updatedAt": "2026-07-28T08:14:25.455Z"
+          },
+          {
+            "id": "543eeed7-014e-4d3b-92cc-d18c85a7a4a6",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "HEALTH_CHECK → PHONE-001",
+            "description": "Job 85a01d5d-6392-4819-9f95-5e393a72b6b5",
+            "input": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "command": "HEALTH_CHECK",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:23.153Z",
+            "completedAt": "2026-07-28T08:14:23.153Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:23.154Z",
+            "updatedAt": "2026-07-28T08:14:23.154Z"
+          },
+          {
+            "id": "c2106747-b7cc-444a-b217-1a84b113bdea",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "VIEW_JOB_LOG → PHONE-001",
+            "description": "Job cdd70d98-053b-4197-88cc-6e8c48d9b816",
+            "input": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "command": "VIEW_JOB_LOG",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:21.920Z",
+            "completedAt": "2026-07-28T08:14:21.920Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:21.922Z",
+            "updatedAt": "2026-07-28T08:14:21.922Z"
+          },
+          {
+            "id": "62442089-6dbd-4e10-8b28-9cd9c3224e02",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "RUN_SINGLE_DEVICE_TEST → PHONE-001",
+            "description": "Job 2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+            "input": {
+              "jobId": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+              "command": "RUN_SINGLE_DEVICE_TEST",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:15.487Z",
+            "completedAt": "2026-07-28T08:14:15.487Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:15.489Z",
+            "updatedAt": "2026-07-28T08:14:15.489Z"
+          }
+        ],
+        "events": [
+          {
+            "id": "e93fedc1-758b-448d-833f-38e10356fd78",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "REBOOT_DEVICE → PHONE-001",
+            "metadata": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "status": "SUCCESS",
+              "command": "REBOOT_DEVICE"
+            },
+            "createdAt": "2026-07-28T08:14:44.180Z"
+          },
+          {
+            "id": "dca41285-80ae-477a-997e-cb4e4ba87992",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "OPEN_APP → PHONE-001",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "SUCCESS",
+              "command": "OPEN_APP"
+            },
+            "createdAt": "2026-07-28T08:14:25.467Z"
+          },
+          {
+            "id": "595f71f8-1dc0-46d4-b5fe-9db217dbc883",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "HEALTH_CHECK → PHONE-001",
+            "metadata": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "status": "SUCCESS",
+              "command": "HEALTH_CHECK"
+            },
+            "createdAt": "2026-07-28T08:14:23.163Z"
+          },
+          {
+            "id": "89468be8-70e0-4d6f-8956-43f9d49421d0",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "VIEW_JOB_LOG → PHONE-001",
+            "metadata": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "status": "SUCCESS",
+              "command": "VIEW_JOB_LOG"
+            },
+            "createdAt": "2026-07-28T08:14:21.932Z"
+          },
+          {
+            "id": "d06157bd-a835-4e34-a8e5-9b2605c1e1c4",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "RUN_SINGLE_DEVICE_TEST → PHONE-001",
+            "metadata": {
+              "jobId": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+              "status": "SUCCESS",
+              "command": "RUN_SINGLE_DEVICE_TEST"
+            },
+            "createdAt": "2026-07-28T08:14:15.505Z"
+          },
+          {
+            "id": "5ec803a1-46b7-43b5-9e01-008b4539c0ed",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "PUSH_FILE → PHONE-001",
+            "metadata": {
+              "jobId": "4cccb947-5932-4402-9023-34e1d7687831",
+              "status": "SUCCESS",
+              "command": "PUSH_FILE"
+            },
+            "createdAt": "2026-07-28T08:14:13.008Z"
+          },
+          {
+            "id": "5ef7b979-1115-4053-9582-a1c711b48c6f",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "STOP_APP → PHONE-001",
+            "metadata": {
+              "jobId": "f2ca1d8a-63b6-4fc2-9175-d1a5d4d8f2c1",
+              "status": "SUCCESS",
+              "command": "STOP_APP"
+            },
+            "createdAt": "2026-07-28T08:14:10.547Z"
+          },
+          {
+            "id": "d7d4ae4b-f720-4afd-90bb-f6614055e813",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "RESTART_APP → PHONE-001",
+            "metadata": {
+              "jobId": "6f3c0587-36f9-4996-a1be-a31e76a14df6",
+              "status": "SUCCESS",
+              "command": "RESTART_APP"
+            },
+            "createdAt": "2026-07-28T08:14:05.212Z"
+          },
+          {
+            "id": "914c1b7d-f0cb-4f7b-bdaa-9b1457becf73",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "OPEN_APP → PHONE-001",
+            "metadata": {
+              "jobId": "8b302b5f-a72e-46c4-8a53-276e2cafce41",
+              "status": "SUCCESS",
+              "command": "OPEN_APP"
+            },
+            "createdAt": "2026-07-28T08:13:59.811Z"
+          },
+          {
+            "id": "92f84b8d-66e5-4ce9-bf81-674df7332f45",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "SCREENSHOT → PHONE-001",
+            "metadata": {
+              "jobId": "c85e17bd-9eaa-4e68-a39f-aadf737a92eb",
+              "status": "SUCCESS",
+              "command": "SCREENSHOT"
+            },
+            "createdAt": "2026-07-28T08:13:56.436Z"
+          },
+          {
+            "id": "9b239b9f-aed6-402d-9b44-48b10374e454",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "HEALTH_CHECK → PHONE-001",
+            "metadata": {
+              "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+              "status": "SUCCESS",
+              "command": "HEALTH_CHECK"
+            },
+            "createdAt": "2026-07-28T08:13:54.128Z"
+          },
+          {
+            "id": "d3695bcf-86ff-4b98-88de-d602bc539421",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "VIEW_DEVICE_STATUS → PHONE-001",
+            "metadata": {
+              "jobId": "bda1a008-dcf2-4c92-b6a9-bfb72fdf0182",
+              "status": "SUCCESS",
+              "command": "VIEW_DEVICE_STATUS"
+            },
+            "createdAt": "2026-07-28T08:13:46.934Z"
+          },
+          {
+            "id": "01911d21-70b7-43bf-9dfc-feec1e7bab5f",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "REBOOT_DEVICE → PHONE-001",
+            "metadata": {
+              "jobId": "7ee6525c-2ce6-4142-a3b3-4f9f10a6a8ac",
+              "status": "SUCCESS",
+              "command": "REBOOT_DEVICE"
+            },
+            "createdAt": "2026-07-28T08:12:25.110Z"
+          },
+          {
+            "id": "1c6fc820-e718-4812-b96e-4205d6388bea",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "OPEN_APP → PHONE-001",
+            "metadata": {
+              "jobId": "594ae22a-662d-4f53-87c3-d6b3eb6059a9",
+              "status": "SUCCESS",
+              "command": "OPEN_APP"
+            },
+            "createdAt": "2026-07-28T08:12:06.457Z"
+          },
+          {
+            "id": "5fd981ff-eaf2-4b27-a035-a2ec3c2e13f6",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "HEALTH_CHECK → PHONE-001",
+            "metadata": {
+              "jobId": "5227c287-2111-4eb5-87a2-50890b0a53e5",
+              "status": "SUCCESS",
+              "command": "HEALTH_CHECK"
+            },
+            "createdAt": "2026-07-28T08:12:04.174Z"
+          },
+          {
+            "id": "5182c8b9-0b61-4907-a81b-fa198582629f",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "VIEW_JOB_LOG → PHONE-001",
+            "metadata": {
+              "jobId": "bd90f7c1-7856-417a-82a5-de55d28358d5",
+              "status": "SUCCESS",
+              "command": "VIEW_JOB_LOG"
+            },
+            "createdAt": "2026-07-28T08:12:02.958Z"
+          },
+          {
+            "id": "1781775c-61e4-46dc-b3b1-2f57dedc6301",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "RUN_SINGLE_DEVICE_TEST → PHONE-001",
+            "metadata": {
+              "jobId": "49e2ba79-6b8a-481d-a9d5-aa11bf7c8018",
+              "status": "SUCCESS",
+              "command": "RUN_SINGLE_DEVICE_TEST"
+            },
+            "createdAt": "2026-07-28T08:11:57.505Z"
+          },
+          {
+            "id": "d3624e7b-e37c-4cea-a473-7e6eb047f071",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "PUSH_FILE → PHONE-001",
+            "metadata": {
+              "jobId": "d19e18b4-a42f-4cb4-bf12-31eff66a2c2c",
+              "status": "SUCCESS",
+              "command": "PUSH_FILE"
+            },
+            "createdAt": "2026-07-28T08:11:55.001Z"
+          },
+          {
+            "id": "492603f3-2bc8-475c-8650-da49d0190522",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "STOP_APP → PHONE-001",
+            "metadata": {
+              "jobId": "9ab8986a-9fbe-4899-802d-4a850bb9ebaa",
+              "status": "SUCCESS",
+              "command": "STOP_APP"
+            },
+            "createdAt": "2026-07-28T08:11:52.277Z"
+          },
+          {
+            "id": "43a9e4ef-fa50-431b-ba50-62a436126033",
+            "agentId": "11eb2ecd-89e0-4409-909c-8638b2228fa4",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "RESTART_APP → PHONE-001",
+            "metadata": {
+              "jobId": "ad17624f-b8eb-46a3-a0f5-a4621b0d7af3",
+              "status": "SUCCESS",
+              "command": "RESTART_APP"
+            },
+            "createdAt": "2026-07-28T08:11:48.956Z"
+          }
+        ]
+      },
+      {
+        "id": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+        "organizationId": "default-org",
+        "code": "16bit.QA",
+        "name": "QA",
+        "role": "QA",
+        "avatar": "",
+        "status": "SUCCESS",
+        "currentTaskId": null,
+        "lastActivityAt": "2026-07-28T08:15:39.439Z",
+        "config": {},
+        "createdAt": "2026-07-28T01:49:08.926Z",
+        "updatedAt": "2026-07-28T08:15:39.452Z",
+        "tasks": [
+          {
+            "id": "09cdca1b-c619-4049-b0fd-9bcf7d837ff5",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "REBOOT_DEVICE → PHONE-001",
+            "description": "Job 4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+            "input": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "command": "REBOOT_DEVICE",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:15:39.316Z",
+            "completedAt": "2026-07-28T08:15:39.446Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:44.224Z",
+            "updatedAt": "2026-07-28T08:15:39.448Z"
+          },
+          {
+            "id": "7c642ee7-8787-4a2f-994e-3a367c126fb1",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "OPEN_APP → PHONE-001",
+            "description": "Job 265efd51-6db3-448f-9e6d-81ec358ad037",
+            "input": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "command": "OPEN_APP",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "FAILED",
+            "startedAt": null,
+            "completedAt": "2026-07-28T08:14:43.194Z",
+            "error": "Device command failed",
+            "createdAt": "2026-07-28T08:14:25.504Z",
+            "updatedAt": "2026-07-28T08:14:43.195Z"
+          },
+          {
+            "id": "df7b8e14-8262-4f44-99ec-0222b8eec8c8",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "HEALTH_CHECK → PHONE-001",
+            "description": "Job 85a01d5d-6392-4819-9f95-5e393a72b6b5",
+            "input": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "command": "HEALTH_CHECK",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:24.393Z",
+            "completedAt": "2026-07-28T08:14:24.498Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:23.199Z",
+            "updatedAt": "2026-07-28T08:14:24.500Z"
+          },
+          {
+            "id": "815e7612-f162-4638-827b-f880e03d7b8e",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "VIEW_JOB_LOG → PHONE-001",
+            "description": "Job cdd70d98-053b-4197-88cc-6e8c48d9b816",
+            "input": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "command": "VIEW_JOB_LOG",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:22.192Z",
+            "completedAt": "2026-07-28T08:14:22.310Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:21.966Z",
+            "updatedAt": "2026-07-28T08:14:22.311Z"
+          },
+          {
+            "id": "cf54591b-5435-4f6f-b9af-be10f1ae0579",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "parentTaskId": null,
+            "missionId": null,
+            "type": "DEVICE_COMMAND",
+            "title": "RUN_SINGLE_DEVICE_TEST → PHONE-001",
+            "description": "Job 2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+            "input": {
+              "jobId": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+              "command": "RUN_SINGLE_DEVICE_TEST",
+              "deviceCode": "PHONE-001"
+            },
+            "output": null,
+            "status": "COMPLETED",
+            "startedAt": "2026-07-28T08:14:21.534Z",
+            "completedAt": "2026-07-28T08:14:21.704Z",
+            "error": null,
+            "createdAt": "2026-07-28T08:14:15.564Z",
+            "updatedAt": "2026-07-28T08:14:21.705Z"
+          }
+        ],
+        "events": [
+          {
+            "id": "04ebab42-45a6-47e6-8ef2-8342efab07a0",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "4bf10086-1e9b-40c5-9570-f60ae47bccb1 → SUCCESS",
+            "metadata": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:15:39.457Z"
+          },
+          {
+            "id": "01cd0043-1098-462e-8556-d74551569404",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "4bf10086-1e9b-40c5-9570-f60ae47bccb1 → WORKING",
+            "metadata": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:15:39.330Z"
+          },
+          {
+            "id": "677f0fad-0fa6-49ea-bd29-9259d4ac7a73",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "4bf10086-1e9b-40c5-9570-f60ae47bccb1 → WAITING",
+            "metadata": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "status": "WAITING"
+            },
+            "createdAt": "2026-07-28T08:14:44.331Z"
+          },
+          {
+            "id": "5df59c48-c904-41d2-b6b9-65532eb73b5f",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "REBOOT_DEVICE → PHONE-001",
+            "metadata": {
+              "jobId": "4bf10086-1e9b-40c5-9570-f60ae47bccb1",
+              "status": "WAITING",
+              "command": "REBOOT_DEVICE"
+            },
+            "createdAt": "2026-07-28T08:14:44.233Z"
+          },
+          {
+            "id": "9da88af9-8f5f-4143-8cf5-2750bfb7f439",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → ERROR",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "ERROR"
+            },
+            "createdAt": "2026-07-28T08:14:43.206Z"
+          },
+          {
+            "id": "ae017a13-f110-4885-8483-5919a5942117",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → WAITING",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WAITING"
+            },
+            "createdAt": "2026-07-28T08:14:42.413Z"
+          },
+          {
+            "id": "712dfde6-a941-47b5-9ecb-83ee5a8117de",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → ERROR",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "ERROR"
+            },
+            "createdAt": "2026-07-28T08:14:32.305Z"
+          },
+          {
+            "id": "181eb2d0-c14a-45a2-bbee-0c1dcea02d22",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → WAITING",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WAITING"
+            },
+            "createdAt": "2026-07-28T08:14:31.493Z"
+          },
+          {
+            "id": "975a1699-f911-4a98-9c9a-2d84ed60dead",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → ERROR",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "ERROR"
+            },
+            "createdAt": "2026-07-28T08:14:26.400Z"
+          },
+          {
+            "id": "1233975d-697a-43c8-a463-76d54657ae1f",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "265efd51-6db3-448f-9e6d-81ec358ad037 → WAITING",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WAITING"
+            },
+            "createdAt": "2026-07-28T08:14:25.615Z"
+          },
+          {
+            "id": "0ffb76ef-82e0-44ed-bc4a-aeb769cc1fb9",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "OPEN_APP → PHONE-001",
+            "metadata": {
+              "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+              "status": "WAITING",
+              "command": "OPEN_APP"
+            },
+            "createdAt": "2026-07-28T08:14:25.515Z"
+          },
+          {
+            "id": "b30b7a82-eb64-4907-8755-11da2507ca45",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "85a01d5d-6392-4819-9f95-5e393a72b6b5 → SUCCESS",
+            "metadata": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:14:24.509Z"
+          },
+          {
+            "id": "d22a8b68-d360-466d-ac5f-5d726ca29a00",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "85a01d5d-6392-4819-9f95-5e393a72b6b5 → WORKING",
+            "metadata": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:24.410Z"
+          },
+          {
+            "id": "f795c1ac-6e27-4297-bf7a-1f83269a1172",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "85a01d5d-6392-4819-9f95-5e393a72b6b5 → WAITING",
+            "metadata": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "status": "WAITING"
+            },
+            "createdAt": "2026-07-28T08:14:23.358Z"
+          },
+          {
+            "id": "44530a4a-3309-4625-b24b-1ae8ef40bcb6",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "HEALTH_CHECK → PHONE-001",
+            "metadata": {
+              "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+              "status": "WAITING",
+              "command": "HEALTH_CHECK"
+            },
+            "createdAt": "2026-07-28T08:14:23.208Z"
+          },
+          {
+            "id": "4eaaeec9-52ca-4c1b-ad8f-e5773c7cd564",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "cdd70d98-053b-4197-88cc-6e8c48d9b816 → SUCCESS",
+            "metadata": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:14:22.322Z"
+          },
+          {
+            "id": "d404d0a6-fb7e-4aca-b7a4-3bf16134b80c",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "cdd70d98-053b-4197-88cc-6e8c48d9b816 → WORKING",
+            "metadata": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "status": "WORKING"
+            },
+            "createdAt": "2026-07-28T08:14:22.202Z"
+          },
+          {
+            "id": "c81e24da-b134-4faf-b460-12f5fc2b56e2",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "cdd70d98-053b-4197-88cc-6e8c48d9b816 → WAITING",
+            "metadata": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "status": "WAITING"
+            },
+            "createdAt": "2026-07-28T08:14:22.093Z"
+          },
+          {
+            "id": "6471da43-2aa2-4536-8849-e47db245b889",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "DEVICE_TASK_CREATED",
+            "message": "VIEW_JOB_LOG → PHONE-001",
+            "metadata": {
+              "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+              "status": "WAITING",
+              "command": "VIEW_JOB_LOG"
+            },
+            "createdAt": "2026-07-28T08:14:21.976Z"
+          },
+          {
+            "id": "c5cc82c6-10d0-4049-928f-b2047be99046",
+            "agentId": "5751070a-2915-4caf-b812-a2bf35ef12e9",
+            "eventType": "JOB_STATE_CHANGED",
+            "message": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f → SUCCESS",
+            "metadata": {
+              "jobId": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+              "status": "SUCCESS"
+            },
+            "createdAt": "2026-07-28T08:14:21.714Z"
+          }
+        ]
+      }
+    ]
+  }
+}

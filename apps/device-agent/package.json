@@ -1,0 +1,16 @@
+{
+  "name": "@farm-phone/device-agent",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "build": "node --check src/index.js",
+    "dev": "node --env-file=../../.env src/index.js",
+    "lint": "node --check src/index.js && node --check test/agent.test.js",
+    "start": "node src/index.js",
+    "test": "node --test test/*.test.js",
+    "typecheck": "node --check src/index.js && node --check test/agent.test.js"
+  },
+  "dependencies": {
+    "socket.io-client": "^4.7.4"
+  }
+}

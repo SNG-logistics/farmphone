@@ -1,0 +1,14 @@
+{
+  "testId": "TEST-018",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": false,
+  "startedAt": "2026-07-28T08:15:44.473Z",
+  "completedAt": "2026-07-28T08:15:44.473Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-018/result.json"
+  ],
+  "notes": "Static production-source contract; no physical device claim.",
+  "details": {}
+}

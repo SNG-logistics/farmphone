@@ -1,0 +1,355 @@
+{
+  "testId": "TEST-010A",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T08:14:23.103Z",
+  "completedAt": "2026-07-28T08:14:23.103Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-010A/result.json"
+  ],
+  "notes": "",
+  "details": {
+    "job": {
+      "id": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+      "organizationId": "default-org",
+      "campaignId": null,
+      "accountId": null,
+      "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+      "contentId": null,
+      "type": "DEVICE_COMMAND",
+      "priority": "NORMAL",
+      "scheduledAt": null,
+      "startedAt": "2026-07-28T08:14:22.020Z",
+      "completedAt": "2026-07-28T08:14:22.238Z",
+      "status": "SUCCESS",
+      "parameters": {
+        "command": "VIEW_JOB_LOG",
+        "targetJobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a"
+      },
+      "result": {
+        "logs": [
+          {
+            "id": "a7836863-51de-40b0-bb4b-962a01a807f8",
+            "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+            "level": "INFO",
+            "message": "HEALTH_CHECK ผ่านการ Verify",
+            "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+            "metadata": {
+              "result": {
+                "checks": {
+                  "storageUsed": 21523247104,
+                  "batteryLevel": 99,
+                  "storageTotal": 49480187904,
+                  "adbConnection": "PASS",
+                  "authorization": "PASS",
+                  "uptimeSeconds": 70,
+                  "androidVersion": "16",
+                  "selectedAppPackage": "com.ss.android.ugc.trill",
+                  "selectedAppInstalled": true,
+                  "deviceAgentConnection": "PASS"
+                },
+                "result": "PASS",
+                "warnings": []
+              }
+            },
+            "adbOutput": null,
+            "createdAt": "2026-07-28T08:13:55.570Z",
+            "errorCode": null,
+            "attemptNumber": 1,
+            "organizationId": "default-org"
+          },
+          {
+            "id": "b47110f9-88a3-42f0-b2ac-9a80584a81e7",
+            "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+            "level": "INFO",
+            "message": "มอบหมาย HEALTH_CHECK ให้ Device Agent",
+            "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+            "metadata": null,
+            "adbOutput": null,
+            "createdAt": "2026-07-28T08:13:54.267Z",
+            "errorCode": null,
+            "attemptNumber": 1,
+            "organizationId": "default-org"
+          },
+          {
+            "id": "2db2486a-e75f-446d-9c21-9e11922ebc63",
+            "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+            "level": "INFO",
+            "message": "สร้างคำสั่ง HEALTH_CHECK สำหรับ PHONE-001",
+            "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+            "metadata": null,
+            "adbOutput": null,
+            "createdAt": "2026-07-28T08:13:54.091Z",
+            "errorCode": null,
+            "attemptNumber": 0,
+            "organizationId": "default-org"
+          }
+        ],
+        "count": 3,
+        "targetJob": {
+          "id": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+          "status": "SUCCESS",
+          "attempts": 1,
+          "createdAt": "2026-07-28T08:13:54.081Z",
+          "errorCode": null,
+          "startedAt": "2026-07-28T08:13:54.246Z",
+          "completedAt": "2026-07-28T08:13:55.546Z",
+          "maxAttempts": 3,
+          "errorMessage": null
+        }
+      },
+      "attempts": 1,
+      "maxAttempts": 3,
+      "retryCount": 0,
+      "maxRetries": 3,
+      "errorCode": null,
+      "errorMessage": null,
+      "idempotencyKey": "PHONE-001:VIEW_JOB_LOG:1785226461878",
+      "metadata": {
+        "source": "SINGLE_DEVICE_DASHBOARD",
+        "deviceCode": "PHONE-001"
+      },
+      "createdAt": "2026-07-28T08:14:21.898Z",
+      "updatedAt": "2026-07-28T08:14:22.240Z",
+      "device": {
+        "id": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "organizationId": "default-org",
+        "deviceGroupId": null,
+        "code": "PHONE-001",
+        "name": "samsung SM-A075F",
+        "serialNumber": "R8YY81H581J",
+        "manufacturer": "samsung",
+        "model": "SM-A075F",
+        "osVersion": "16",
+        "adbStatus": "ONLINE",
+        "battery": 99,
+        "storage": 46,
+        "storageUsed": "21531303936",
+        "storageTotal": "49480187904",
+        "agentVersion": "1.0.0",
+        "networkType": "wifi",
+        "assignedAccountId": null,
+        "currentJobId": null,
+        "lastHeartbeatAt": "2026-07-28T08:14:21.208Z",
+        "nodeId": "NODE-A",
+        "metadata": {
+          "lastHeartbeatError": null
+        },
+        "createdAt": "2026-07-28T01:43:35.524Z",
+        "updatedAt": "2026-07-28T08:14:21.651Z"
+      },
+      "campaign": null,
+      "account": null,
+      "content": null,
+      "deviceCommand": {
+        "id": "47a1cd77-066e-47c1-82c7-212e2768a4fb",
+        "organizationId": "default-org",
+        "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+        "command": "VIEW_JOB_LOG",
+        "parameters": {
+          "command": "VIEW_JOB_LOG",
+          "targetJobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a"
+        },
+        "status": "SUCCESS",
+        "result": {
+          "logs": [
+            {
+              "id": "a7836863-51de-40b0-bb4b-962a01a807f8",
+              "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+              "level": "INFO",
+              "message": "HEALTH_CHECK ผ่านการ Verify",
+              "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+              "metadata": {
+                "result": {
+                  "checks": {
+                    "storageUsed": 21523247104,
+                    "batteryLevel": 99,
+                    "storageTotal": 49480187904,
+                    "adbConnection": "PASS",
+                    "authorization": "PASS",
+                    "uptimeSeconds": 70,
+                    "androidVersion": "16",
+                    "selectedAppPackage": "com.ss.android.ugc.trill",
+                    "selectedAppInstalled": true,
+                    "deviceAgentConnection": "PASS"
+                  },
+                  "result": "PASS",
+                  "warnings": []
+                }
+              },
+              "adbOutput": null,
+              "createdAt": "2026-07-28T08:13:55.570Z",
+              "errorCode": null,
+              "attemptNumber": 1,
+              "organizationId": "default-org"
+            },
+            {
+              "id": "b47110f9-88a3-42f0-b2ac-9a80584a81e7",
+              "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+              "level": "INFO",
+              "message": "มอบหมาย HEALTH_CHECK ให้ Device Agent",
+              "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+              "metadata": null,
+              "adbOutput": null,
+              "createdAt": "2026-07-28T08:13:54.267Z",
+              "errorCode": null,
+              "attemptNumber": 1,
+              "organizationId": "default-org"
+            },
+            {
+              "id": "2db2486a-e75f-446d-9c21-9e11922ebc63",
+              "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+              "level": "INFO",
+              "message": "สร้างคำสั่ง HEALTH_CHECK สำหรับ PHONE-001",
+              "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+              "metadata": null,
+              "adbOutput": null,
+              "createdAt": "2026-07-28T08:13:54.091Z",
+              "errorCode": null,
+              "attemptNumber": 0,
+              "organizationId": "default-org"
+            }
+          ],
+          "count": 3,
+          "targetJob": {
+            "id": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+            "status": "SUCCESS",
+            "attempts": 1,
+            "createdAt": "2026-07-28T08:13:54.081Z",
+            "errorCode": null,
+            "startedAt": "2026-07-28T08:13:54.246Z",
+            "completedAt": "2026-07-28T08:13:55.546Z",
+            "maxAttempts": 3,
+            "errorMessage": null
+          }
+        },
+        "errorCode": null,
+        "errorMessage": null,
+        "requestedAt": "2026-07-28T08:14:21.905Z",
+        "assignedAt": "2026-07-28T08:14:22.032Z",
+        "startedAt": "2026-07-28T08:14:22.128Z",
+        "completedAt": "2026-07-28T08:14:22.238Z",
+        "createdAt": "2026-07-28T08:14:21.905Z",
+        "updatedAt": "2026-07-28T08:14:22.253Z"
+      },
+      "logs": [
+        {
+          "id": "3c524f07-173d-4b28-b25b-dde252e49641",
+          "organizationId": "default-org",
+          "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "VIEW_JOB_LOG ผ่านการ Verify",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": {
+            "result": {
+              "logs": [
+                {
+                  "id": "a7836863-51de-40b0-bb4b-962a01a807f8",
+                  "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+                  "level": "INFO",
+                  "message": "HEALTH_CHECK ผ่านการ Verify",
+                  "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+                  "metadata": {
+                    "result": {
+                      "checks": {
+                        "storageUsed": 21523247104,
+                        "batteryLevel": 99,
+                        "storageTotal": 49480187904,
+                        "adbConnection": "PASS",
+                        "authorization": "PASS",
+                        "uptimeSeconds": 70,
+                        "androidVersion": "16",
+                        "selectedAppPackage": "com.ss.android.ugc.trill",
+                        "selectedAppInstalled": true,
+                        "deviceAgentConnection": "PASS"
+                      },
+                      "result": "PASS",
+                      "warnings": []
+                    }
+                  },
+                  "adbOutput": null,
+                  "createdAt": "2026-07-28T08:13:55.570Z",
+                  "errorCode": null,
+                  "attemptNumber": 1,
+                  "organizationId": "default-org"
+                },
+                {
+                  "id": "b47110f9-88a3-42f0-b2ac-9a80584a81e7",
+                  "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+                  "level": "INFO",
+                  "message": "มอบหมาย HEALTH_CHECK ให้ Device Agent",
+                  "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+                  "metadata": null,
+                  "adbOutput": null,
+                  "createdAt": "2026-07-28T08:13:54.267Z",
+                  "errorCode": null,
+                  "attemptNumber": 1,
+                  "organizationId": "default-org"
+                },
+                {
+                  "id": "2db2486a-e75f-446d-9c21-9e11922ebc63",
+                  "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+                  "level": "INFO",
+                  "message": "สร้างคำสั่ง HEALTH_CHECK สำหรับ PHONE-001",
+                  "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+                  "metadata": null,
+                  "adbOutput": null,
+                  "createdAt": "2026-07-28T08:13:54.091Z",
+                  "errorCode": null,
+                  "attemptNumber": 0,
+                  "organizationId": "default-org"
+                }
+              ],
+              "count": 3,
+              "targetJob": {
+                "id": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+                "status": "SUCCESS",
+                "attempts": 1,
+                "createdAt": "2026-07-28T08:13:54.081Z",
+                "errorCode": null,
+                "startedAt": "2026-07-28T08:13:54.246Z",
+                "completedAt": "2026-07-28T08:13:55.546Z",
+                "maxAttempts": 3,
+                "errorMessage": null
+              }
+            }
+          },
+          "createdAt": "2026-07-28T08:14:22.266Z"
+        },
+        {
+          "id": "ca983cae-6ce5-4433-9c7f-12055cecfa57",
+          "organizationId": "default-org",
+          "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "ประมวลผล VIEW_JOB_LOG จากฐานข้อมูล",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:22.040Z"
+        },
+        {
+          "id": "b4c6891b-f40c-4b3e-9ae2-c29146a83cad",
+          "organizationId": "default-org",
+          "jobId": "cdd70d98-053b-4197-88cc-6e8c48d9b816",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "สร้างคำสั่ง VIEW_JOB_LOG สำหรับ PHONE-001",
+          "attemptNumber": 0,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:21.908Z"
+        }
+      ],
+      "uploadedFiles": []
+    }
+  }
+}

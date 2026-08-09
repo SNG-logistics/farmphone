@@ -1,0 +1,163 @@
+{
+  "testId": "TEST-008",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T08:14:12.781Z",
+  "completedAt": "2026-07-28T08:14:12.781Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-008/result.json"
+  ],
+  "notes": "",
+  "details": {
+    "job": {
+      "id": "f2ca1d8a-63b6-4fc2-9175-d1a5d4d8f2c1",
+      "organizationId": "default-org",
+      "campaignId": null,
+      "accountId": null,
+      "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+      "contentId": null,
+      "type": "DEVICE_COMMAND",
+      "priority": "NORMAL",
+      "scheduledAt": null,
+      "startedAt": "2026-07-28T08:14:10.675Z",
+      "completedAt": "2026-07-28T08:14:11.793Z",
+      "status": "SUCCESS",
+      "parameters": {
+        "command": "STOP_APP",
+        "packageName": "com.ss.android.ugc.trill"
+      },
+      "result": {
+        "foreground": false,
+        "processIds": [],
+        "packageName": "com.ss.android.ugc.trill",
+        "processRunning": false,
+        "verifiedStopped": true,
+        "foregroundEvidence": []
+      },
+      "attempts": 1,
+      "maxAttempts": 3,
+      "retryCount": 0,
+      "maxRetries": 3,
+      "errorCode": null,
+      "errorMessage": null,
+      "idempotencyKey": "PHONE-001:STOP_APP:1785226450478",
+      "metadata": {
+        "source": "SINGLE_DEVICE_DASHBOARD",
+        "deviceCode": "PHONE-001"
+      },
+      "createdAt": "2026-07-28T08:14:10.499Z",
+      "updatedAt": "2026-07-28T08:14:11.795Z",
+      "device": {
+        "id": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "organizationId": "default-org",
+        "deviceGroupId": null,
+        "code": "PHONE-001",
+        "name": "samsung SM-A075F",
+        "serialNumber": "R8YY81H581J",
+        "manufacturer": "samsung",
+        "model": "SM-A075F",
+        "osVersion": "16",
+        "adbStatus": "ONLINE",
+        "battery": 99,
+        "storage": 46,
+        "storageUsed": "21531078656",
+        "storageTotal": "49480187904",
+        "agentVersion": "1.0.0",
+        "networkType": "wifi",
+        "assignedAccountId": null,
+        "currentJobId": null,
+        "lastHeartbeatAt": "2026-07-28T08:14:12.012Z",
+        "nodeId": "NODE-A",
+        "metadata": {
+          "lastHeartbeatError": null
+        },
+        "createdAt": "2026-07-28T01:43:35.524Z",
+        "updatedAt": "2026-07-28T08:14:12.013Z"
+      },
+      "campaign": null,
+      "account": null,
+      "content": null,
+      "deviceCommand": {
+        "id": "86ac950a-d414-47f4-b3fa-621c7b86fc5d",
+        "organizationId": "default-org",
+        "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "jobId": "f2ca1d8a-63b6-4fc2-9175-d1a5d4d8f2c1",
+        "command": "STOP_APP",
+        "parameters": {
+          "command": "STOP_APP",
+          "packageName": "com.ss.android.ugc.trill"
+        },
+        "status": "SUCCESS",
+        "result": {
+          "foreground": false,
+          "processIds": [],
+          "packageName": "com.ss.android.ugc.trill",
+          "processRunning": false,
+          "verifiedStopped": true,
+          "foregroundEvidence": []
+        },
+        "errorCode": null,
+        "errorMessage": null,
+        "requestedAt": "2026-07-28T08:14:10.510Z",
+        "assignedAt": "2026-07-28T08:14:10.683Z",
+        "startedAt": "2026-07-28T08:14:10.799Z",
+        "completedAt": "2026-07-28T08:14:11.793Z",
+        "createdAt": "2026-07-28T08:14:10.510Z",
+        "updatedAt": "2026-07-28T08:14:11.800Z"
+      },
+      "logs": [
+        {
+          "id": "7abdeab8-7d2e-40d7-9102-6a3dac71066a",
+          "organizationId": "default-org",
+          "jobId": "f2ca1d8a-63b6-4fc2-9175-d1a5d4d8f2c1",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "STOP_APP ผ่านการ Verify",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": {
+            "result": {
+              "foreground": false,
+              "processIds": [],
+              "packageName": "com.ss.android.ugc.trill",
+              "processRunning": false,
+              "verifiedStopped": true,
+              "foregroundEvidence": []
+            }
+          },
+          "createdAt": "2026-07-28T08:14:11.811Z"
+        },
+        {
+          "id": "cfa5bcfc-d11d-470f-a21e-6d07b17f7f3e",
+          "organizationId": "default-org",
+          "jobId": "f2ca1d8a-63b6-4fc2-9175-d1a5d4d8f2c1",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "มอบหมาย STOP_APP ให้ Device Agent",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:10.698Z"
+        },
+        {
+          "id": "5f70805a-ce2d-40d3-9d66-7df8b4a153c7",
+          "organizationId": "default-org",
+          "jobId": "f2ca1d8a-63b6-4fc2-9175-d1a5d4d8f2c1",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "สร้างคำสั่ง STOP_APP สำหรับ PHONE-001",
+          "attemptNumber": 0,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:10.515Z"
+        }
+      ],
+      "uploadedFiles": []
+    }
+  }
+}

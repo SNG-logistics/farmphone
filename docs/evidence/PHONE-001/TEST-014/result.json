@@ -1,0 +1,68 @@
+{
+  "testId": "TEST-014",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T08:16:19.9641601Z",
+  "completedAt": "2026-07-28T08:16:36.2401747Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-014/result.json",
+    "docs/evidence/PHONE-001/TEST-014/api-restart-log.txt"
+  ],
+  "notes": "Restarted only the API container while PostgreSQL and the physical Device Agent remained running. The completed physical HEALTH_CHECK Job was read before and after restart with identical id, status, attempts, completion timestamp, and result.",
+  "details": {
+    "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+    "containerStartedAtBefore": "2026-07-28T08:12:29.62914663Z",
+    "restartRequestedAt": "2026-07-28T08:16:19.9641601Z",
+    "containerStartedAtAfter": "2026-07-28T08:16:30.663807583Z",
+    "apiRecoveredAt": "2026-07-28T08:16:36.2401747Z",
+    "before": {
+      "id": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+      "status": "SUCCESS",
+      "attempts": 1,
+      "completedAt": "2026-07-28T08:13:55.546Z",
+      "result": {
+        "checks": {
+          "storageUsed": 21523247104,
+          "batteryLevel": 99,
+          "storageTotal": 49480187904,
+          "adbConnection": "PASS",
+          "authorization": "PASS",
+          "uptimeSeconds": 70,
+          "androidVersion": "16",
+          "selectedAppPackage": "com.ss.android.ugc.trill",
+          "selectedAppInstalled": true,
+          "deviceAgentConnection": "PASS"
+        },
+        "result": "PASS",
+        "warnings": []
+      }
+    },
+    "after": {
+      "id": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+      "status": "SUCCESS",
+      "attempts": 1,
+      "completedAt": "2026-07-28T08:13:55.546Z",
+      "result": {
+        "checks": {
+          "storageUsed": 21523247104,
+          "batteryLevel": 99,
+          "storageTotal": 49480187904,
+          "adbConnection": "PASS",
+          "authorization": "PASS",
+          "uptimeSeconds": 70,
+          "androidVersion": "16",
+          "selectedAppPackage": "com.ss.android.ugc.trill",
+          "selectedAppInstalled": true,
+          "deviceAgentConnection": "PASS"
+        },
+        "result": "PASS",
+        "warnings": []
+      }
+    },
+    "sameId": true,
+    "sameStatus": true,
+    "sameResult": true
+  }
+}

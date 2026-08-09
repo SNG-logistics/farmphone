@@ -1,0 +1,12 @@
+{
+  "status": "SUCCESS",
+  "generatedAt": "2026-08-08T23:06:42.481Z",
+  "outputDirectory": "C:\\Users\\acer\\OneDrive\\เดสก์ท็อป\\farm phone\\output\\sng-express",
+  "finalMp4": "C:\\Users\\acer\\OneDrive\\เดสก์ท็อป\\farm phone\\output\\sng-express\\final.mp4",
+  "thumbnail": "C:\\Users\\acer\\OneDrive\\เดสก์ท็อป\\farm phone\\output\\sng-express\\thumbnail.jpg",
+  "script": "C:\\Users\\acer\\OneDrive\\เดสก์ท็อป\\farm phone\\output\\sng-express\\script.json",
+  "scenePlan": "C:\\Users\\acer\\OneDrive\\เดสก์ท็อป\\farm phone\\output\\sng-express\\scene-plan.json",
+  "qaReport": "C:\\Users\\acer\\OneDrive\\เดสก์ท็อป\\farm phone\\output\\sng-express\\qa-report.json",
+  "renderLog": "C:\\Users\\acer\\OneDrive\\เดสก์ท็อป\\farm phone\\output\\sng-express\\render.log",
+  "checksum": "3cf4fa3734fcafa35e15f9e0adbd8b728f42120cd34781a43aa16dc718ca0cda"
+}

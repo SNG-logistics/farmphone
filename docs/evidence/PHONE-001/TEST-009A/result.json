@@ -1,0 +1,593 @@
+{
+  "testId": "TEST-009A",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T08:14:21.856Z",
+  "completedAt": "2026-07-28T08:14:21.856Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-009A/result.json"
+  ],
+  "notes": "",
+  "details": {
+    "job": {
+      "id": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+      "organizationId": "default-org",
+      "campaignId": null,
+      "accountId": null,
+      "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+      "contentId": null,
+      "type": "DEVICE_COMMAND",
+      "priority": "NORMAL",
+      "scheduledAt": null,
+      "startedAt": "2026-07-28T08:14:15.645Z",
+      "completedAt": "2026-07-28T08:14:21.628Z",
+      "status": "SUCCESS",
+      "parameters": {
+        "file": {
+          "size": 133,
+          "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+          "filename": "live_push_PHONE-001.txt",
+          "destination": "/sdcard/Download/FarmPhone/live_push_PHONE-001.txt",
+          "uploadedFileId": "f6e5e54f-64fa-4858-90e9-0800395a4bda"
+        },
+        "command": "RUN_SINGLE_DEVICE_TEST",
+        "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/",
+        "packageName": "com.ss.android.ugc.trill"
+      },
+      "result": {
+        "steps": [
+          {
+            "name": "DEVICE_AGENT_CHECK",
+            "status": "PASS",
+            "connected": true,
+            "timestamp": "2026-07-28T08:14:16.299Z"
+          },
+          {
+            "name": "ADB_CHECK",
+            "status": "PASS",
+            "timestamp": "2026-07-28T08:14:16.364Z"
+          },
+          {
+            "name": "PHONE_001_CHECK",
+            "status": "PASS",
+            "timestamp": "2026-07-28T08:14:16.364Z",
+            "deviceCode": "PHONE-001",
+            "serialNumber": "R8YY81H581J"
+          },
+          {
+            "name": "HEALTH_CHECK",
+            "status": "PASS",
+            "timestamp": "2026-07-28T08:14:16.731Z"
+          },
+          {
+            "name": "SCREENSHOT",
+            "status": "PASS",
+            "timestamp": "2026-07-28T08:14:18.204Z"
+          },
+          {
+            "name": "OPEN_APP",
+            "status": "PASS",
+            "timestamp": "2026-07-28T08:14:19.909Z"
+          },
+          {
+            "name": "VERIFY_APP_RUNNING",
+            "status": "PASS",
+            "timestamp": "2026-07-28T08:14:19.909Z",
+            "processIds": [
+              "11913"
+            ]
+          },
+          {
+            "name": "PUSH_FILE",
+            "status": "PASS",
+            "timestamp": "2026-07-28T08:14:20.546Z"
+          },
+          {
+            "name": "VERIFY_PUSH_FILE",
+            "size": 133,
+            "status": "PASS",
+            "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+            "timestamp": "2026-07-28T08:14:20.546Z",
+            "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/live_push_PHONE-001.txt"
+          },
+          {
+            "name": "STOP_APP",
+            "status": "PASS",
+            "timestamp": "2026-07-28T08:14:20.875Z"
+          },
+          {
+            "name": "VERIFY_APP_STOPPED",
+            "status": "PASS",
+            "timestamp": "2026-07-28T08:14:20.875Z"
+          },
+          {
+            "name": "REPORT",
+            "status": "PASS",
+            "timestamp": "2026-07-28T08:14:20.875Z",
+            "failedSteps": 0,
+            "completedSteps": 13
+          },
+          {
+            "name": "FINAL_RESULT",
+            "status": "PASS",
+            "timestamp": "2026-07-28T08:14:20.875Z"
+          }
+        ],
+        "errors": [],
+        "health": {
+          "checks": {
+            "storageUsed": 21531107328,
+            "batteryLevel": 99,
+            "storageTotal": 49480187904,
+            "adbConnection": "PASS",
+            "authorization": "PASS",
+            "uptimeSeconds": 92,
+            "androidVersion": "16",
+            "selectedAppPackage": "com.ss.android.ugc.trill",
+            "selectedAppInstalled": true,
+            "deviceAgentConnection": "PASS"
+          },
+          "result": "PASS",
+          "warnings": []
+        },
+        "status": "PASS",
+        "openApp": {
+          "foreground": true,
+          "processIds": [
+            "11913"
+          ],
+          "packageName": "com.ss.android.ugc.trill",
+          "processRunning": true,
+          "verifiedRunning": true,
+          "foregroundEvidence": [
+            "mFocusedApp=ActivityRecord{165540907 u0 com.ss.android.ugc.trill/com.ss.android.ugc.aweme.splash.SplashActivity t1013}"
+          ]
+        },
+        "stopApp": {
+          "foreground": false,
+          "processIds": [],
+          "packageName": "com.ss.android.ugc.trill",
+          "processRunning": false,
+          "verifiedStopped": true,
+          "foregroundEvidence": []
+        },
+        "pushFile": {
+          "size": 133,
+          "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+          "filename": "live_push_PHONE-001.txt",
+          "adbOutput": "",
+          "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/live_push_PHONE-001.txt"
+        },
+        "startedAt": "2026-07-28T08:14:16.299Z",
+        "deviceCode": "PHONE-001",
+        "screenshot": {
+          "size": 704432,
+          "checksum": "6a85fd3c214efa64621b4aea02ec47dcb9a52e68bfe43b30aa81baa07aefac44",
+          "screenshotUrl": "/api/v1/devices/files/709aebc2-b8a8-4aba-80d2-906e67f90d25/view?signature=d9d98526ad4f57fb1f5126c0b355e08dd9f5bec0bb69886a343e2cd94fea15f8",
+          "uploadedFileId": "709aebc2-b8a8-4aba-80d2-906e67f90d25"
+        },
+        "completedAt": "2026-07-28T08:14:20.875Z",
+        "serialNumber": "R8YY81H581J"
+      },
+      "attempts": 1,
+      "maxAttempts": 3,
+      "retryCount": 0,
+      "maxRetries": 3,
+      "errorCode": null,
+      "errorMessage": null,
+      "idempotencyKey": "PHONE-001:RUN_SINGLE_DEVICE_TEST:29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994:1785226455280",
+      "metadata": {
+        "source": "SINGLE_DEVICE_DASHBOARD",
+        "deviceCode": "PHONE-001"
+      },
+      "createdAt": "2026-07-28T08:14:15.446Z",
+      "updatedAt": "2026-07-28T08:14:21.631Z",
+      "device": {
+        "id": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "organizationId": "default-org",
+        "deviceGroupId": null,
+        "code": "PHONE-001",
+        "name": "samsung SM-A075F",
+        "serialNumber": "R8YY81H581J",
+        "manufacturer": "samsung",
+        "model": "SM-A075F",
+        "osVersion": "16",
+        "adbStatus": "ONLINE",
+        "battery": 99,
+        "storage": 46,
+        "storageUsed": "21531303936",
+        "storageTotal": "49480187904",
+        "agentVersion": "1.0.0",
+        "networkType": "wifi",
+        "assignedAccountId": null,
+        "currentJobId": null,
+        "lastHeartbeatAt": "2026-07-28T08:14:21.208Z",
+        "nodeId": "NODE-A",
+        "metadata": {
+          "lastHeartbeatError": null
+        },
+        "createdAt": "2026-07-28T01:43:35.524Z",
+        "updatedAt": "2026-07-28T08:14:21.651Z"
+      },
+      "campaign": null,
+      "account": null,
+      "content": null,
+      "deviceCommand": {
+        "id": "20428784-027c-4cb6-ad2b-1c306bd76617",
+        "organizationId": "default-org",
+        "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "jobId": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+        "command": "RUN_SINGLE_DEVICE_TEST",
+        "parameters": {
+          "file": {
+            "size": 133,
+            "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+            "filename": "live_push_PHONE-001.txt",
+            "destination": "/sdcard/Download/FarmPhone/live_push_PHONE-001.txt",
+            "uploadedFileId": "f6e5e54f-64fa-4858-90e9-0800395a4bda"
+          },
+          "command": "RUN_SINGLE_DEVICE_TEST",
+          "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/",
+          "packageName": "com.ss.android.ugc.trill"
+        },
+        "status": "SUCCESS",
+        "result": {
+          "steps": [
+            {
+              "name": "DEVICE_AGENT_CHECK",
+              "status": "PASS",
+              "connected": true,
+              "timestamp": "2026-07-28T08:14:16.299Z"
+            },
+            {
+              "name": "ADB_CHECK",
+              "status": "PASS",
+              "timestamp": "2026-07-28T08:14:16.364Z"
+            },
+            {
+              "name": "PHONE_001_CHECK",
+              "status": "PASS",
+              "timestamp": "2026-07-28T08:14:16.364Z",
+              "deviceCode": "PHONE-001",
+              "serialNumber": "R8YY81H581J"
+            },
+            {
+              "name": "HEALTH_CHECK",
+              "status": "PASS",
+              "timestamp": "2026-07-28T08:14:16.731Z"
+            },
+            {
+              "name": "SCREENSHOT",
+              "status": "PASS",
+              "timestamp": "2026-07-28T08:14:18.204Z"
+            },
+            {
+              "name": "OPEN_APP",
+              "status": "PASS",
+              "timestamp": "2026-07-28T08:14:19.909Z"
+            },
+            {
+              "name": "VERIFY_APP_RUNNING",
+              "status": "PASS",
+              "timestamp": "2026-07-28T08:14:19.909Z",
+              "processIds": [
+                "11913"
+              ]
+            },
+            {
+              "name": "PUSH_FILE",
+              "status": "PASS",
+              "timestamp": "2026-07-28T08:14:20.546Z"
+            },
+            {
+              "name": "VERIFY_PUSH_FILE",
+              "size": 133,
+              "status": "PASS",
+              "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+              "timestamp": "2026-07-28T08:14:20.546Z",
+              "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/live_push_PHONE-001.txt"
+            },
+            {
+              "name": "STOP_APP",
+              "status": "PASS",
+              "timestamp": "2026-07-28T08:14:20.875Z"
+            },
+            {
+              "name": "VERIFY_APP_STOPPED",
+              "status": "PASS",
+              "timestamp": "2026-07-28T08:14:20.875Z"
+            },
+            {
+              "name": "REPORT",
+              "status": "PASS",
+              "timestamp": "2026-07-28T08:14:20.875Z",
+              "failedSteps": 0,
+              "completedSteps": 13
+            },
+            {
+              "name": "FINAL_RESULT",
+              "status": "PASS",
+              "timestamp": "2026-07-28T08:14:20.875Z"
+            }
+          ],
+          "errors": [],
+          "health": {
+            "checks": {
+              "storageUsed": 21531107328,
+              "batteryLevel": 99,
+              "storageTotal": 49480187904,
+              "adbConnection": "PASS",
+              "authorization": "PASS",
+              "uptimeSeconds": 92,
+              "androidVersion": "16",
+              "selectedAppPackage": "com.ss.android.ugc.trill",
+              "selectedAppInstalled": true,
+              "deviceAgentConnection": "PASS"
+            },
+            "result": "PASS",
+            "warnings": []
+          },
+          "status": "PASS",
+          "openApp": {
+            "foreground": true,
+            "processIds": [
+              "11913"
+            ],
+            "packageName": "com.ss.android.ugc.trill",
+            "processRunning": true,
+            "verifiedRunning": true,
+            "foregroundEvidence": [
+              "mFocusedApp=ActivityRecord{165540907 u0 com.ss.android.ugc.trill/com.ss.android.ugc.aweme.splash.SplashActivity t1013}"
+            ]
+          },
+          "stopApp": {
+            "foreground": false,
+            "processIds": [],
+            "packageName": "com.ss.android.ugc.trill",
+            "processRunning": false,
+            "verifiedStopped": true,
+            "foregroundEvidence": []
+          },
+          "pushFile": {
+            "size": 133,
+            "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+            "filename": "live_push_PHONE-001.txt",
+            "adbOutput": "",
+            "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/live_push_PHONE-001.txt"
+          },
+          "startedAt": "2026-07-28T08:14:16.299Z",
+          "deviceCode": "PHONE-001",
+          "screenshot": {
+            "size": 704432,
+            "checksum": "6a85fd3c214efa64621b4aea02ec47dcb9a52e68bfe43b30aa81baa07aefac44",
+            "screenshotUrl": "/api/v1/devices/files/709aebc2-b8a8-4aba-80d2-906e67f90d25/view?signature=d9d98526ad4f57fb1f5126c0b355e08dd9f5bec0bb69886a343e2cd94fea15f8",
+            "uploadedFileId": "709aebc2-b8a8-4aba-80d2-906e67f90d25"
+          },
+          "completedAt": "2026-07-28T08:14:20.875Z",
+          "serialNumber": "R8YY81H581J"
+        },
+        "errorCode": null,
+        "errorMessage": null,
+        "requestedAt": "2026-07-28T08:14:15.463Z",
+        "assignedAt": "2026-07-28T08:14:15.654Z",
+        "startedAt": "2026-07-28T08:14:15.784Z",
+        "completedAt": "2026-07-28T08:14:21.628Z",
+        "createdAt": "2026-07-28T08:14:15.463Z",
+        "updatedAt": "2026-07-28T08:14:21.643Z"
+      },
+      "logs": [
+        {
+          "id": "f915a010-3b9a-4546-9d28-7f0872618c65",
+          "organizationId": "default-org",
+          "jobId": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "RUN_SINGLE_DEVICE_TEST ผ่านการ Verify",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": {
+            "result": {
+              "steps": [
+                {
+                  "name": "DEVICE_AGENT_CHECK",
+                  "status": "PASS",
+                  "connected": true,
+                  "timestamp": "2026-07-28T08:14:16.299Z"
+                },
+                {
+                  "name": "ADB_CHECK",
+                  "status": "PASS",
+                  "timestamp": "2026-07-28T08:14:16.364Z"
+                },
+                {
+                  "name": "PHONE_001_CHECK",
+                  "status": "PASS",
+                  "timestamp": "2026-07-28T08:14:16.364Z",
+                  "deviceCode": "PHONE-001",
+                  "serialNumber": "R8YY81H581J"
+                },
+                {
+                  "name": "HEALTH_CHECK",
+                  "status": "PASS",
+                  "timestamp": "2026-07-28T08:14:16.731Z"
+                },
+                {
+                  "name": "SCREENSHOT",
+                  "status": "PASS",
+                  "timestamp": "2026-07-28T08:14:18.204Z"
+                },
+                {
+                  "name": "OPEN_APP",
+                  "status": "PASS",
+                  "timestamp": "2026-07-28T08:14:19.909Z"
+                },
+                {
+                  "name": "VERIFY_APP_RUNNING",
+                  "status": "PASS",
+                  "timestamp": "2026-07-28T08:14:19.909Z",
+                  "processIds": [
+                    "11913"
+                  ]
+                },
+                {
+                  "name": "PUSH_FILE",
+                  "status": "PASS",
+                  "timestamp": "2026-07-28T08:14:20.546Z"
+                },
+                {
+                  "name": "VERIFY_PUSH_FILE",
+                  "size": 133,
+                  "status": "PASS",
+                  "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+                  "timestamp": "2026-07-28T08:14:20.546Z",
+                  "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/live_push_PHONE-001.txt"
+                },
+                {
+                  "name": "STOP_APP",
+                  "status": "PASS",
+                  "timestamp": "2026-07-28T08:14:20.875Z"
+                },
+                {
+                  "name": "VERIFY_APP_STOPPED",
+                  "status": "PASS",
+                  "timestamp": "2026-07-28T08:14:20.875Z"
+                },
+                {
+                  "name": "REPORT",
+                  "status": "PASS",
+                  "timestamp": "2026-07-28T08:14:20.875Z",
+                  "failedSteps": 0,
+                  "completedSteps": 13
+                },
+                {
+                  "name": "FINAL_RESULT",
+                  "status": "PASS",
+                  "timestamp": "2026-07-28T08:14:20.875Z"
+                }
+              ],
+              "errors": [],
+              "health": {
+                "checks": {
+                  "storageUsed": 21531107328,
+                  "batteryLevel": 99,
+                  "storageTotal": 49480187904,
+                  "adbConnection": "PASS",
+                  "authorization": "PASS",
+                  "uptimeSeconds": 92,
+                  "androidVersion": "16",
+                  "selectedAppPackage": "com.ss.android.ugc.trill",
+                  "selectedAppInstalled": true,
+                  "deviceAgentConnection": "PASS"
+                },
+                "result": "PASS",
+                "warnings": []
+              },
+              "status": "PASS",
+              "openApp": {
+                "foreground": true,
+                "processIds": [
+                  "11913"
+                ],
+                "packageName": "com.ss.android.ugc.trill",
+                "processRunning": true,
+                "verifiedRunning": true,
+                "foregroundEvidence": [
+                  "mFocusedApp=ActivityRecord{165540907 u0 com.ss.android.ugc.trill/com.ss.android.ugc.aweme.splash.SplashActivity t1013}"
+                ]
+              },
+              "stopApp": {
+                "foreground": false,
+                "processIds": [],
+                "packageName": "com.ss.android.ugc.trill",
+                "processRunning": false,
+                "verifiedStopped": true,
+                "foregroundEvidence": []
+              },
+              "pushFile": {
+                "size": 133,
+                "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+                "filename": "live_push_PHONE-001.txt",
+                "adbOutput": "",
+                "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/live_push_PHONE-001.txt"
+              },
+              "startedAt": "2026-07-28T08:14:16.299Z",
+              "deviceCode": "PHONE-001",
+              "screenshot": {
+                "size": 704432,
+                "checksum": "6a85fd3c214efa64621b4aea02ec47dcb9a52e68bfe43b30aa81baa07aefac44",
+                "screenshotUrl": "/api/v1/devices/files/709aebc2-b8a8-4aba-80d2-906e67f90d25/view?signature=d9d98526ad4f57fb1f5126c0b355e08dd9f5bec0bb69886a343e2cd94fea15f8",
+                "uploadedFileId": "709aebc2-b8a8-4aba-80d2-906e67f90d25"
+              },
+              "completedAt": "2026-07-28T08:14:20.875Z",
+              "serialNumber": "R8YY81H581J"
+            }
+          },
+          "createdAt": "2026-07-28T08:14:21.659Z"
+        },
+        {
+          "id": "5f60c5fe-7d00-430e-9b40-8fd7d3de46d4",
+          "organizationId": "default-org",
+          "jobId": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "มอบหมาย RUN_SINGLE_DEVICE_TEST ให้ Device Agent",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:15.678Z"
+        },
+        {
+          "id": "0cf431dd-8a38-45cb-9441-04d88a362adb",
+          "organizationId": "default-org",
+          "jobId": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "สร้างคำสั่ง RUN_SINGLE_DEVICE_TEST สำหรับ PHONE-001",
+          "attemptNumber": 0,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:15.467Z"
+        }
+      ],
+      "uploadedFiles": [
+        {
+          "id": "709aebc2-b8a8-4aba-80d2-906e67f90d25",
+          "organizationId": "default-org",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "jobId": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+          "filename": "PHONE-001-1785226461434.png",
+          "mimeType": "image/png",
+          "size": "704432",
+          "checksum": "6a85fd3c214efa64621b4aea02ec47dcb9a52e68bfe43b30aa81baa07aefac44",
+          "storageKey": "evidence/2a5280d5-fb9d-41bc-a9ed-24d945ca790f/1785226460992.png",
+          "url": "minio://farm-phone-media/evidence/2a5280d5-fb9d-41bc-a9ed-24d945ca790f/1785226460992.png",
+          "destination": null,
+          "status": "CAPTURED",
+          "createdAt": "2026-07-28T08:14:21.435Z",
+          "updatedAt": "2026-07-28T08:14:21.435Z"
+        },
+        {
+          "id": "f6e5e54f-64fa-4858-90e9-0800395a4bda",
+          "organizationId": "default-org",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "jobId": "2a5280d5-fb9d-41bc-a9ed-24d945ca790f",
+          "filename": "live_push_PHONE-001.txt",
+          "mimeType": "application/octet-stream",
+          "size": "133",
+          "checksum": "29e434b71929569da0e36983e526eda7e8f5d6f787f0cfc68a3ad3f5bb793994",
+          "storageKey": "content/2026-07-28/2fe036a9-7bd3-4332-bfd9-b5e7a1dd5f67.txt",
+          "url": "minio://farm-phone-media/content/2026-07-28/2fe036a9-7bd3-4332-bfd9-b5e7a1dd5f67.txt",
+          "destination": "/sdcard/Download/Farm 'Phone'; (PHONE-001)/live_push_PHONE-001.txt",
+          "status": "PUSHED",
+          "createdAt": "2026-07-28T08:14:15.451Z",
+          "updatedAt": "2026-07-28T08:14:21.443Z"
+        }
+      ]
+    }
+  }
+}

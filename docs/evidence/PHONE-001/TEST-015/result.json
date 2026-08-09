@@ -1,0 +1,37 @@
+{
+  "testId": "TEST-015",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T07:52:33.885Z",
+  "completedAt": "2026-07-28T07:53:10.264Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-015/result.json",
+    "docs/evidence/PHONE-001/TEST-015/agent-restart-log.txt"
+  ],
+  "notes": "Host Device Agent was stopped for more than 15 seconds, PHONE-001 remained OFFLINE, then the Agent reconnected through WebSocket and resumed physical ADB heartbeats.",
+  "details": {
+    "serialNumber": "R8YY81H581J",
+    "model": "SM-A075F",
+    "before": {
+      "capturedAt": "2026-07-28T07:52:33.885Z",
+      "adbStatus": "ONLINE",
+      "lastHeartbeatAt": "2026-07-28T07:52:32.179Z"
+    },
+    "offline": {
+      "capturedAt": "2026-07-28T07:52:50.575Z",
+      "heartbeatAgeMs": 18396,
+      "adbStatus": "OFFLINE",
+      "lastHeartbeatAt": "2026-07-28T07:52:32.179Z"
+    },
+    "afterRestart": {
+      "agentStartedAt": "2026-07-28T07:52:55.740Z",
+      "webSocketConnectedAt": "2026-07-28T07:52:55.815Z",
+      "registeredAt": "2026-07-28T07:52:56.344Z",
+      "capturedAt": "2026-07-28T07:53:10.264Z",
+      "adbStatus": "ONLINE",
+      "lastHeartbeatAt": "2026-07-28T07:53:07.146Z"
+    }
+  }
+}

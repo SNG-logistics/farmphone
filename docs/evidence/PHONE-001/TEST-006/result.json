@@ -1,0 +1,178 @@
+{
+  "testId": "TEST-006",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T08:13:59.754Z",
+  "completedAt": "2026-07-28T08:13:59.754Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-006/result.json",
+    "docs/evidence/PHONE-001/TEST-006/PHONE-001.png"
+  ],
+  "notes": "",
+  "details": {
+    "job": {
+      "id": "c85e17bd-9eaa-4e68-a39f-aadf737a92eb",
+      "organizationId": "default-org",
+      "campaignId": null,
+      "accountId": null,
+      "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+      "contentId": null,
+      "type": "DEVICE_COMMAND",
+      "priority": "NORMAL",
+      "scheduledAt": null,
+      "startedAt": "2026-07-28T08:13:56.530Z",
+      "completedAt": "2026-07-28T08:13:59.522Z",
+      "status": "SUCCESS",
+      "parameters": {
+        "command": "SCREENSHOT"
+      },
+      "result": {
+        "size": 706047,
+        "checksum": "715f12cf85cba7686e7ed0cf2fb8e6c2977f1d769443a6e33baa3c76a318ce3b",
+        "screenshotUrl": "/api/v1/devices/files/50d9c39d-ab03-4c37-b3b2-6c198074df88/view?signature=bae305ac9b1cbc155c89fa15e13163298d5155fcf7e92b25c81d138e089c36a7",
+        "uploadedFileId": "50d9c39d-ab03-4c37-b3b2-6c198074df88"
+      },
+      "attempts": 1,
+      "maxAttempts": 3,
+      "retryCount": 0,
+      "maxRetries": 3,
+      "errorCode": null,
+      "errorMessage": null,
+      "idempotencyKey": "PHONE-001:SCREENSHOT:1785226436379",
+      "metadata": {
+        "source": "SINGLE_DEVICE_DASHBOARD",
+        "deviceCode": "PHONE-001"
+      },
+      "createdAt": "2026-07-28T08:13:56.397Z",
+      "updatedAt": "2026-07-28T08:13:59.523Z",
+      "device": {
+        "id": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "organizationId": "default-org",
+        "deviceGroupId": null,
+        "code": "PHONE-001",
+        "name": "samsung SM-A075F",
+        "serialNumber": "R8YY81H581J",
+        "manufacturer": "samsung",
+        "model": "SM-A075F",
+        "osVersion": "16",
+        "adbStatus": "ONLINE",
+        "battery": 99,
+        "storage": 46,
+        "storageUsed": "21523824640",
+        "storageTotal": "49480187904",
+        "agentVersion": "1.0.0",
+        "networkType": "wifi",
+        "assignedAccountId": null,
+        "currentJobId": null,
+        "lastHeartbeatAt": "2026-07-28T08:13:59.050Z",
+        "nodeId": "NODE-A",
+        "metadata": {
+          "lastHeartbeatError": null
+        },
+        "createdAt": "2026-07-28T01:43:35.524Z",
+        "updatedAt": "2026-07-28T08:13:59.536Z"
+      },
+      "campaign": null,
+      "account": null,
+      "content": null,
+      "deviceCommand": {
+        "id": "5613555f-07a1-43d1-8d96-c402a74423e1",
+        "organizationId": "default-org",
+        "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "jobId": "c85e17bd-9eaa-4e68-a39f-aadf737a92eb",
+        "command": "SCREENSHOT",
+        "parameters": {
+          "command": "SCREENSHOT"
+        },
+        "status": "SUCCESS",
+        "result": {
+          "size": 706047,
+          "checksum": "715f12cf85cba7686e7ed0cf2fb8e6c2977f1d769443a6e33baa3c76a318ce3b",
+          "screenshotUrl": "/api/v1/devices/files/50d9c39d-ab03-4c37-b3b2-6c198074df88/view?signature=bae305ac9b1cbc155c89fa15e13163298d5155fcf7e92b25c81d138e089c36a7",
+          "uploadedFileId": "50d9c39d-ab03-4c37-b3b2-6c198074df88"
+        },
+        "errorCode": null,
+        "errorMessage": null,
+        "requestedAt": "2026-07-28T08:13:56.406Z",
+        "assignedAt": "2026-07-28T08:13:56.542Z",
+        "startedAt": "2026-07-28T08:13:56.651Z",
+        "completedAt": "2026-07-28T08:13:59.522Z",
+        "createdAt": "2026-07-28T08:13:56.406Z",
+        "updatedAt": "2026-07-28T08:13:59.530Z"
+      },
+      "logs": [
+        {
+          "id": "70bd1d45-8256-438b-8bf2-c0f3d7f75238",
+          "organizationId": "default-org",
+          "jobId": "c85e17bd-9eaa-4e68-a39f-aadf737a92eb",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "SCREENSHOT ผ่านการ Verify",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": {
+            "result": {
+              "size": 706047,
+              "checksum": "715f12cf85cba7686e7ed0cf2fb8e6c2977f1d769443a6e33baa3c76a318ce3b",
+              "screenshotUrl": "/api/v1/devices/files/50d9c39d-ab03-4c37-b3b2-6c198074df88/view?signature=bae305ac9b1cbc155c89fa15e13163298d5155fcf7e92b25c81d138e089c36a7",
+              "uploadedFileId": "50d9c39d-ab03-4c37-b3b2-6c198074df88"
+            }
+          },
+          "createdAt": "2026-07-28T08:13:59.542Z"
+        },
+        {
+          "id": "56a7c98c-3610-4cad-a1ab-90fe19b940ff",
+          "organizationId": "default-org",
+          "jobId": "c85e17bd-9eaa-4e68-a39f-aadf737a92eb",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "มอบหมาย SCREENSHOT ให้ Device Agent",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:13:56.561Z"
+        },
+        {
+          "id": "ce6fcb6f-f5ea-4ac3-859c-d05e271fa935",
+          "organizationId": "default-org",
+          "jobId": "c85e17bd-9eaa-4e68-a39f-aadf737a92eb",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "สร้างคำสั่ง SCREENSHOT สำหรับ PHONE-001",
+          "attemptNumber": 0,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:13:56.410Z"
+        }
+      ],
+      "uploadedFiles": [
+        {
+          "id": "50d9c39d-ab03-4c37-b3b2-6c198074df88",
+          "organizationId": "default-org",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "jobId": "c85e17bd-9eaa-4e68-a39f-aadf737a92eb",
+          "filename": "PHONE-001-1785226439381.png",
+          "mimeType": "image/png",
+          "size": "706047",
+          "checksum": "715f12cf85cba7686e7ed0cf2fb8e6c2977f1d769443a6e33baa3c76a318ce3b",
+          "storageKey": "evidence/c85e17bd-9eaa-4e68-a39f-aadf737a92eb/1785226439128.png",
+          "url": "minio://farm-phone-media/evidence/c85e17bd-9eaa-4e68-a39f-aadf737a92eb/1785226439128.png",
+          "destination": null,
+          "status": "CAPTURED",
+          "createdAt": "2026-07-28T08:13:59.382Z",
+          "updatedAt": "2026-07-28T08:13:59.382Z"
+        }
+      ]
+    },
+    "dimensions": {
+      "width": 720,
+      "height": 1600
+    },
+    "screenshotSha256": "715f12cf85cba7686e7ed0cf2fb8e6c2977f1d769443a6e33baa3c76a318ce3b"
+  }
+}

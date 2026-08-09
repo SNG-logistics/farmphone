@@ -1,0 +1,104 @@
+name: farm-phone-acceptance
+
+# Isolated, disposable stack for proving a clean image build and migration deploy.
+# It deliberately uses named volumes and alternate host ports so the development
+# stack and its persisted data are never modified by acceptance runs.
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: farmphone
+      POSTGRES_PASSWORD: farmphone_acceptance_secret
+      POSTGRES_DB: farm_phone
+    ports:
+      - "127.0.0.1:${ACCEPTANCE_POSTGRES_PORT:-15432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U farmphone -d farm_phone"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    command: redis-server --appendonly yes --requirepass redis_acceptance_secret
+    ports:
+      - "127.0.0.1:${ACCEPTANCE_REDIS_PORT:-16379}:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "redis_acceptance_secret", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  minio:
+    image: minio/minio:latest
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: minioacceptance
+      MINIO_ROOT_PASSWORD: minioacceptance_secret
+    ports:
+      - "127.0.0.1:${ACCEPTANCE_MINIO_PORT:-19000}:9000"
+      - "127.0.0.1:${ACCEPTANCE_MINIO_CONSOLE_PORT:-19001}:9001"
+    volumes:
+      - minio_data:/data
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9000/minio/health/live"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.api
+    environment:
+      DATABASE_URL: postgresql://farmphone:farmphone_acceptance_secret@postgres:5432/farm_phone
+      REDIS_URL: redis://:redis_acceptance_secret@redis:6379
+      JWT_SECRET: acceptance_jwt_secret_not_for_production
+      FILE_URL_SECRET: acceptance_file_url_secret_not_for_production
+      MINIO_ENDPOINT: minio
+      MINIO_PORT: "9000"
+      MINIO_ACCESS_KEY: minioacceptance
+      MINIO_SECRET_KEY: minioacceptance_secret
+      MINIO_BUCKET: farm-phone-media
+      DEVICE_AGENT_TOKEN: acceptance_device_agent_token
+      DEVICE_OFFLINE_TIMEOUT_MS: "15000"
+      SOCKET_REDIS_ADAPTER: "true"
+      NODE_ENV: development
+      API_PORT: "3001"
+      CORS_ORIGIN: http://localhost:${ACCEPTANCE_WEB_PORT:-13000}
+      LOCAL_DEV_AUTH_BYPASS: "true"
+    command: ["sh", "-c", "cd packages/database && npx prisma migrate deploy && cd /app && node dist/main.js"]
+    ports:
+      - "127.0.0.1:${ACCEPTANCE_API_PORT:-13001}:3001"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      minio:
+        condition: service_healthy
+
+  web:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile.web
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:${ACCEPTANCE_API_PORT:-13001}
+        NEXT_PUBLIC_WS_URL: http://localhost:${ACCEPTANCE_API_PORT:-13001}
+    environment:
+      NEXT_PUBLIC_API_URL: http://localhost:${ACCEPTANCE_API_PORT:-13001}
+      NEXT_PUBLIC_WS_URL: http://localhost:${ACCEPTANCE_API_PORT:-13001}
+      API_URL: http://api:3001
+    ports:
+      - "127.0.0.1:${ACCEPTANCE_WEB_PORT:-13000}:3000"
+    depends_on:
+      - api
+
+volumes:
+  postgres_data:
+  redis_data:
+  minio_data:

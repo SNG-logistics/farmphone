@@ -1,0 +1,2 @@
+FARM PHONE PHONE-001 live push fixture
+This file verifies remote size and SHA-256 with a filename containing spaces and parentheses.

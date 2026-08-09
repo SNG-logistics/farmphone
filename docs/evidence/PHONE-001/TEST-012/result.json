@@ -1,0 +1,198 @@
+{
+  "testId": "TEST-012",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T08:14:44.124Z",
+  "completedAt": "2026-07-28T08:14:44.124Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-012/result.json"
+  ],
+  "notes": "",
+  "details": {
+    "job": {
+      "id": "265efd51-6db3-448f-9e6d-81ec358ad037",
+      "organizationId": "default-org",
+      "campaignId": null,
+      "accountId": null,
+      "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+      "contentId": null,
+      "type": "DEVICE_COMMAND",
+      "priority": "NORMAL",
+      "scheduledAt": null,
+      "startedAt": "2026-07-28T08:14:25.551Z",
+      "completedAt": "2026-07-28T08:14:43.110Z",
+      "status": "FAILED",
+      "parameters": {
+        "command": "OPEN_APP",
+        "packageName": "com.farmphone.acceptance.missing.1785226465398"
+      },
+      "result": null,
+      "attempts": 3,
+      "maxAttempts": 3,
+      "retryCount": 2,
+      "maxRetries": 3,
+      "errorCode": "ADB_COMMAND_FAILED",
+      "errorMessage": "Command failed: C:\\\\Users\\\\acer\\\\AppData\\\\Local\\\\Android\\\\platform-tools\\\\adb.exe -s R8YY81H581J shell 'pm' 'path' 'com.farmphone.acceptance.missing.1785226465398'\n",
+      "idempotencyKey": "PHONE-001:OPEN_APP:1785226465398",
+      "metadata": {
+        "source": "SINGLE_DEVICE_DASHBOARD",
+        "deviceCode": "PHONE-001"
+      },
+      "createdAt": "2026-07-28T08:14:25.423Z",
+      "updatedAt": "2026-07-28T08:14:43.112Z",
+      "device": {
+        "id": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "organizationId": "default-org",
+        "deviceGroupId": null,
+        "code": "PHONE-001",
+        "name": "samsung SM-A075F",
+        "serialNumber": "R8YY81H581J",
+        "manufacturer": "samsung",
+        "model": "SM-A075F",
+        "osVersion": "16",
+        "adbStatus": "ERROR",
+        "battery": 99,
+        "storage": 46,
+        "storageUsed": "21530382336",
+        "storageTotal": "49480187904",
+        "agentVersion": "1.0.0",
+        "networkType": "wifi",
+        "assignedAccountId": null,
+        "currentJobId": null,
+        "lastHeartbeatAt": "2026-07-28T08:14:43.407Z",
+        "nodeId": "NODE-A",
+        "metadata": {
+          "lastHeartbeatError": null
+        },
+        "createdAt": "2026-07-28T01:43:35.524Z",
+        "updatedAt": "2026-07-28T08:14:43.408Z"
+      },
+      "campaign": null,
+      "account": null,
+      "content": null,
+      "deviceCommand": {
+        "id": "7b5ab399-7f07-4d1f-a987-2a9d8c014b0a",
+        "organizationId": "default-org",
+        "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+        "command": "OPEN_APP",
+        "parameters": {
+          "command": "OPEN_APP",
+          "packageName": "com.farmphone.acceptance.missing.1785226465398"
+        },
+        "status": "FAILED",
+        "result": null,
+        "errorCode": "ADB_COMMAND_FAILED",
+        "errorMessage": "Command failed: C:\\\\Users\\\\acer\\\\AppData\\\\Local\\\\Android\\\\platform-tools\\\\adb.exe -s R8YY81H581J shell 'pm' 'path' 'com.farmphone.acceptance.missing.1785226465398'\n",
+        "requestedAt": "2026-07-28T08:14:25.435Z",
+        "assignedAt": "2026-07-28T08:14:42.305Z",
+        "startedAt": "2026-07-28T08:14:42.466Z",
+        "completedAt": "2026-07-28T08:14:43.128Z",
+        "createdAt": "2026-07-28T08:14:25.435Z",
+        "updatedAt": "2026-07-28T08:14:43.129Z"
+      },
+      "logs": [
+        {
+          "id": "78cd22f8-fe22-46eb-ae3b-d72540230624",
+          "organizationId": "default-org",
+          "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "ERROR",
+          "message": "Attempt 3/3 ล้มเหลว: Command failed: C:\\\\Users\\\\acer\\\\AppData\\\\Local\\\\Android\\\\platform-tools\\\\adb.exe -s R8YY81H581J shell 'pm' 'path' 'com.farmphone.acceptance.missing.1785226465398'\n",
+          "attemptNumber": 3,
+          "errorCode": "ADB_COMMAND_FAILED",
+          "adbOutput": "",
+          "metadata": {
+            "errorCode": "ADB_COMMAND_FAILED"
+          },
+          "createdAt": "2026-07-28T08:14:43.154Z"
+        },
+        {
+          "id": "b251695f-7ad0-4825-984f-5f7a48819c9e",
+          "organizationId": "default-org",
+          "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "มอบหมาย OPEN_APP ให้ Device Agent",
+          "attemptNumber": 3,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:42.330Z"
+        },
+        {
+          "id": "5c2a97a3-f892-4808-b153-ff9571586708",
+          "organizationId": "default-org",
+          "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "ERROR",
+          "message": "Attempt 2/3 ล้มเหลว: Command failed: C:\\\\Users\\\\acer\\\\AppData\\\\Local\\\\Android\\\\platform-tools\\\\adb.exe -s R8YY81H581J shell 'pm' 'path' 'com.farmphone.acceptance.missing.1785226465398'\n",
+          "attemptNumber": 2,
+          "errorCode": "ADB_COMMAND_FAILED",
+          "adbOutput": "",
+          "metadata": {
+            "errorCode": "ADB_COMMAND_FAILED"
+          },
+          "createdAt": "2026-07-28T08:14:32.249Z"
+        },
+        {
+          "id": "2b0cdf27-1d66-4e73-bb26-9ab1d6062cd7",
+          "organizationId": "default-org",
+          "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "มอบหมาย OPEN_APP ให้ Device Agent",
+          "attemptNumber": 2,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:31.428Z"
+        },
+        {
+          "id": "b361b396-396b-4185-80e5-8f4083cfaca2",
+          "organizationId": "default-org",
+          "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "ERROR",
+          "message": "Attempt 1/3 ล้มเหลว: Command failed: C:\\\\Users\\\\acer\\\\AppData\\\\Local\\\\Android\\\\platform-tools\\\\adb.exe -s R8YY81H581J shell 'pm' 'path' 'com.farmphone.acceptance.missing.1785226465398'\n",
+          "attemptNumber": 1,
+          "errorCode": "ADB_COMMAND_FAILED",
+          "adbOutput": "",
+          "metadata": {
+            "errorCode": "ADB_COMMAND_FAILED"
+          },
+          "createdAt": "2026-07-28T08:14:26.341Z"
+        },
+        {
+          "id": "81d4a968-2813-4d9f-90b3-3bd87f4d551c",
+          "organizationId": "default-org",
+          "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "มอบหมาย OPEN_APP ให้ Device Agent",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:25.569Z"
+        },
+        {
+          "id": "cc8857b1-194f-416f-83d1-e2536c405cf4",
+          "organizationId": "default-org",
+          "jobId": "265efd51-6db3-448f-9e6d-81ec358ad037",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "สร้างคำสั่ง OPEN_APP สำหรับ PHONE-001",
+          "attemptNumber": 0,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:25.438Z"
+        }
+      ],
+      "uploadedFiles": []
+    }
+  }
+}

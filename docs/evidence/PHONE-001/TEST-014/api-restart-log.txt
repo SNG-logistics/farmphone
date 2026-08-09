@@ -1,0 +1,13 @@
+TEST-014 API restart persistence evidence
+Device: PHONE-001 (physical Samsung SM-A075F, serial R8YY81H581J)
+Job: 4987af15-f060-41d6-bc50-b1f5a67cae2a
+
+2026-07-28T08:12:29.62914663Z API container start before test
+2026-07-28T08:16:19.9641601Z API restart requested
+2026-07-28T08:16:30.663807583Z API container start after restart
+2026-07-28T08:16:36.2401747Z API endpoint recovered and returned the Job
+
+Before restart: id=4987af15-f060-41d6-bc50-b1f5a67cae2a status=SUCCESS attempts=1 completedAt=2026-07-28T08:13:55.546Z result=PASS
+After restart:  id=4987af15-f060-41d6-bc50-b1f5a67cae2a status=SUCCESS attempts=1 completedAt=2026-07-28T08:13:55.546Z result=PASS
+
+Comparison: sameId=true sameStatus=true sameResult=true

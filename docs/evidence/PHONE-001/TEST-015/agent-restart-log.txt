@@ -1,0 +1,8 @@
+2026-07-28T07:52:33.885Z before stop: ONLINE, lastHeartbeatAt=2026-07-28T07:52:32.179Z, serial=R8YY81H581J
+2026-07-28T07:52:33.920Z Agent received SIGINT and performed graceful shutdown
+2026-07-28T07:52:33.982Z WebSocket disconnected (io client disconnect)
+2026-07-28T07:52:50.575Z after more than 15 seconds: OFFLINE, heartbeatAgeMs=18396
+2026-07-28T07:52:55.740Z Agent process restarted for PHONE-001 with heartbeatMs=5000
+2026-07-28T07:52:55.815Z WebSocket connected
+2026-07-28T07:52:56.344Z PHONE-001 registered with serial=R8YY81H581J
+2026-07-28T07:53:10.264Z verification: ONLINE, lastHeartbeatAt=2026-07-28T07:53:07.146Z, model=SM-A075F

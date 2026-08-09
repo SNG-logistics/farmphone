@@ -1,0 +1,55 @@
+# ============================================================
+# Farm Phone AI Office — Worker Dockerfile (BullMQ Consumer)
+# ============================================================
+FROM node:20-alpine AS builder
+
+RUN apk add --no-cache openssl
+
+WORKDIR /app
+
+# Copy root configs
+COPY package.json package-lock.json turbo.json tsconfig.base.json ./
+
+# Copy package.json files for monorepo install
+COPY packages/config/package.json packages/config/
+COPY packages/database/package.json packages/database/
+COPY packages/types/package.json packages/types/
+COPY packages/events/package.json packages/events/
+
+# Copy apps/workers configs
+COPY apps/workers/package.json apps/workers/
+COPY apps/workers/tsconfig.json apps/workers/
+
+# Install exactly the dependency graph recorded in the lockfile
+RUN npm ci
+
+# Copy all source
+COPY packages/ packages/
+COPY apps/workers/ apps/workers/
+
+# Generate Prisma types and fail the image build on every compile error
+RUN cd packages/database && npx prisma generate
+RUN npm run build --workspace @farm-phone/config \
+    && npm run build --workspace @farm-phone/types \
+    && npm run build --workspace @farm-phone/database \
+    && npm run build --workspace @farm-phone/events \
+    && npm run build --workspace @farm-phone/workers
+
+# ---- Production Stage ----
+FROM node:20-alpine
+
+RUN apk add --no-cache openssl
+
+WORKDIR /app
+
+COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder /app/packages ./packages
+COPY --from=builder /app/apps/workers/dist ./dist
+COPY --from=builder /app/apps/workers/package.json ./package.json
+
+# Prisma client
+COPY --from=builder /app/packages/database/prisma ./packages/database/prisma
+COPY --from=builder /app/packages/database/package.json ./packages/database/package.json
+RUN cd packages/database && npx prisma generate
+
+CMD ["node", "dist/worker.js"]

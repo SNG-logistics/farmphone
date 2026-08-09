@@ -1,0 +1,53 @@
+{
+  "template": "SNG_EXPRESS_ECOMMERCE_PREMIUM",
+  "preset": "FAST_SOCIAL",
+  "title": "SNG EXPRESS Premium Social Commercial 9:16",
+  "durationSeconds": 25,
+  "brand": "SNG EXPRESS",
+  "aspectRatio": "9:16",
+  "resolution": "1080x1920",
+  "storyboard": [
+    {
+      "scene": 1,
+      "title": "Hook",
+      "duration": "0-2.5s",
+      "text": "เจอของถูกใจจากไทย แต่ร้านไม่ส่งลาว?"
+    },
+    {
+      "scene": 2,
+      "title": "Problem",
+      "duration": "2.5-5s",
+      "text": "ปัญหานี้ SNG EXPRESS ช่วยคุณได้!"
+    },
+    {
+      "scene": 3,
+      "title": "Shopping",
+      "duration": "5-9s",
+      "text": "1. สั่งสินค้าจากร้านออนไลน์ในไทย (Shopee • Lazada)"
+    },
+    {
+      "scene": 4,
+      "title": "Warehouse",
+      "duration": "9-13s",
+      "text": "2. ส่งสินค้าเข้าคลัง SNG EXPRESS ประเทศไทย"
+    },
+    {
+      "scene": 5,
+      "title": "Route",
+      "duration": "13-17.5s",
+      "text": "3. ขนส่งไทย–ลาวอย่างเป็นระบบ มีรอบรถทุกวัน"
+    },
+    {
+      "scene": 6,
+      "title": "Tracking",
+      "duration": "17.5-21s",
+      "text": "ติดตามสถานะได้ มีทีมงานดูแลตลอด 24 ชม."
+    },
+    {
+      "scene": 7,
+      "title": "CTA",
+      "duration": "21-25s",
+      "text": "ช้อปจากไทย ส่งถึงลาวง่ายขึ้น ทักสอบถาม SNG EXPRESS!"
+    }
+  ]
+}

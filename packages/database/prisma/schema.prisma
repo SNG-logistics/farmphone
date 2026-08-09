@@ -1,0 +1,570 @@
+// ============================================================
+// FARM PHONE AI OFFICE — Prisma Database Schema
+// PostgreSQL 16 + Prisma ORM
+// ============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---- Organization (Multi-Tenant) ----
+
+model Organization {
+  id            String   @id @default(uuid())
+  name          String
+  planId        String?
+  creditBalance Int      @default(0)
+  isActive      Boolean  @default(true)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  users            User[]
+  devices          Device[]
+  deviceHeartbeats DeviceHeartbeat[]
+  deviceCommands   DeviceCommand[]
+  deviceGroups     DeviceGroup[]
+  accounts         Account[]
+  content          Content[]
+  campaigns        Campaign[]
+  jobs             Job[]
+  jobLogs          JobLog[]
+  uploadedFiles    UploadedFile[]
+  missions         Mission[]
+  aiAgents         AIAgent[]
+  creditLedgers    CreditLedger[]
+  auditLogs        AuditLog[]
+  notifications    Notification[]
+  logs             Log[]
+  subscription     Subscription?
+
+  @@map("organizations")
+}
+
+// ---- Users & Auth ----
+
+model User {
+  id             String    @id @default(uuid())
+  organizationId String
+  email          String    @unique
+  passwordHash   String
+  name           String
+  role           String    @default("VIEWER") // SUPER_ADMIN, OWNER, ADMIN, MANAGER, OPERATOR, VIEWER
+  permissions    String[]  @default([])
+  isActive       Boolean   @default(true)
+  lastLoginAt    DateTime?
+  refreshToken   String?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  missions     Mission[]    @relation("MissionCreator")
+  logs         Log[]        @relation("UserLogs")
+
+  @@map("users")
+}
+
+// ---- AI Agents ----
+
+model AIAgent {
+  id             String   @id @default(uuid())
+  organizationId String
+  code           String // 16bit.CEO, 16bit.MANAGER, etc.
+  name           String
+  role           String
+  avatar         String   @default("")
+  status         String   @default("IDLE") // IDLE, THINKING, WORKING, WAITING, SUCCESS, WARNING, ERROR, OFFLINE
+  currentTaskId  String?
+  lastActivityAt DateTime @default(now())
+  config         Json     @default("{}")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  tasks        AgentTask[]
+  events       AgentEvent[]
+
+  @@unique([organizationId, code])
+  @@map("ai_agents")
+}
+
+model AgentTask {
+  id           String    @id @default(uuid())
+  agentId      String
+  parentTaskId String?
+  missionId    String?
+  type         String
+  title        String
+  description  String    @default("")
+  input        Json?
+  output       Json?
+  status       String    @default("PENDING") // PENDING, ASSIGNED, IN_PROGRESS, COMPLETED, FAILED, BLOCKED
+  startedAt    DateTime?
+  completedAt  DateTime?
+  error        String?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  agent      AIAgent     @relation(fields: [agentId], references: [id], onDelete: Cascade)
+  parentTask AgentTask?  @relation("TaskHierarchy", fields: [parentTaskId], references: [id])
+  childTasks AgentTask[] @relation("TaskHierarchy")
+  mission    Mission?    @relation(fields: [missionId], references: [id])
+
+  @@map("agent_tasks")
+}
+
+model AgentEvent {
+  id        String   @id @default(uuid())
+  agentId   String
+  eventType String // MISSION_CREATED, TASK_CREATED, etc.
+  message   String
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  agent AIAgent @relation(fields: [agentId], references: [id], onDelete: Cascade)
+
+  @@index([agentId, createdAt])
+  @@map("agent_events")
+}
+
+// ---- Missions & Workflows ----
+
+model Mission {
+  id             String    @id @default(uuid())
+  organizationId String
+  name           String
+  description    String    @default("")
+  status         String    @default("DRAFT") // DRAFT, ANALYZING, PLANNING, EXECUTING, COMPLETED, FAILED
+  campaignId     String?
+  createdBy      String
+  startedAt      DateTime?
+  completedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  organization  Organization   @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  creator       User           @relation("MissionCreator", fields: [createdBy], references: [id])
+  campaign      Campaign?      @relation(fields: [campaignId], references: [id])
+  workflowSteps WorkflowStep[]
+  agentTasks    AgentTask[]
+
+  @@map("missions")
+}
+
+model WorkflowStep {
+  id          String    @id @default(uuid())
+  missionId   String
+  sortOrder   Int       @default(0)
+  name        String
+  status      String    @default("WAITING") // WAITING, ACTIVE, SUCCESS, FAILED
+  agentCode   String?
+  startedAt   DateTime?
+  completedAt DateTime?
+  error       String?
+
+  mission Mission @relation(fields: [missionId], references: [id], onDelete: Cascade)
+
+  @@map("workflow_steps")
+}
+
+// ---- Devices ----
+
+model DeviceGroup {
+  id             String   @id @default(uuid())
+  organizationId String
+  name           String
+  nodeId         String
+  deviceCount    Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  devices      Device[]
+
+  @@map("device_groups")
+}
+
+model Device {
+  id                String    @id @default(uuid())
+  organizationId    String
+  deviceGroupId     String?
+  code              String    @unique
+  name              String
+  serialNumber      String?
+  manufacturer      String    @default("")
+  model             String    @default("Unknown")
+  osVersion         String    @default("")
+  adbStatus         String    @default("OFFLINE") // OFFLINE, CONNECTING, ONLINE, BUSY, WARNING, ERROR, MAINTENANCE
+  battery           Int       @default(0)
+  storage           Int       @default(0)
+  storageUsed       BigInt    @default(0) // Bytes
+  storageTotal      BigInt    @default(0) // Bytes
+  agentVersion      String    @default("")
+  networkType       String    @default("wifi")
+  assignedAccountId String?
+  currentJobId      String?
+  lastHeartbeatAt   DateTime?
+  nodeId            String    @default("NODE-A")
+  metadata          Json?
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  organization  Organization?     @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  deviceGroup   DeviceGroup?      @relation(fields: [deviceGroupId], references: [id])
+  jobs          Job[]
+  heartbeats    DeviceHeartbeat[]
+  commands      DeviceCommand[]
+  jobLogs       JobLog[]
+  uploadedFiles UploadedFile[]
+
+  @@unique([organizationId, serialNumber])
+  @@index([organizationId, nodeId])
+  @@index([adbStatus])
+  @@map("devices")
+}
+
+// ---- Accounts ----
+
+model Account {
+  id               String    @id @default(uuid())
+  organizationId   String
+  platform         String    @default("unknown")
+  username         String
+  nickname         String?
+  status           String    @default("ACTIVE") // ACTIVE, PAUSED, AUTH_REQUIRED, ERROR, BANNED
+  assignedDeviceId String?
+  authStatus       String    @default("unknown")
+  encryptedToken   String? // AES-256-GCM encrypted
+  lastJobAt        DateTime?
+  todayJobCount    Int       @default(0)
+  metadata         Json?
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  jobs         Job[]
+
+  @@unique([organizationId, platform, username])
+  @@map("accounts")
+}
+
+// ---- Content ----
+
+model Content {
+  id             String   @id @default(uuid())
+  organizationId String
+  title          String
+  type           String   @default("video") // video, image
+  url            String
+  thumbnailUrl   String?
+  duration       Int?
+  width          Int?
+  height         Int?
+  fileSize       BigInt?
+  caption        String?
+  hashtags       String[] @default([])
+  tags           String[] @default([])
+  status         String   @default("READY") // READY, PROCESSING, USED, ARCHIVED, ERROR
+  usageCount     Int      @default(0)
+  campaignId     String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  campaign     Campaign?    @relation(fields: [campaignId], references: [id])
+  jobs         Job[]
+
+  @@map("content")
+}
+
+// ---- Campaigns ----
+
+model Campaign {
+  id             String    @id @default(uuid())
+  organizationId String
+  name           String
+  description    String    @default("")
+  startDate      DateTime?
+  endDate        DateTime?
+  accountIds     String[]  @default([])
+  contentIds     String[]  @default([])
+  deviceGroupId  String?
+  schedule       String?
+  dailyLimit     Int       @default(0)
+  status         String    @default("DRAFT") // DRAFT, READY, RUNNING, PAUSED, COMPLETED, ERROR, CANCELLED
+  totalJobs      Int       @default(0)
+  successJobs    Int       @default(0)
+  failedJobs     Int       @default(0)
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  jobs         Job[]
+  missions     Mission[]
+  contentItems Content[]
+
+  @@map("campaigns")
+}
+
+// ---- Jobs ----
+
+model Job {
+  id             String    @id @default(uuid())
+  organizationId String
+  campaignId     String?
+  accountId      String?
+  deviceId       String?
+  contentId      String?
+  type           String    @default("BATCH_OPERATION")
+  priority       String    @default("NORMAL") // LOW, NORMAL, HIGH, URGENT
+  scheduledAt    DateTime?
+  startedAt      DateTime?
+  completedAt    DateTime?
+  status         String    @default("CREATED") // CREATED, QUEUED, ASSIGNED, RUNNING, VERIFYING, SUCCESS, FAILED, CANCELLED
+  parameters     Json      @default("{}")
+  result         Json?
+  attempts       Int       @default(0) // Total execution attempts started, including the first attempt
+  maxAttempts    Int       @default(3) // Total attempt limit, including the first attempt
+  retryCount     Int       @default(0) // Legacy compatibility: retries after the first attempt
+  maxRetries     Int       @default(3) // Legacy compatibility: existing queue retry limit
+  errorCode      String?
+  errorMessage   String?
+  idempotencyKey String?
+  metadata       Json?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  organization     Organization      @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  campaign         Campaign?         @relation(fields: [campaignId], references: [id])
+  account          Account?          @relation(fields: [accountId], references: [id])
+  device           Device?           @relation(fields: [deviceId], references: [id])
+  content          Content?          @relation(fields: [contentId], references: [id])
+  deviceCommand    DeviceCommand?
+  logs             JobLog[]
+  uploadedFiles    UploadedFile[]
+  deviceHeartbeats DeviceHeartbeat[]
+
+  @@index([organizationId, status])
+  @@index([scheduledAt])
+  @@index([deviceId, status])
+  @@unique([organizationId, idempotencyKey])
+  @@map("jobs")
+}
+
+model DeviceHeartbeat {
+  id             String   @id @default(uuid())
+  organizationId String
+  deviceId       String
+  deviceCode     String
+  serialNumber   String
+  status         String
+  batteryLevel   Int
+  storageUsed    BigInt // Bytes
+  storageTotal   BigInt // Bytes
+  androidVersion String
+  model          String
+  currentJobId   String?
+  agentVersion   String
+  timestamp      DateTime
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  device       Device       @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  currentJob   Job?         @relation(fields: [currentJobId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId, timestamp])
+  @@index([deviceId, timestamp])
+  @@index([status, timestamp])
+  @@map("device_heartbeats")
+}
+
+model DeviceCommand {
+  id             String    @id @default(uuid())
+  organizationId String
+  deviceId       String
+  jobId          String    @unique
+  command        String
+  parameters     Json      @default("{}")
+  status         String    @default("CREATED")
+  result         Json?
+  errorCode      String?
+  errorMessage   String?
+  requestedAt    DateTime  @default(now())
+  assignedAt     DateTime?
+  startedAt      DateTime?
+  completedAt    DateTime?
+  createdAt      DateTime  @default(now())
+  updatedAt      DateTime  @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  device       Device       @relation(fields: [deviceId], references: [id], onDelete: Cascade)
+  job          Job          @relation(fields: [jobId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, status, createdAt])
+  @@index([deviceId, status, createdAt])
+  @@map("device_commands")
+}
+
+model JobLog {
+  id             String   @id @default(uuid())
+  organizationId String
+  jobId          String
+  deviceId       String?
+  level          String   @default("INFO")
+  message        String
+  attemptNumber  Int?
+  errorCode      String?
+  adbOutput      String?
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  job          Job          @relation(fields: [jobId], references: [id], onDelete: Cascade)
+  device       Device?      @relation(fields: [deviceId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId, createdAt])
+  @@index([jobId, createdAt])
+  @@index([deviceId, createdAt])
+  @@map("job_logs")
+}
+
+model UploadedFile {
+  id             String   @id @default(uuid())
+  organizationId String
+  deviceId       String?
+  jobId          String?
+  filename       String
+  mimeType       String?
+  size           BigInt
+  checksum       String
+  storageKey     String
+  url            String?
+  destination    String?
+  status         String   @default("STORED")
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  device       Device?      @relation(fields: [deviceId], references: [id], onDelete: SetNull)
+  job          Job?         @relation(fields: [jobId], references: [id], onDelete: SetNull)
+
+  @@index([organizationId, createdAt])
+  @@index([deviceId, createdAt])
+  @@index([checksum])
+  @@map("uploaded_files")
+}
+
+// ---- Billing ----
+
+model Subscription {
+  id                 String   @id @default(uuid())
+  organizationId     String   @unique
+  planId             String
+  status             String   @default("ACTIVE")
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@map("subscriptions")
+}
+
+model Plan {
+  id              String   @id @default(uuid())
+  name            String
+  maxDevices      Int
+  maxAccounts     Int
+  monthlyPrice    Int      @default(0)
+  includedCredits Int      @default(0)
+  features        String[] @default([])
+  isActive        Boolean  @default(true)
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  @@map("plans")
+}
+
+model CreditLedger {
+  id             String   @id @default(uuid())
+  organizationId String
+  amount         Int
+  type           String // CREDIT_ADD, CREDIT_USE, CREDIT_REFUND, ADMIN_ADJUSTMENT
+  description    String   @default("")
+  balanceBefore  Int
+  balanceAfter   Int
+  createdBy      String?
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, createdAt])
+  @@map("credit_ledger")
+}
+
+// ---- Notifications ----
+
+model Notification {
+  id             String   @id @default(uuid())
+  organizationId String
+  channel        String   @default("system") // system, telegram, line, email
+  title          String
+  message        String
+  type           String   @default("INFO") // INFO, WARNING, ERROR, SUCCESS
+  isRead         Boolean  @default(false)
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, isRead, createdAt])
+  @@map("notifications")
+}
+
+// ---- Logs ----
+
+model Log {
+  id             String   @id @default(uuid())
+  organizationId String
+  level          String   @default("INFO") // DEBUG, INFO, WARN, ERROR
+  category       String   @default("system") // system, agent, device, job, api, security
+  message        String
+  userId         String?
+  agentId        String?
+  deviceId       String?
+  jobId          String?
+  metadata       Json?
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  user         User?        @relation("UserLogs", fields: [userId], references: [id])
+
+  @@index([organizationId, level, createdAt])
+  @@index([category, createdAt])
+  @@map("logs")
+}
+
+// ---- Audit ----
+
+model AuditLog {
+  id             String   @id @default(uuid())
+  organizationId String
+  action         String
+  resourceType   String
+  resourceId     String?
+  userId         String?
+  ipAddress      String?
+  userAgent      String?
+  changes        Json?
+  createdAt      DateTime @default(now())
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId, createdAt])
+  @@map("audit_logs")
+}

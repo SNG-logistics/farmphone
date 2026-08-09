@@ -1,0 +1,179 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-dark-navy text-gray-100 font-sans;
+    margin: 0;
+    min-height: 100vh;
+  }
+
+  * {
+    @apply border-pixel-border;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-cyber-blue text-dark-navy font-bold py-2 px-4 rounded 
+           border-2 border-cyber-blue hover:bg-dark-navy hover:text-cyber-blue
+           transition-all duration-200 shadow-pixel-sm active:translate-x-[2px] active:translate-y-[2px] active:shadow-none;
+  }
+
+  .btn-outline {
+    @apply border-2 border-cyber-blue text-cyber-blue font-bold py-2 px-4 rounded
+           hover:bg-cyber-blue hover:text-dark-navy transition-all duration-200;
+  }
+
+  .btn-danger {
+    @apply bg-error-red text-white font-bold py-2 px-4 rounded
+           border-2 border-error-red hover:bg-dark-navy hover:text-error-red
+           transition-all duration-200 shadow-pixel-sm;
+  }
+
+  .card {
+    @apply bg-navy-800 border-2 border-pixel-border rounded-lg p-4 
+           shadow-card hover:shadow-glow transition-shadow duration-300;
+  }
+
+  .card-header {
+    @apply text-xs font-mono text-cyber-blue uppercase tracking-wider mb-3;
+  }
+
+  .card-value {
+    @apply text-2xl font-bold text-white font-mono;
+  }
+
+  .kpi-card {
+    @apply card flex flex-col items-start gap-1;
+  }
+
+  .kpi-label {
+    @apply text-xs font-mono text-gray-400 uppercase tracking-wider;
+  }
+
+  .kpi-value {
+    @apply text-3xl font-bold text-white font-mono;
+  }
+
+  .kpi-sub {
+    @apply text-xs text-gray-500 font-mono;
+  }
+
+  .badge {
+    @apply px-2 py-0.5 rounded text-xs font-mono font-bold;
+  }
+
+  .badge-online { @apply bg-status-green/20 text-status-green border border-status-green/50; }
+  .badge-offline { @apply bg-error-red/20 text-error-red border border-error-red/50; }
+  .badge-busy { @apply bg-warning-orange/20 text-warning-orange border border-warning-orange/50; }
+  .badge-warning { @apply bg-warning-orange/20 text-warning-orange border border-warning-orange/50; }
+  .badge-error { @apply bg-error-red/20 text-error-red border border-error-red/50; }
+  .badge-success { @apply bg-status-green/20 text-status-green border border-status-green/50; }
+  .badge-info { @apply bg-cyber-blue/20 text-cyber-blue border border-cyber-blue/50; }
+
+  .sidebar-link {
+    @apply flex items-center gap-3 px-3 py-2 rounded text-gray-400 font-mono text-sm
+           hover:bg-navy-600 hover:text-cyber-blue transition-all duration-200;
+  }
+
+  .sidebar-link.active {
+    @apply bg-cyber-blue/10 text-cyber-blue border-l-2 border-cyber-blue;
+  }
+
+  .input-field {
+    @apply w-full bg-navy-700 border-2 border-pixel-border rounded px-3 py-2
+           text-white font-mono text-sm placeholder-gray-500
+           focus:border-cyber-blue focus:outline-none transition-colors duration-200;
+  }
+
+  /* Pixel art scrollbar */
+  .pixel-scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+  .pixel-scrollbar::-webkit-scrollbar-track {
+    @apply bg-navy-800;
+  }
+  .pixel-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-pixel-border rounded;
+  }
+  .pixel-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-cyber-blue;
+  }
+
+  /* Agent animation states */
+  .agent-state-idle {
+    animation: float 3s ease-in-out infinite;
+  }
+  .agent-state-thinking {
+    animation: thinking 1.5s ease-in-out infinite;
+  }
+  .agent-state-working {
+    animation: working 0.8s ease-in-out infinite;
+  }
+  .agent-state-success {
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 6px rgba(0, 255, 136, 0.5));
+  }
+  .agent-state-warning {
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 6px rgba(255, 140, 0, 0.5));
+  }
+  .agent-state-error {
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 0 6px rgba(255, 51, 102, 0.5));
+  }
+
+  @keyframes thinking {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+  }
+
+  @keyframes working {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-2px); }
+  }
+
+  /* Task packet animation */
+  .task-packet {
+    animation: packetTravel 2s ease-in-out forwards;
+  }
+  @keyframes packetTravel {
+    0% { transform: translateX(0); opacity: 1; }
+    50% { transform: translateX(50%); opacity: 1; }
+    100% { transform: translateX(100%); opacity: 0; }
+  }
+
+  /* Fleet device card styles */
+  .fleet-card {
+    @apply card relative overflow-hidden transition-all duration-300;
+  }
+  .fleet-card:hover {
+    @apply border-cyber-blue/60 shadow-glow;
+    transform: scale(1.01);
+  }
+
+  /* Status strip on device cards */
+  .status-strip {
+    @apply absolute inset-y-0 left-0 w-1;
+  }
+
+  /* Progress bars for battery/storage */
+  .progress-track {
+    @apply h-1.5 flex-1 overflow-hidden rounded-full bg-navy-600;
+  }
+  .progress-fill {
+    @apply h-full rounded-full transition-all duration-500;
+  }
+
+  /* Prevent browser autofill white background override */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 30px #1a2332 inset !important;
+    -webkit-text-fill-color: #ffffff !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+}

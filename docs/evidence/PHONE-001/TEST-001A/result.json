@@ -1,0 +1,179 @@
+{
+  "testId": "TEST-001A",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T08:13:49.149Z",
+  "completedAt": "2026-07-28T08:13:49.149Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-001A/result.json"
+  ],
+  "notes": "",
+  "details": {
+    "job": {
+      "id": "bda1a008-dcf2-4c92-b6a9-bfb72fdf0182",
+      "organizationId": "default-org",
+      "campaignId": null,
+      "accountId": null,
+      "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+      "contentId": null,
+      "type": "DEVICE_COMMAND",
+      "priority": "NORMAL",
+      "scheduledAt": null,
+      "startedAt": "2026-07-28T08:13:47.036Z",
+      "completedAt": "2026-07-28T08:13:48.147Z",
+      "status": "SUCCESS",
+      "parameters": {
+        "command": "VIEW_DEVICE_STATUS"
+      },
+      "result": {
+        "model": "SM-A075F",
+        "adbStatus": "BUSY",
+        "deviceCode": "PHONE-001",
+        "storageUsed": 21521051648,
+        "batteryLevel": 99,
+        "manufacturer": "samsung",
+        "serialNumber": "R8YY81H581J",
+        "storageTotal": 49480187904,
+        "authorization": "AUTHORIZED",
+        "uptimeSeconds": 63,
+        "androidVersion": "16",
+        "lastHeartbeatError": null
+      },
+      "attempts": 1,
+      "maxAttempts": 3,
+      "retryCount": 0,
+      "maxRetries": 3,
+      "errorCode": null,
+      "errorMessage": null,
+      "idempotencyKey": "PHONE-001:VIEW_DEVICE_STATUS:1785226426787",
+      "metadata": {
+        "source": "SINGLE_DEVICE_DASHBOARD",
+        "deviceCode": "PHONE-001"
+      },
+      "createdAt": "2026-07-28T08:13:46.824Z",
+      "updatedAt": "2026-07-28T08:13:48.149Z",
+      "device": {
+        "id": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "organizationId": "default-org",
+        "deviceGroupId": null,
+        "code": "PHONE-001",
+        "name": "samsung SM-A075F",
+        "serialNumber": "R8YY81H581J",
+        "manufacturer": "samsung",
+        "model": "SM-A075F",
+        "osVersion": "16",
+        "adbStatus": "ONLINE",
+        "battery": 99,
+        "storage": 46,
+        "storageUsed": "21521358848",
+        "storageTotal": "49480187904",
+        "agentVersion": "1.0.0",
+        "networkType": "wifi",
+        "assignedAccountId": null,
+        "currentJobId": null,
+        "lastHeartbeatAt": "2026-07-28T08:13:48.974Z",
+        "nodeId": "NODE-A",
+        "metadata": {
+          "lastHeartbeatError": null
+        },
+        "createdAt": "2026-07-28T01:43:35.524Z",
+        "updatedAt": "2026-07-28T08:13:48.975Z"
+      },
+      "campaign": null,
+      "account": null,
+      "content": null,
+      "deviceCommand": {
+        "id": "b97769c7-eb02-4fe2-9c91-7e58d88e0c63",
+        "organizationId": "default-org",
+        "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "jobId": "bda1a008-dcf2-4c92-b6a9-bfb72fdf0182",
+        "command": "VIEW_DEVICE_STATUS",
+        "parameters": {
+          "command": "VIEW_DEVICE_STATUS"
+        },
+        "status": "SUCCESS",
+        "result": {
+          "model": "SM-A075F",
+          "adbStatus": "BUSY",
+          "deviceCode": "PHONE-001",
+          "storageUsed": 21521051648,
+          "batteryLevel": 99,
+          "manufacturer": "samsung",
+          "serialNumber": "R8YY81H581J",
+          "storageTotal": 49480187904,
+          "authorization": "AUTHORIZED",
+          "uptimeSeconds": 63,
+          "androidVersion": "16",
+          "lastHeartbeatError": null
+        },
+        "errorCode": null,
+        "errorMessage": null,
+        "requestedAt": "2026-07-28T08:13:46.859Z",
+        "assignedAt": "2026-07-28T08:13:47.053Z",
+        "startedAt": "2026-07-28T08:13:47.175Z",
+        "completedAt": "2026-07-28T08:13:48.147Z",
+        "createdAt": "2026-07-28T08:13:46.859Z",
+        "updatedAt": "2026-07-28T08:13:48.156Z"
+      },
+      "logs": [
+        {
+          "id": "98a9d93a-a00a-487a-a9cb-2dcc09cd3010",
+          "organizationId": "default-org",
+          "jobId": "bda1a008-dcf2-4c92-b6a9-bfb72fdf0182",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "VIEW_DEVICE_STATUS ผ่านการ Verify",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": {
+            "result": {
+              "model": "SM-A075F",
+              "adbStatus": "BUSY",
+              "deviceCode": "PHONE-001",
+              "storageUsed": 21521051648,
+              "batteryLevel": 99,
+              "manufacturer": "samsung",
+              "serialNumber": "R8YY81H581J",
+              "storageTotal": 49480187904,
+              "authorization": "AUTHORIZED",
+              "uptimeSeconds": 63,
+              "androidVersion": "16",
+              "lastHeartbeatError": null
+            }
+          },
+          "createdAt": "2026-07-28T08:13:48.168Z"
+        },
+        {
+          "id": "82e9bde9-ca01-4d17-b899-c67584fd31bc",
+          "organizationId": "default-org",
+          "jobId": "bda1a008-dcf2-4c92-b6a9-bfb72fdf0182",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "มอบหมาย VIEW_DEVICE_STATUS ให้ Device Agent",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:13:47.075Z"
+        },
+        {
+          "id": "3ea16817-000a-4982-aabf-ec39af5e7c45",
+          "organizationId": "default-org",
+          "jobId": "bda1a008-dcf2-4c92-b6a9-bfb72fdf0182",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "สร้างคำสั่ง VIEW_DEVICE_STATUS สำหรับ PHONE-001",
+          "attemptNumber": 0,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:13:46.881Z"
+        }
+      ],
+      "uploadedFiles": []
+    }
+  }
+}

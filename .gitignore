@@ -1,0 +1,94 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build outputs
+.next/
+.next-dev/
+dist/
+build/
+out/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Prisma
+packages/database/prisma/*.db
+packages/database/prisma/*.db-journal
+
+# Uploads
+uploads/
+storage/
+
+# Docker
+docker/data/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Logs
+build/
+out/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Prisma
+packages/database/prisma/*.db
+packages/database/prisma/*.db-journal
+
+# Uploads
+uploads/
+storage/
+
+# Docker
+docker/data/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Logs
+logs/
+*.log
+
+# Turbo
+.turbo/
+
+# Temporary
+tmp/
+temp/
+*.tmp
+
+# Firebase
+firebase-service-account.json
+*-firebase-adminsdk-*.json
+
+# Binaries
+*.exe

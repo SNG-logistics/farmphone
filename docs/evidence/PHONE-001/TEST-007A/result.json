@@ -1,0 +1,214 @@
+{
+  "testId": "TEST-007A",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T08:14:10.474Z",
+  "completedAt": "2026-07-28T08:14:10.474Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-007A/result.json"
+  ],
+  "notes": "",
+  "details": {
+    "job": {
+      "id": "6f3c0587-36f9-4996-a1be-a31e76a14df6",
+      "organizationId": "default-org",
+      "campaignId": null,
+      "accountId": null,
+      "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+      "contentId": null,
+      "type": "DEVICE_COMMAND",
+      "priority": "NORMAL",
+      "scheduledAt": null,
+      "startedAt": "2026-07-28T08:14:05.287Z",
+      "completedAt": "2026-07-28T08:14:09.819Z",
+      "status": "SUCCESS",
+      "parameters": {
+        "command": "RESTART_APP",
+        "packageName": "com.ss.android.ugc.trill"
+      },
+      "result": {
+        "packageName": "com.ss.android.ugc.trill",
+        "stopEvidence": {
+          "foreground": false,
+          "processIds": [],
+          "packageName": "com.ss.android.ugc.trill",
+          "processRunning": false,
+          "verifiedStopped": true,
+          "foregroundEvidence": []
+        },
+        "startEvidence": {
+          "foreground": true,
+          "processIds": [
+            "10766"
+          ],
+          "packageName": "com.ss.android.ugc.trill",
+          "processRunning": true,
+          "verifiedRunning": true,
+          "foregroundEvidence": [
+            "mFocusedApp=ActivityRecord{85761483 u0 com.ss.android.ugc.trill/com.ss.android.ugc.aweme.splash.SplashActivity t1012}"
+          ]
+        },
+        "verifiedRunning": true,
+        "verifiedStopped": true
+      },
+      "attempts": 1,
+      "maxAttempts": 3,
+      "retryCount": 0,
+      "maxRetries": 3,
+      "errorCode": null,
+      "errorMessage": null,
+      "idempotencyKey": "PHONE-001:RESTART_APP:1785226445121",
+      "metadata": {
+        "source": "SINGLE_DEVICE_DASHBOARD",
+        "deviceCode": "PHONE-001"
+      },
+      "createdAt": "2026-07-28T08:14:05.153Z",
+      "updatedAt": "2026-07-28T08:14:09.820Z",
+      "device": {
+        "id": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "organizationId": "default-org",
+        "deviceGroupId": null,
+        "code": "PHONE-001",
+        "name": "samsung SM-A075F",
+        "serialNumber": "R8YY81H581J",
+        "manufacturer": "samsung",
+        "model": "SM-A075F",
+        "osVersion": "16",
+        "adbStatus": "ONLINE",
+        "battery": 99,
+        "storage": 46,
+        "storageUsed": "21530996736",
+        "storageTotal": "49480187904",
+        "agentVersion": "1.0.0",
+        "networkType": "wifi",
+        "assignedAccountId": null,
+        "currentJobId": null,
+        "lastHeartbeatAt": "2026-07-28T08:14:10.058Z",
+        "nodeId": "NODE-A",
+        "metadata": {
+          "lastHeartbeatError": null
+        },
+        "createdAt": "2026-07-28T01:43:35.524Z",
+        "updatedAt": "2026-07-28T08:14:10.060Z"
+      },
+      "campaign": null,
+      "account": null,
+      "content": null,
+      "deviceCommand": {
+        "id": "1d5afd7e-92d7-4317-a08e-fa887911d450",
+        "organizationId": "default-org",
+        "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "jobId": "6f3c0587-36f9-4996-a1be-a31e76a14df6",
+        "command": "RESTART_APP",
+        "parameters": {
+          "command": "RESTART_APP",
+          "packageName": "com.ss.android.ugc.trill"
+        },
+        "status": "SUCCESS",
+        "result": {
+          "packageName": "com.ss.android.ugc.trill",
+          "stopEvidence": {
+            "foreground": false,
+            "processIds": [],
+            "packageName": "com.ss.android.ugc.trill",
+            "processRunning": false,
+            "verifiedStopped": true,
+            "foregroundEvidence": []
+          },
+          "startEvidence": {
+            "foreground": true,
+            "processIds": [
+              "10766"
+            ],
+            "packageName": "com.ss.android.ugc.trill",
+            "processRunning": true,
+            "verifiedRunning": true,
+            "foregroundEvidence": [
+              "mFocusedApp=ActivityRecord{85761483 u0 com.ss.android.ugc.trill/com.ss.android.ugc.aweme.splash.SplashActivity t1012}"
+            ]
+          },
+          "verifiedRunning": true,
+          "verifiedStopped": true
+        },
+        "errorCode": null,
+        "errorMessage": null,
+        "requestedAt": "2026-07-28T08:14:05.173Z",
+        "assignedAt": "2026-07-28T08:14:05.294Z",
+        "startedAt": "2026-07-28T08:14:05.382Z",
+        "completedAt": "2026-07-28T08:14:09.819Z",
+        "createdAt": "2026-07-28T08:14:05.173Z",
+        "updatedAt": "2026-07-28T08:14:09.828Z"
+      },
+      "logs": [
+        {
+          "id": "88c7c609-0a47-44d6-a0f6-286a3cd67953",
+          "organizationId": "default-org",
+          "jobId": "6f3c0587-36f9-4996-a1be-a31e76a14df6",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "RESTART_APP ผ่านการ Verify",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": {
+            "result": {
+              "packageName": "com.ss.android.ugc.trill",
+              "stopEvidence": {
+                "foreground": false,
+                "processIds": [],
+                "packageName": "com.ss.android.ugc.trill",
+                "processRunning": false,
+                "verifiedStopped": true,
+                "foregroundEvidence": []
+              },
+              "startEvidence": {
+                "foreground": true,
+                "processIds": [
+                  "10766"
+                ],
+                "packageName": "com.ss.android.ugc.trill",
+                "processRunning": true,
+                "verifiedRunning": true,
+                "foregroundEvidence": [
+                  "mFocusedApp=ActivityRecord{85761483 u0 com.ss.android.ugc.trill/com.ss.android.ugc.aweme.splash.SplashActivity t1012}"
+                ]
+              },
+              "verifiedRunning": true,
+              "verifiedStopped": true
+            }
+          },
+          "createdAt": "2026-07-28T08:14:09.842Z"
+        },
+        {
+          "id": "044d621c-b707-4366-8801-fa650f46c7ac",
+          "organizationId": "default-org",
+          "jobId": "6f3c0587-36f9-4996-a1be-a31e76a14df6",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "มอบหมาย RESTART_APP ให้ Device Agent",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:05.306Z"
+        },
+        {
+          "id": "2ed6c5c0-c2a0-4ece-b85a-b3f1565dcf4d",
+          "organizationId": "default-org",
+          "jobId": "6f3c0587-36f9-4996-a1be-a31e76a14df6",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "สร้างคำสั่ง RESTART_APP สำหรับ PHONE-001",
+          "attemptNumber": 0,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:14:05.179Z"
+        }
+      ],
+      "uploadedFiles": []
+    }
+  }
+}

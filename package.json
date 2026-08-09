@@ -1,0 +1,62 @@
+{
+  "name": "farm-phone-ai-office",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FARM PHONE AI OFFICE — Autonomous Multi-Device Control Platform",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "start": "node scripts/start-system.mjs",
+    "start:all": "node scripts/start-system.mjs",
+    "run": "node scripts/start-system.mjs",
+    "stop": "powershell -Command \"Get-NetTCPConnection -LocalPort 3001,3000 -ErrorAction SilentlyContinue | ForEach-Object { if ($processId = $_.OwningProcess) { if ($processId -gt 0) { Stop-Process -Id $processId -Force -ErrorAction SilentlyContinue } } }\"",
+    "dev": "turbo run dev",
+    "dev:agent": "npm run dev --workspace=@farm-phone/device-agent",
+    "dev:all": "node scripts/start-system.mjs",
+    "setup": "npm run db:generate && npm run db:migrate",
+    "adb:devices": "\"C:\\Users\\acer\\AppData\\Local\\Android\\platform-tools\\adb.exe\" devices -l",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "typecheck": "turbo run typecheck",
+    "verify": "npm run lint && npm run typecheck && npm test",
+    "test": "turbo run test",
+    "test:e2e:device": "node tests/e2e-one-device.mjs",
+    "test:single-device:automated": "npm run test:e2e:mock --workspace @farm-phone/api && npm test --workspace @farm-phone/device-agent && node --test tests/live-one-device.contract.mjs",
+    "test:video-create": "npm run test:e2e:mock --workspace @farm-phone/api",
+    "doctor": "node scripts/system-doctor.mjs",
+    "gemini:agent": "node scripts/gemini-screen-agent.mjs",
+    "gemini:auto-post": "node scripts/auto-post-viral-video.mjs",
+    "gemini:matrix-engage": "node scripts/matrix-cross-engage.mjs",
+    "video:sng": "node scripts/create-sng-video.mjs",
+    "video:test": "node scripts/test-rendered-video.mjs",
+    "video:create:sng": "node scripts/create-sng-video.mjs",
+    "video:preview:sng": "node scripts/render-preview.mjs",
+    "video:final:sng": "node scripts/render-final.mjs",
+    "video:premium:sng": "node scripts/create-premium-video.mjs",
+    "db:migrate": "cd packages/database && npx prisma migrate dev",
+    "db:generate": "cd packages/database && npx prisma generate",
+    "db:seed": "cd packages/database && npx prisma db seed",
+    "docker:up": "echo Firebase / Standalone Mode Active (Docker not required)",
+    "docker:down": "echo Firebase / Standalone Mode Active"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.4.0"
+  },
+  "overrides": {
+    "postcss": "8.5.23",
+    "sharp": "0.35.3"
+  },
+  "packageManager": "npm@10.2.4",
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "@firebase/firestore": "^4.16.0",
+    "firebase": "^12.16.0",
+    "firebase-admin": "^14.2.0"
+  }
+}

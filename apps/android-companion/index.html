@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>FARM PHONE — Android Companion App</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.socket.io/4.7.5/socket.io.min.js"></script>
+  <style>
+    body {
+      background-color: #060b13;
+      color: #f3f4f6;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    }
+    .neon-border {
+      border: 1px solid rgba(0, 240, 255, 0.4);
+      box-shadow: 0 0 15px rgba(0, 240, 255, 0.15);
+    }
+  </style>
+</head>
+<body className="p-4 min-h-screen flex flex-col justify-between">
+  <div className="space-y-4">
+    <!-- Header -->
+    <header className="flex items-center justify-between p-4 rounded-xl bg-slate-900 border border-slate-800">
+      <div>
+        <div className="flex items-center gap-2">
+          <span className="text-xl">📱</span>
+          <h1 className="font-mono text-lg font-bold text-cyan-400">FARM PHONE COMPANION</h1>
+        </div>
+        <p className="text-xs text-gray-400 mt-0.5">Android Device Companion Service v1.0.0</p>
+      </div>
+      <div id="statusBadge" className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+        DISCONNECTED
+      </div>
+    </header>
+
+    <!-- Configuration Form -->
+    <section className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-3">
+      <h2 className="text-xs font-mono font-bold text-cyan-400 uppercase tracking-wider">การตั้งค่าการเชื่อมต่อ (Server Connection)</h2>
+
+      <div className="space-y-2">
+        <label className="text-xs text-gray-400 font-mono">Backend API Host URL</label>
+        <input
+          id="apiUrlInput"
+          type="text"
+          value="http://192.168.1.100:3001"
+          placeholder="http://192.168.1.100:3001"
+          className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-sm font-mono text-white focus:outline-none focus:border-cyan-400"
+        />
+      </div>
+
+      <div className="grid grid-cols-2 gap-2">
+        <div>
+          <label className="text-xs text-gray-400 font-mono">Device Code</label>
+          <input
+            id="deviceCodeInput"
+            type="text"
+            value="PHONE-001"
+            className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-sm font-mono text-white focus:outline-none focus:border-cyan-400"
+          />
+        </div>
+        <div>
+          <label className="text-xs text-gray-400 font-mono">Node ID</label>
+          <input
+            id="nodeIdInput"
+            type="text"
+            value="NODE-A"
+            className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-800 text-sm font-mono text-white focus:outline-none focus:border-cyan-400"
+          />
+        </div>
+      </div>
+
+      <button
+        id="connectBtn"
+        type="button"
+        className="w-full py-2.5 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-mono font-bold text-sm shadow-lg shadow-cyan-500/20 transition-all"
+      >
+        🚀 เชื่อมต่อเข้า FARM PHONE SERVER
+      </button>
+    </section>
+
+    <!-- Device Status & Info -->
+    <section className="grid grid-cols-2 gap-3">
+      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+        <span className="text-[11px] font-mono text-gray-400">BATTERY STATUS</span>
+        <p id="batteryText" className="text-lg font-bold font-mono text-emerald-400 mt-1">98% (Charging)</p>
+      </div>
+      <div className="p-3 rounded-xl bg-slate-900 border border-slate-800">
+        <span className="text-[11px] font-mono text-gray-400">STORAGE USAGE</span>
+        <p id="storageText" className="text-lg font-bold font-mono text-cyan-400 mt-1">32 GB / 128 GB</p>
+      </div>
+    </section>
+
+    <!-- Execution Logs -->
+    <section className="p-4 rounded-xl bg-slate-900 border border-slate-800 space-y-2">
+      <div className="flex items-center justify-between">
+        <h3 className="text-xs font-mono font-bold text-cyan-400 uppercase">บันทึกการทำงาน (Live Command Logs)</h3>
+        <button id="clearLogsBtn" className="text-[10px] text-gray-500 hover:text-gray-300 font-mono">ล้างบันทึก</button>
+      </div>
+      <div id="logsConsole" className="h-48 overflow-y-auto p-3 rounded-lg bg-black/90 font-mono text-xs space-y-1 border border-slate-800 text-gray-300">
+        <p className="text-gray-500">[SYSTEM] แอป Farm Phone Companion พร้อมใช้งาน...</p>
+      </div>
+    </section>
+  </div>
+
+  <footer className="mt-4 text-center text-[11px] text-gray-600 font-mono">
+    FARM PHONE Companion App · Built for Android Devices & ADB Automation
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

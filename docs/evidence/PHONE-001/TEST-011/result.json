@@ -1,0 +1,17 @@
+{
+  "testId": "TEST-011",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T08:14:25.394Z",
+  "completedAt": "2026-07-28T08:14:25.394Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-011/result.json"
+  ],
+  "notes": "",
+  "details": {
+    "jobId": "85a01d5d-6392-4819-9f95-5e393a72b6b5",
+    "idempotencyKey": "PHONE-001:HEALTH_CHECK:duplicate-contract:1785226463106"
+  }
+}

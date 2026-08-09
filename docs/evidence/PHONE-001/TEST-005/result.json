@@ -1,0 +1,186 @@
+{
+  "testId": "TEST-005",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T08:13:56.377Z",
+  "completedAt": "2026-07-28T08:13:56.377Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-005/result.json"
+  ],
+  "notes": "",
+  "details": {
+    "job": {
+      "id": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+      "organizationId": "default-org",
+      "campaignId": null,
+      "accountId": null,
+      "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+      "contentId": null,
+      "type": "DEVICE_COMMAND",
+      "priority": "NORMAL",
+      "scheduledAt": null,
+      "startedAt": "2026-07-28T08:13:54.246Z",
+      "completedAt": "2026-07-28T08:13:55.546Z",
+      "status": "SUCCESS",
+      "parameters": {
+        "command": "HEALTH_CHECK"
+      },
+      "result": {
+        "checks": {
+          "storageUsed": 21523247104,
+          "batteryLevel": 99,
+          "storageTotal": 49480187904,
+          "adbConnection": "PASS",
+          "authorization": "PASS",
+          "uptimeSeconds": 70,
+          "androidVersion": "16",
+          "selectedAppPackage": "com.ss.android.ugc.trill",
+          "selectedAppInstalled": true,
+          "deviceAgentConnection": "PASS"
+        },
+        "result": "PASS",
+        "warnings": []
+      },
+      "attempts": 1,
+      "maxAttempts": 3,
+      "retryCount": 0,
+      "maxRetries": 3,
+      "errorCode": null,
+      "errorMessage": null,
+      "idempotencyKey": "PHONE-001:HEALTH_CHECK:1785226434055",
+      "metadata": {
+        "source": "SINGLE_DEVICE_DASHBOARD",
+        "deviceCode": "PHONE-001"
+      },
+      "createdAt": "2026-07-28T08:13:54.081Z",
+      "updatedAt": "2026-07-28T08:13:55.548Z",
+      "device": {
+        "id": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "organizationId": "default-org",
+        "deviceGroupId": null,
+        "code": "PHONE-001",
+        "name": "samsung SM-A075F",
+        "serialNumber": "R8YY81H581J",
+        "manufacturer": "samsung",
+        "model": "SM-A075F",
+        "osVersion": "16",
+        "adbStatus": "ONLINE",
+        "battery": 99,
+        "storage": 46,
+        "storageUsed": "21523181568",
+        "storageTotal": "49480187904",
+        "agentVersion": "1.0.0",
+        "networkType": "wifi",
+        "assignedAccountId": null,
+        "currentJobId": null,
+        "lastHeartbeatAt": "2026-07-28T08:13:55.731Z",
+        "nodeId": "NODE-A",
+        "metadata": {
+          "lastHeartbeatError": null
+        },
+        "createdAt": "2026-07-28T01:43:35.524Z",
+        "updatedAt": "2026-07-28T08:13:55.732Z"
+      },
+      "campaign": null,
+      "account": null,
+      "content": null,
+      "deviceCommand": {
+        "id": "6a769699-30b6-4f79-a11a-ab8c78bb4c17",
+        "organizationId": "default-org",
+        "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+        "command": "HEALTH_CHECK",
+        "parameters": {
+          "command": "HEALTH_CHECK"
+        },
+        "status": "SUCCESS",
+        "result": {
+          "checks": {
+            "storageUsed": 21523247104,
+            "batteryLevel": 99,
+            "storageTotal": 49480187904,
+            "adbConnection": "PASS",
+            "authorization": "PASS",
+            "uptimeSeconds": 70,
+            "androidVersion": "16",
+            "selectedAppPackage": "com.ss.android.ugc.trill",
+            "selectedAppInstalled": true,
+            "deviceAgentConnection": "PASS"
+          },
+          "result": "PASS",
+          "warnings": []
+        },
+        "errorCode": null,
+        "errorMessage": null,
+        "requestedAt": "2026-07-28T08:13:54.087Z",
+        "assignedAt": "2026-07-28T08:13:54.251Z",
+        "startedAt": "2026-07-28T08:13:54.354Z",
+        "completedAt": "2026-07-28T08:13:55.546Z",
+        "createdAt": "2026-07-28T08:13:54.087Z",
+        "updatedAt": "2026-07-28T08:13:55.555Z"
+      },
+      "logs": [
+        {
+          "id": "a7836863-51de-40b0-bb4b-962a01a807f8",
+          "organizationId": "default-org",
+          "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "HEALTH_CHECK ผ่านการ Verify",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": {
+            "result": {
+              "checks": {
+                "storageUsed": 21523247104,
+                "batteryLevel": 99,
+                "storageTotal": 49480187904,
+                "adbConnection": "PASS",
+                "authorization": "PASS",
+                "uptimeSeconds": 70,
+                "androidVersion": "16",
+                "selectedAppPackage": "com.ss.android.ugc.trill",
+                "selectedAppInstalled": true,
+                "deviceAgentConnection": "PASS"
+              },
+              "result": "PASS",
+              "warnings": []
+            }
+          },
+          "createdAt": "2026-07-28T08:13:55.570Z"
+        },
+        {
+          "id": "b47110f9-88a3-42f0-b2ac-9a80584a81e7",
+          "organizationId": "default-org",
+          "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "มอบหมาย HEALTH_CHECK ให้ Device Agent",
+          "attemptNumber": 1,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:13:54.267Z"
+        },
+        {
+          "id": "2db2486a-e75f-446d-9c21-9e11922ebc63",
+          "organizationId": "default-org",
+          "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+          "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+          "level": "INFO",
+          "message": "สร้างคำสั่ง HEALTH_CHECK สำหรับ PHONE-001",
+          "attemptNumber": 0,
+          "errorCode": null,
+          "adbOutput": null,
+          "metadata": null,
+          "createdAt": "2026-07-28T08:13:54.091Z"
+        }
+      ],
+      "uploadedFiles": []
+    },
+    "healthResult": "PASS"
+  }
+}

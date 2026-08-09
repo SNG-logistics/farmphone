@@ -1,0 +1,20 @@
+{
+  "name": "@farm-phone/android-companion",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FARM PHONE Mobile Companion APK & Device Controller App for Android",
+  "main": "index.html",
+  "scripts": {
+    "start": "serve . -p 3200",
+    "cap:add": "cap add android",
+    "cap:open": "cap open android"
+  },
+  "dependencies": {
+    "@capacitor/android": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "socket.io-client": "^4.7.5"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^6.0.0"
+  }
+}

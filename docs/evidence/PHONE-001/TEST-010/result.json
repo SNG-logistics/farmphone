@@ -1,0 +1,73 @@
+{
+  "testId": "TEST-010",
+  "status": "PASS",
+  "deviceCode": "PHONE-001",
+  "physicalDevice": true,
+  "startedAt": "2026-07-28T08:14:21.877Z",
+  "completedAt": "2026-07-28T08:14:21.877Z",
+  "buildId": "local-worktree",
+  "evidence": [
+    "docs/evidence/PHONE-001/TEST-010/result.json"
+  ],
+  "notes": "",
+  "details": {
+    "logs": [
+      {
+        "id": "a7836863-51de-40b0-bb4b-962a01a807f8",
+        "organizationId": "default-org",
+        "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+        "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "level": "INFO",
+        "message": "HEALTH_CHECK ผ่านการ Verify",
+        "attemptNumber": 1,
+        "errorCode": null,
+        "adbOutput": null,
+        "metadata": {
+          "result": {
+            "checks": {
+              "storageUsed": 21523247104,
+              "batteryLevel": 99,
+              "storageTotal": 49480187904,
+              "adbConnection": "PASS",
+              "authorization": "PASS",
+              "uptimeSeconds": 70,
+              "androidVersion": "16",
+              "selectedAppPackage": "com.ss.android.ugc.trill",
+              "selectedAppInstalled": true,
+              "deviceAgentConnection": "PASS"
+            },
+            "result": "PASS",
+            "warnings": []
+          }
+        },
+        "createdAt": "2026-07-28T08:13:55.570Z"
+      },
+      {
+        "id": "b47110f9-88a3-42f0-b2ac-9a80584a81e7",
+        "organizationId": "default-org",
+        "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+        "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "level": "INFO",
+        "message": "มอบหมาย HEALTH_CHECK ให้ Device Agent",
+        "attemptNumber": 1,
+        "errorCode": null,
+        "adbOutput": null,
+        "metadata": null,
+        "createdAt": "2026-07-28T08:13:54.267Z"
+      },
+      {
+        "id": "2db2486a-e75f-446d-9c21-9e11922ebc63",
+        "organizationId": "default-org",
+        "jobId": "4987af15-f060-41d6-bc50-b1f5a67cae2a",
+        "deviceId": "d6ce5ec7-da4c-4898-88cc-af30a2ce83c1",
+        "level": "INFO",
+        "message": "สร้างคำสั่ง HEALTH_CHECK สำหรับ PHONE-001",
+        "attemptNumber": 0,
+        "errorCode": null,
+        "adbOutput": null,
+        "metadata": null,
+        "createdAt": "2026-07-28T08:13:54.091Z"
+      }
+    ]
+  }
+}

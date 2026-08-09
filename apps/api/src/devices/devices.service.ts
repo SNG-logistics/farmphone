@@ -93,11 +93,11 @@ export class DevicesService {
   }
 
   async findByCode(code: string) {
-    return this.deviceRecord(code);
+    return this.findOne(code);
   }
 
   async updateStatus(id: string, adbStatus: string) {
-    const existing = await this.deviceRecord(id);
+    const existing = await this.findOne(id);
     const device = await this.prisma.device.update({ where: { id: existing.id }, data: { adbStatus: this.deviceStatus(adbStatus) } });
     this.heartbeatRuntime.clear();
     return device;
